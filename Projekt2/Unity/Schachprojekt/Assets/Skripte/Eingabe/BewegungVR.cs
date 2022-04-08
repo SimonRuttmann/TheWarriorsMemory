@@ -1,9 +1,13 @@
+/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
- public class BewegungVR : MonoBehaviour
+*/
+using UnityEngine;
+public class BewegungVR : MonoBehaviour
 {
+    /*
     private Vector2 trackpad;
     private float Direction;
     private Vector3 moveDirection;
@@ -46,4 +50,5 @@ using Valve.VR;
         trackpad = SteamVR_Actions._default.MoveVR.GetAxis(Hand);
        
     }
+    */
 }

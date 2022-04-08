@@ -1,12 +1,14 @@
+/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
-
+*/
+using UnityEngine;
 
 public class CharacterControllerBewegungVR : MonoBehaviour
 {
-    private CharacterController controller;
+   /* private CharacterController controller;
     private Vector3 playerVelocity;
     private Vector2 trackpad;
     public SteamVR_Input_Sources Hand;
@@ -51,7 +53,7 @@ public class CharacterControllerBewegungVR : MonoBehaviour
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
         }
         */
-        
+        /*
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }
@@ -71,4 +73,5 @@ public class CharacterControllerBewegungVR : MonoBehaviour
         trackpad = SteamVR_Actions._default.MoveVR.GetAxis(Hand);
 
     }
+        */
 }

@@ -1,9 +1,12 @@
+/*
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Valve.VR.Extras;
-
+*/
+using UnityEngine;
 public class LaserPointerWrap : MonoBehaviour
 {
+    /*
     [SerializeField] Schachbrett schachbrett;
     protected IInputHandler[] inputhandlers; 
     private SteamVR_LaserPointer steamVrLaserPointer;
@@ -65,4 +68,5 @@ public class LaserPointerWrap : MonoBehaviour
 
         pointerEnterHandler.OnPointerEnter(new PointerEventData(EventSystem.current));
     }
+    */
 }
