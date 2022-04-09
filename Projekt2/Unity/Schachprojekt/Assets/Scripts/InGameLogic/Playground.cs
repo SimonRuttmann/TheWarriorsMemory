@@ -11,21 +11,31 @@ using UnityEngine;
 
 public class Playground : MonoBehaviour
 {
-    [SerializeField] private Transform EffektiverStartpunktUntenLinks;
-    [SerializeField] private float Feldgroesse;
+    
+    /// <summary>
+    /// This attribute needs to be matched within the center of the bottom left hexagon,
+    /// based on it, the positions of the click events and the position of marker, pieces can be calculated
+    /// </summary>
+    [SerializeField] private Transform anchorPointBottomLeft;
+    
+    /// <summary>
+    /// This attribute needs to be set to the exact size of the hexagon
+    /// based on it, the positions of the click events and the position of marker, pieces can be calculated
+    /// </summary>
+    [SerializeField] private float hexagonSize;
 
     public const int GesFeldGroesse = 8;
 
     private Piece[,] grid;  //Start bei 1, 1
     private Piece _gewaehltePiece;
-    private SchachManager schachManager;
+    private InGameManager _inGameManager;
 
     public MarkerCreator markerCreator; 
     private AnimationScheduler _animationScheduler;
 
     public Vector3 RelativePositionZumSchachbrettfeld(Vector2Int position)
     {
-        return EffektiverStartpunktUntenLinks.position + new Vector3(position.x * Feldgroesse, 0f, position.y * Feldgroesse);
+        return anchorPointBottomLeft.position + new Vector3(position.x * hexagonSize, 0f, position.y * hexagonSize);
     }
 
     protected virtual void Awake()
@@ -41,20 +51,20 @@ public class Playground : MonoBehaviour
         grid = new Piece[GesFeldGroesse, GesFeldGroesse];
     }
 
-    public void SetzeAbhaengigkeiten(SchachManager schachManager)
+    public void SetzeAbhaengigkeiten(InGameManager inGameManager)
     {
-        this.schachManager = schachManager;
+        this._inGameManager = inGameManager;
     }
 
     public Vector3 KalkulierePosVonCoords(Vector2Int coords)
     {
-        return EffektiverStartpunktUntenLinks.position + new Vector3(coords.x * Feldgroesse, 0f, coords.y * Feldgroesse);
+        return anchorPointBottomLeft.position + new Vector3(coords.x * hexagonSize, 0f, coords.y * hexagonSize);
     }
 
     private Vector2Int KalkuliereCoordsVonPos(Vector3 inputPosition)
     {
-        int x = Mathf.FloorToInt(transform.InverseTransformPoint(inputPosition).x / Feldgroesse) + GesFeldGroesse / 2;
-        int y = Mathf.FloorToInt(transform.InverseTransformPoint(inputPosition).z / Feldgroesse) + GesFeldGroesse / 2;
+        int x = Mathf.FloorToInt(transform.InverseTransformPoint(inputPosition).x / hexagonSize) + GesFeldGroesse / 2;
+        int y = Mathf.FloorToInt(transform.InverseTransformPoint(inputPosition).z / hexagonSize) + GesFeldGroesse / 2;
         return new Vector2Int(x, y);
     }
 
@@ -71,7 +81,7 @@ public class Playground : MonoBehaviour
             {
                 DeselectFigur();
             }
-            else if (piece != null && _gewaehltePiece != piece && schachManager.IstTeamzug(piece.Team))
+            else if (piece != null && _gewaehltePiece != piece && _inGameManager.IstTeamzug(piece.Team))
             {
                 piece.IdleAnimation();
                 WahleFigur(piece);
@@ -85,7 +95,7 @@ public class Playground : MonoBehaviour
         }
         else
         {
-            if (piece != null && schachManager.IstTeamzug(piece.Team))
+            if (piece != null && _inGameManager.IstTeamzug(piece.Team))
             {
                 piece.IdleAnimation();
                 WahleFigur(piece);
@@ -95,7 +105,7 @@ public class Playground : MonoBehaviour
 
     private void WahleFigur(Piece piece)
     {
-        schachManager.EntferneAngriffsMoeglichkeitenAufFigur<Koenig>(piece);
+      //  schachManager.EntferneAngriffsMoeglichkeitenAufFigur<Koenig>(piece);
         _gewaehltePiece = piece;
         List<Vector2Int> auswahl = _gewaehltePiece.GetPossibleMoves().ToList();
         ZeigeAusgewaehlteFelder(auswahl);
@@ -129,7 +139,7 @@ public class Playground : MonoBehaviour
     }
     private void BeendeZug()
     {
-        schachManager.BeendeZug();
+        _inGameManager.BeendeZug();
     }
 
     public void UpdateSchachbrettOnFigurBewegt(Vector2Int newCoords, Vector2Int oldCoords, Piece neuFig, Piece altFig)
@@ -257,7 +267,7 @@ public class Playground : MonoBehaviour
         int back = 0;
         if (angreifendePiece.Team == Team.Player) back = 180;
 
-        _animationScheduler.RotatePiece1(6f, angreifendePiece, (float)back);
+        _animationScheduler.RotatePiece(6f, angreifendePiece, (float)back);
         this.BlockEingabe(7f);
     }
 
@@ -267,7 +277,7 @@ public class Playground : MonoBehaviour
         if (piece)
         {
             grid[piece.Position.x, piece.Position.y] = null;
-            schachManager.OnFigurRemoved(piece);
+            _inGameManager.OnFigurRemoved(piece);
         }
     }
 
@@ -299,7 +309,7 @@ public class Playground : MonoBehaviour
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         SchlageFigur(piece);
         _animationScheduler.CleanDelete(1, piece);
-        schachManager.BefoerdernErstellung(pos, team, modell);
+
     }
 
     /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

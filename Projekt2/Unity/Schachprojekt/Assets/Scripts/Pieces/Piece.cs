@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Scripts.Enums;
+using Scripts.PieceMovement;
 using Scripts.Pieces.Interfaces;
 using UnityEngine;
 
