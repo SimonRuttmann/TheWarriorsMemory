@@ -3,7 +3,7 @@ using System.Linq;
 using Scripts.Enums;
 using Scripts.Pieces;
 
-namespace Scripts.Logik
+namespace Scripts.InGameLogic
 {
 	[System.Serializable] 
 	public class Player

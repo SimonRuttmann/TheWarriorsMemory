@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Scripts.Enums;
+using Scripts.InGameLogic;
+using Scripts.Marker;
 using Scripts.Pieces;
 using Scripts.Pieces.Animation;
 using UnityEngine;
@@ -18,7 +20,7 @@ public class Playground : MonoBehaviour
     private Piece _gewaehltePiece;
     private SchachManager schachManager;
 
-    public FeldAuswahlErsteller feldAuswahlErsteller; 
+    public MarkerCreator markerCreator; 
     private AnimationScheduler _animationScheduler;
 
     public Vector3 RelativePositionZumSchachbrettfeld(Vector2Int position)
@@ -29,7 +31,7 @@ public class Playground : MonoBehaviour
     protected virtual void Awake()
     {
         _animationScheduler = GetComponent<AnimationScheduler>();
-        feldAuswahlErsteller = GetComponent<FeldAuswahlErsteller>();
+        markerCreator = GetComponent<MarkerCreator>();
 
         CreateGrid();
     }
@@ -108,13 +110,13 @@ public class Playground : MonoBehaviour
             bool isSquareFree = GetFigurOnFeld(auswahl[i]) == null;
             squaresData.Add(position, isSquareFree);
         }
-        feldAuswahlErsteller.ZeigeAuswahl(squaresData);
+        markerCreator.CreateAndShowMarkers(squaresData);
     }
 
     private void DeselectFigur()
     {
         _gewaehltePiece = null;
-        feldAuswahlErsteller.entferneAuswaehler();
+        markerCreator.DestroyMarkers();
     }
 
     private void OnAusgewaehlteFigurBewegt(Vector2Int kooridanten, Piece piece)

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Scripts.Enums;
-using Scripts.Logik;
+using Scripts.InGameLogic;
 using Scripts.PieceDeployment;
 using Scripts.Pieces;
 using Scripts.Pieces.Enums;
@@ -62,7 +62,7 @@ public class SchachManager : MonoBehaviour
 
     private void StarteNeuesSpiel(bool firstGame)
     {
-        playground.feldAuswahlErsteller.entferneAuswaehler();
+        playground.markerCreator.DestroyMarkers();
         this.spielzustand = Spielzustand.Start;
         teamanzeigeText1.text = "Am Zug: Team    Weiss";
         teamanzeigeText2.text = "Am Zug: Team    Weiss";
