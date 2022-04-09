@@ -41,9 +41,9 @@ public class SchachUIManager : MonoBehaviour
     }
 
 	//Wird bei nach einem Schachzug gesetzt
-	public void SetTeamanzeige(FigurFarbe farbe)
+	public void SetTeamanzeige(Team farbe)
     {
-		if (farbe == FigurFarbe.weiss) teamtext.text = "Team Weiﬂ ist an der Reihe";
+		if (farbe == Team.Player) teamtext.text = "Team Weiﬂ ist an der Reihe";
 		else teamtext.text = "Team Schwarz ist an der Reihe";
     }
 

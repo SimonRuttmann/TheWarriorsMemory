@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Springer : Figur
+public class Springer : Piece
 {
 	Vector2Int[] springfelder = new Vector2Int[]
 	{
@@ -16,19 +16,19 @@ public class Springer : Figur
 		new Vector2Int(-1, -2),
 	};
 
-	public override List<Vector2Int> WaehleMoeglicheFelder()
+	public override List<Vector2Int> GeneratePossibleMoves()
 	{
-		Bewegungsmöglichkeiten.Clear();
+		_possibleMoves.Clear();
 
 		for (int i = 0; i < springfelder.Length; i++)
 		{
-			Vector2Int nextCoords = position + springfelder[i];
-			Figur figur = schachbrett.GetFigurOnFeld(nextCoords);
-			if (!schachbrett.CheckObCoordsAufFeld(nextCoords))
+			Vector2Int nextCoords = Position + springfelder[i];
+			Piece piece = playground.GetFigurOnFeld(nextCoords);
+			if (!playground.CheckObCoordsAufFeld(nextCoords))
 				continue;
-			if (figur == null || !figur.IstGleichesTeam(this))
-				AddBewegungsmoeglichkeit(nextCoords);
+			if (piece == null || !piece.IsSameTeam(this))
+				AddPossibleMove(nextCoords);
 		}
-		return Bewegungsmöglichkeiten;
+		return _possibleMoves;
 	}
 }

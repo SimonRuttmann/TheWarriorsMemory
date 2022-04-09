@@ -13,12 +13,12 @@ public class SchachbrettAufstellung : ScriptableObject
     {
         public Vector2Int Position;     //x und y
         public Figurtyp Figurtyp;
-        public FigurFarbe FigurFarbe;
+        public Team team;
     }
 
     [SerializeField] private Feld[] Spielfeld;
 
-    // 0        x = 1 y = 1 Turm Weiß
+    // 0        x = 1 y = 1 Turm Wei?
     // .... 
     //
 
@@ -30,7 +30,7 @@ public class SchachbrettAufstellung : ScriptableObject
     // 0
     // -> Vector x = Turm x Position -1
     // -> Vector y = Turm y Position -1
-    // -> (0,0) = "Logische" Position Turm Weiß
+    // -> (0,0) = "Logische" Position Turm Wei?
 
 
     public Vector2Int Get_XY_VonAufstellungsFigur(int index)
@@ -43,9 +43,9 @@ public class SchachbrettAufstellung : ScriptableObject
     {
         return Spielfeld[index].Figurtyp.ToString();
     }
-    public FigurFarbe Get_Farbe_VonAufstellungsFigur(int index)
+    public Team Get_Farbe_VonAufstellungsFigur(int index)
     {
-        return Spielfeld[index].FigurFarbe;
+        return Spielfeld[index].team;
     }
 }
 

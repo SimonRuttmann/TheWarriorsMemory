@@ -5,22 +5,23 @@ using UnityEngine;
 public interface IDynamicStats
 {
 
-    void SetHealth(int health);
+    
+	public int Health { get; set; }
 
-    void SetAttackDamage(int dmg);
 
-    void SetMoveRange(int range);
+    public int AttackDamage { get; set; }
 
-    string SetName(string name);
+	
+    public int MoveRange { get; set; };
 
-    int GetHealth();
+	
+    public int AttackRange { get; set; };
 
-    int GetAttackDamage();
+	
+    public string Name { get; set; }
 
-    int GetMoveRange();
-
-    string GetName();
-
-    string GetType();
+	
+    public string DisplayType { get; set; }
+    
 
 }

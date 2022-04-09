@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dame : Figur
+public class Dame : Piece
 {
     private Vector2Int[] richtungen = new Vector2Int[]
     {
@@ -15,30 +15,30 @@ public class Dame : Figur
         new Vector2Int(-1, 1),
         new Vector2Int(-1,- 1),
     };
-    public override List<Vector2Int> WaehleMoeglicheFelder()
+    public override List<Vector2Int> GeneratePossibleMoves()
     {
-        Bewegungsmöglichkeiten.Clear();
+        _possibleMoves.Clear();
 
-        float reichweite = Schachbrett.GesFeldGroesse;
+        float reichweite = Playground.GesFeldGroesse;
         foreach (var richtung in richtungen)
         {
             for (int i = 1; i <= reichweite; i++)
             {
-                Vector2Int nextCoords = position + richtung * i;
-                Figur figur = schachbrett.GetFigurOnFeld(nextCoords);
-                if (!schachbrett.CheckObCoordsAufFeld(nextCoords))
+                Vector2Int nextCoords = Position + richtung * i;
+                Piece piece = playground.GetFigurOnFeld(nextCoords);
+                if (!playground.CheckObCoordsAufFeld(nextCoords))
                     break;
-                if (figur == null)
-                    AddBewegungsmoeglichkeit(nextCoords);
-                else if (!figur.IstGleichesTeam(this))
+                if (piece == null)
+                    AddPossibleMove(nextCoords);
+                else if (!piece.IsSameTeam(this))
                 {
-                    AddBewegungsmoeglichkeit(nextCoords);
+                    AddPossibleMove(nextCoords);
                     break;
                 }
-                else if (figur.IstGleichesTeam(this))
+                else if (piece.IsSameTeam(this))
                     break;
             }
         }
-        return Bewegungsmöglichkeiten;
+        return _possibleMoves;
     }
 }

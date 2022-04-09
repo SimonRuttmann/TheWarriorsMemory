@@ -12,33 +12,33 @@ using System.Linq;
 [System.Serializable] //Vermutung: Entweder zur Speicherung der Klasse oder Inspektor
 public class Spieler
 {
-    public FigurFarbe Farbe;
-    public Schachbrett Schachbrett;
+    public Team Farbe;
+    public Playground playground;
     //Alle Figuren eines Spieler, welche sich auf dem Spielfeld befinden
-    public List<Figur> AktiveFiguren;
+    public List<Piece> AktiveFiguren;
     // Start is called before the first frame update
 
     //VORSICHT KONSTRUKTOR!
-    public Spieler(FigurFarbe farbe, Schachbrett schachbrett)
+    public Spieler(Team farbe, Playground playground)
     {
-        AktiveFiguren = new List<Figur>();
-        this.Schachbrett = schachbrett;
+        AktiveFiguren = new List<Piece>();
+        this.playground = playground;
         this.Farbe = farbe;
     }
 
-    public void AddFigur(Figur figur)
+    public void AddFigur(Piece piece)
     {
-        if (!AktiveFiguren.Contains(figur))
+        if (!AktiveFiguren.Contains(piece))
         {
-            AktiveFiguren.Add(figur);
+            AktiveFiguren.Add(piece);
         }
     }
 
-    public void RemoveFigur(Figur figur)
+    public void RemoveFigur(Piece piece)
     {
-        if (AktiveFiguren.Contains(figur))
+        if (AktiveFiguren.Contains(piece))
         {
-            AktiveFiguren.Remove(figur);
+            AktiveFiguren.Remove(piece);
         }
     }
 
@@ -46,69 +46,69 @@ public class Spieler
       {
           foreach(var figur in AktiveFiguren)
           {
-              if (Schachbrett.HatFigur(figur))
+              if (playground.HatFigur(figur))
               {
-                figur.WaehleMoeglicheFelder();
+                figur.GeneratePossibleMoves();
               }
           }
       }
 
-	public Figur[] GetPieceAtackingOppositePiceOfType<T>() where T : Figur
+	public Piece[] GetPieceAtackingOppositePiceOfType<T>() where T : Piece
 	{
 		return AktiveFiguren.Where(p => p.IsAttackingPieceOfType<T>()).ToArray();
 	}
 
-	public Figur[] GetFigurenVomTyp<T>() where T : Figur
+	public Piece[] GetFigurenVomTyp<T>() where T : Piece
 	{
 		return AktiveFiguren.Where(p => p is T).ToArray();
 	}
 
-	public void EntferneAngriffsMoeglichkeitenAufFigur<T>(Spieler gegner, Figur gewaehlteFigur) where T : Figur
+	public void EntferneAngriffsMoeglichkeitenAufFigur<T>(Spieler gegner, Piece gewaehltePiece) where T : Piece
 	{
 		List<Vector2Int> coordsZumEntfernen = new List<Vector2Int>();
 
 		coordsZumEntfernen.Clear();
-		foreach (var coords in gewaehlteFigur.Bewegungsmöglichkeiten)
+		foreach (var coords in gewaehltePiece._possibleMoves)
 		{
-			Figur pieceOnCoords = this.Schachbrett.GetFigurOnFeld(coords);
-			Schachbrett.UpdateSchachbrettOnFigurBewegt(coords, gewaehlteFigur.position, gewaehlteFigur, null);
+			Piece pieceOnCoords = this.playground.GetFigurOnFeld(coords);
+			playground.UpdateSchachbrettOnFigurBewegt(coords, gewaehltePiece.Position, gewaehltePiece, null);
 			gegner.GeneriereAlleMoeglichenZuege();
 			if (gegner.CheckObEsFigurAngreift<T>())
 				coordsZumEntfernen.Add(coords);
-			Schachbrett.UpdateSchachbrettOnFigurBewegt(gewaehlteFigur.position, coords, gewaehlteFigur, pieceOnCoords);
+			playground.UpdateSchachbrettOnFigurBewegt(gewaehltePiece.Position, coords, gewaehltePiece, pieceOnCoords);
 		}
 		foreach (var coords in coordsZumEntfernen)
 		{
-			gewaehlteFigur.Bewegungsmöglichkeiten.Remove(coords);
+			gewaehltePiece._possibleMoves.Remove(coords);
 		}
 
 	}
 
-	internal bool CheckObEsFigurAngreift<T>() where T : Figur
+	internal bool CheckObEsFigurAngreift<T>() where T : Piece
 	{
 		foreach (var piece in AktiveFiguren)
 		{
-			if (Schachbrett.HatFigur(piece) && piece.IsAttackingPieceOfType<T>())
+			if (playground.HatFigur(piece) && piece.IsAttackingPieceOfType<T>())
 				return true;
 		}
 		return false;
 	}
 
-	public bool KannFigurVorAngriffRetten<T>(Spieler opponent) where T : Figur
+	public bool KannFigurVorAngriffRetten<T>(Spieler opponent) where T : Piece
 	{
 		foreach (var piece in AktiveFiguren)
 		{
-			foreach (var coords in piece.Bewegungsmöglichkeiten)
+			foreach (var coords in piece._possibleMoves)
 			{
-				Figur pieceOnCoords = Schachbrett.GetFigurOnFeld(coords);
-				Schachbrett.UpdateSchachbrettOnFigurBewegt(coords, piece.position, piece, null);
+				Piece pieceOnCoords = playground.GetFigurOnFeld(coords);
+				playground.UpdateSchachbrettOnFigurBewegt(coords, piece.Position, piece, null);
 				opponent.GeneriereAlleMoeglichenZuege();
 				if (!opponent.CheckObEsFigurAngreift<T>())
 				{
-					Schachbrett.UpdateSchachbrettOnFigurBewegt(piece.position, coords, piece, pieceOnCoords);
+					playground.UpdateSchachbrettOnFigurBewegt(piece.Position, coords, piece, pieceOnCoords);
 					return true;
 				}
-				Schachbrett.UpdateSchachbrettOnFigurBewegt(piece.position, coords, piece, pieceOnCoords);
+				playground.UpdateSchachbrettOnFigurBewegt(piece.Position, coords, piece, pieceOnCoords);
 			}
 		}
 		return false;

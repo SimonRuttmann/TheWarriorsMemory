@@ -28,7 +28,7 @@ public class FigurErsteller : MonoBehaviour
         {
             // Key:  LaueferSchwarz
             // Key:  LaeuferSchwarz=PrefabName (Laeufer=Skript)       Value: LaeuferSchwarz (UnityEngine.GameObject) 
-            String modellName = modell.GetComponent<Figur>().ToString();        
+            String modellName = modell.GetComponent<Piece>().ToString();        
                                                            
             modellName = modellName.Split(' ')[0];
             ModellDictionary.Add(modellName, modell);

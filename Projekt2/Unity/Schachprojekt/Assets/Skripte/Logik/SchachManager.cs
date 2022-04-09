@@ -28,7 +28,7 @@ public class SchachManager : MonoBehaviour
     [SerializeField] private Material schwarzMarker;
 
     //Schachfeld hinzufügen
-    [SerializeField] private Schachbrett schachbrett;
+    [SerializeField] private Playground playground;
 
     [SerializeField] private SchachUIManager SchachUIManager;
 
@@ -51,13 +51,13 @@ public class SchachManager : MonoBehaviour
 
     private void ErstelleSpieler()
     {
-        this.WeisserSpieler = new Spieler(FigurFarbe.weiss, schachbrett);
-        this.SchwarzerSpieler = new Spieler(FigurFarbe.schwarz, schachbrett);
+        this.WeisserSpieler = new Spieler(Team.Player, playground);
+        this.SchwarzerSpieler = new Spieler(Team.Enemy, playground);
     }
 
     private void StarteNeuesSpiel(bool firstGame)
     {
-        schachbrett.feldAuswahlErsteller.entferneAuswaehler();
+        playground.feldAuswahlErsteller.entferneAuswaehler();
         this.spielzustand = Spielzustand.Start;
         teamanzeigeText1.text = "Am Zug: Team    Weiss";
         teamanzeigeText2.text = "Am Zug: Team    Weiss";
@@ -69,11 +69,11 @@ public class SchachManager : MonoBehaviour
         if (firstGame) this.SchachUIManager.startUI();
         else this.SchachUIManager.SpielStarten();
 
-        schachbrett.SetzeAbhaengigkeiten(this);
+        playground.SetzeAbhaengigkeiten(this);
 
         this.ErstelleFigurenVonAufstellung(Startkonfiguration);
         AktiverSpieler = WeisserSpieler;
-        this.SchachUIManager.SetTeamanzeige(FigurFarbe.weiss);
+        this.SchachUIManager.SetTeamanzeige(Team.Player);
         ErstelleAlleSpielerZuege(AktiverSpieler);
         this.spielzustand = Spielzustand.Spiel;
     }
@@ -103,7 +103,7 @@ public class SchachManager : MonoBehaviour
         {
             //Daten der Figur abrufen
             Vector2Int xyPosition = schachbrettAufstellung.Get_XY_VonAufstellungsFigur(i);
-            FigurFarbe figurfarbe = schachbrettAufstellung.Get_Farbe_VonAufstellungsFigur(i);
+            Team figurfarbe = schachbrettAufstellung.Get_Farbe_VonAufstellungsFigur(i);
             string figurtypS = schachbrettAufstellung.Get_Name_VonAufstellungsFigur(i);
 
             //Figur erstellen, instanziieren und dem Spieler hinzufügen 
@@ -111,20 +111,20 @@ public class SchachManager : MonoBehaviour
         }
     }
 
-    public void ErstelleFigurUndInitialisiere(Vector2Int xyPosition, FigurFarbe figurfarbe, string figurtypS)
+    public void ErstelleFigurUndInitialisiere(Vector2Int xyPosition, Team figurfarbe, string figurtypS)
     {
-        Figur neueFigur = this.FigurErsteller.ErstelleFigur(figurtypS).GetComponent<Figur>();
-        neueFigur.SetzeFigurdaten(xyPosition, figurfarbe, schachbrett);
+        Piece neuePiece = this.FigurErsteller.ErstelleFigur(figurtypS).GetComponent<Piece>();
+        neuePiece.InitializePiece(xyPosition, figurfarbe, playground);
         
         //Setzt die Figur auf das Schachfeld
-        this.schachbrett.SetzeFigurAufsFeld(xyPosition, neueFigur);
+        this.playground.SetzeFigurAufsFeld(xyPosition, neuePiece);
 
         //Figur dem Spieler hinzufügen
         //Spieler aktuellerSpieler;
         
-        if (figurfarbe == FigurFarbe.weiss) { this.AktiverSpieler = WeisserSpieler; }
+        if (figurfarbe == Team.Player) { this.AktiverSpieler = WeisserSpieler; }
         else { this.AktiverSpieler = SchwarzerSpieler; }
-        this.AktiverSpieler.AddFigur(neueFigur);
+        this.AktiverSpieler.AddFigur(neuePiece);
     }
 
     private void ErstelleAlleSpielerZuege(Spieler spieler)
@@ -132,7 +132,7 @@ public class SchachManager : MonoBehaviour
         spieler.GeneriereAlleMoeglichenZuege();
     }
 
-    public bool IstTeamzug(FigurFarbe farbe)
+    public bool IstTeamzug(Team farbe)
     {
         return AktiverSpieler.Farbe == farbe;
     }
@@ -157,14 +157,14 @@ public class SchachManager : MonoBehaviour
 
     private bool IstSpielVorbei()
     {
-        Figur[] koenigsbedroher = AktiverSpieler.GetPieceAtackingOppositePiceOfType<Koenig>();
+        Piece[] koenigsbedroher = AktiverSpieler.GetPieceAtackingOppositePiceOfType<Koenig>();
         if (koenigsbedroher.Length > 0)
         {
             Spieler gegnerischerSpieler = GegnerVonSpieler(AktiverSpieler);
-            Figur angegriffenerKoenig = gegnerischerSpieler.GetFigurenVomTyp<Koenig>().FirstOrDefault();
+            Piece angegriffenerKoenig = gegnerischerSpieler.GetFigurenVomTyp<Koenig>().FirstOrDefault();
             gegnerischerSpieler.EntferneAngriffsMoeglichkeitenAufFigur<Koenig>(AktiverSpieler, angegriffenerKoenig);
 
-            int moeglicheKoenigszuege = angegriffenerKoenig.Bewegungsmöglichkeiten.Count;
+            int moeglicheKoenigszuege = angegriffenerKoenig._possibleMoves.Count;
             if (moeglicheKoenigszuege == 0)
             {
                 bool koenigDeckbar = gegnerischerSpieler.KannFigurVorAngriffRetten<Koenig>(AktiverSpieler);
@@ -178,19 +178,19 @@ public class SchachManager : MonoBehaviour
     private void BeendeSpiel()
     {
         this.SchachUIManager.OnGameFinished(AktiverSpieler.Farbe.ToString());
-        if (AktiverSpieler.Farbe == FigurFarbe.weiss)
+        if (AktiverSpieler.Farbe == Team.Player)
         {
             teamanzeigeText1.text = "Team Weiss      gewinnt";
             teamanzeigeText2.text = "Team Weiss      gewinnt";
             SchwarzerSpieler.AktiveFiguren.ForEach(
-                (p => schachbrett.SterbenUndLoeschen(p)));
+                (p => playground.SterbenUndLoeschen(p)));
         }
         else
         {
             teamanzeigeText1.text = "Team Schwarz    gewinnt";
             teamanzeigeText2.text = "Team Schwarz    gewinnt";
             WeisserSpieler.AktiveFiguren.ForEach(
-                (p => schachbrett.SterbenUndLoeschen(p)));
+                (p => playground.SterbenUndLoeschen(p)));
         }
 
 
@@ -218,7 +218,7 @@ public class SchachManager : MonoBehaviour
         
         if (AktiverSpieler == WeisserSpieler) { 
             AktiverSpieler = SchwarzerSpieler; 
-            this.SchachUIManager.SetTeamanzeige(FigurFarbe.schwarz); 
+            this.SchachUIManager.SetTeamanzeige(Team.Enemy); 
             foreach(var marker in teammarker)
             {
                 marker.GetComponent<MeshRenderer>().material = schwarzMarker;
@@ -228,7 +228,7 @@ public class SchachManager : MonoBehaviour
         }
         else {
             AktiverSpieler = WeisserSpieler;   
-            this.SchachUIManager.SetTeamanzeige(FigurFarbe.weiss);
+            this.SchachUIManager.SetTeamanzeige(Team.Player);
             foreach (var marker in teammarker)
             {
                 marker.GetComponent<MeshRenderer>().material = weissMarker;
@@ -247,21 +247,21 @@ public class SchachManager : MonoBehaviour
         return aktuellerGegner;
     }
 
-    internal void OnFigurRemoved(Figur figur)
+    internal void OnFigurRemoved(Piece piece)
     {
-        Spieler figurBesitzer = (figur.figurFarbe == FigurFarbe.weiss) ? WeisserSpieler : SchwarzerSpieler;
-        figurBesitzer.RemoveFigur(figur);
+        Spieler figurBesitzer = (piece.Team == Team.Player) ? WeisserSpieler : SchwarzerSpieler;
+        figurBesitzer.RemoveFigur(piece);
     }
 
-    internal void EntferneAngriffsMoeglichkeitenAufFigur<T>(Figur figur) where T : Figur
+    internal void EntferneAngriffsMoeglichkeitenAufFigur<T>(Piece piece) where T : Piece
     {
-        AktiverSpieler.EntferneAngriffsMoeglichkeitenAufFigur<T>(GegnerVonSpieler(AktiverSpieler), figur);
+        AktiverSpieler.EntferneAngriffsMoeglichkeitenAufFigur<T>(GegnerVonSpieler(AktiverSpieler), piece);
     }
 
     public void RestartGame()
     {
         ZerstoereFiguren();
-        schachbrett.OnSpielNeustart();
+        playground.OnSpielNeustart();
         WeisserSpieler.OnSpielNeustart();
         SchwarzerSpieler.OnSpielNeustart();
         StarteNeuesSpiel(false);
@@ -269,12 +269,12 @@ public class SchachManager : MonoBehaviour
     }
 
 
-    public void BefoerdernErstellung(Vector2Int xyPosition, FigurFarbe figFarbe, string modelltyp)
+    public void BefoerdernErstellung(Vector2Int xyPosition, Team figFarbe, string modelltyp)
     {
         StartCoroutine(WarteBefoerdern(xyPosition, figFarbe, modelltyp));
     }
 
-    IEnumerator WarteBefoerdern(Vector2Int xyPos, FigurFarbe figFarbe, string modelltyp)
+    IEnumerator WarteBefoerdern(Vector2Int xyPos, Team figFarbe, string modelltyp)
     {
         yield return new WaitForSeconds(0.25f);
         this.ErstelleFigurUndInitialisiere(xyPos, figFarbe, modelltyp);
