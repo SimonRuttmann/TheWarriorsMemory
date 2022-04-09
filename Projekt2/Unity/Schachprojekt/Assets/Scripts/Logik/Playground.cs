@@ -234,19 +234,19 @@ public class Playground : MonoBehaviour
 
 
         //Bewegung Angreifer
-        _animationScheduler.RotatePiece1(0f, angreifendePiece, (float)RotationspunktAngreifer);
+        _animationScheduler.RotatePiece(0f, angreifendePiece, (float)RotationspunktAngreifer);
 
         //Bewegung Verteidiger
-        _animationScheduler.RotatePiece2(0f, geschlagenePiece, (float)RotationspunktVerteidiger);
+        _animationScheduler.RotatePiece(0f, geschlagenePiece, (float)RotationspunktVerteidiger);
 
         //Angriff
-        _animationScheduler.StartAnimation(1f, angreifendePiece, null, AnimationStatus.Attack);
+        _animationScheduler.StartAnimation(1f, angreifendePiece, AnimationStatus.Attack);
 
         //Sterben
-        _animationScheduler.StartAnimation(1.5f, null, geschlagenePiece, AnimationStatus.Die);
+        _animationScheduler.StartAnimation(1.5f, geschlagenePiece, AnimationStatus.Die);
 
         //Loeschen
-        _animationScheduler.StartAnimation(4f, null, geschlagenePiece, AnimationStatus.Delete);
+        _animationScheduler.StartAnimation(4f, geschlagenePiece, AnimationStatus.Delete);
 
         //Bewege Figur 1 auf Figur 2
         _animationScheduler.MovePiece(5f, angreifendePiece, kooridanten);
