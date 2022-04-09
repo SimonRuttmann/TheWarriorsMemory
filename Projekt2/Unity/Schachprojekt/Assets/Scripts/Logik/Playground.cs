@@ -148,7 +148,7 @@ public class Playground : MonoBehaviour
         return true;
     }
 
-    public bool HatFigur(Piece piece)
+    public bool ContainsPiece(Piece piece)
     {
         for (int i = 0; i < GesFeldGroesse; i++)
         {

@@ -4,7 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Scripts.Enums;
+using Scripts.Logik;
+using Scripts.PieceDeployment;
 using Scripts.Pieces;
+using Scripts.Pieces.Enums;
 using UnityEngine;
 using UnityEngine.UI;
 //using Valve.VR;
@@ -19,7 +22,7 @@ public class SchachManager : MonoBehaviour
     }
 
     // Hier wird das Skriptobjekt im Editor hinzugefügt
-    [SerializeField] private SchachbrettAufstellung Startkonfiguration;
+    [SerializeField] private PieceDeploymentObject Startkonfiguration;
 
     [SerializeField] private Text teamanzeigeText1;
     [SerializeField] private Text teamanzeigeText2;
@@ -36,10 +39,10 @@ public class SchachManager : MonoBehaviour
 
     [SerializeField] private VrSchachMenu VR_UIManager;
     //public SteamVR_Input_Sources Hand;
-    private FigurErsteller FigurErsteller;
-    private Spieler WeisserSpieler;
-    private Spieler SchwarzerSpieler;
-    private Spieler AktiverSpieler;
+    private PieceCreator _pieceCreator;
+    private Player _weisserPlayer;
+    private Player _schwarzerPlayer;
+    private Player _aktiverPlayer;
     private Spielzustand spielzustand;
 
 
@@ -47,14 +50,14 @@ public class SchachManager : MonoBehaviour
     private void Awake()
     {
         //Abhängigkeiten
-        this.FigurErsteller = GetComponent<FigurErsteller>();
+        this._pieceCreator = GetComponent<PieceCreator>();
         ErstelleSpieler();
     }
 
     private void ErstelleSpieler()
     {
-        this.WeisserSpieler = new Spieler(Team.Player, playground);
-        this.SchwarzerSpieler = new Spieler(Team.Enemy, playground);
+        this._weisserPlayer = new Player(Team.Player, playground);
+        this._schwarzerPlayer = new Player(Team.Enemy, playground);
     }
 
     private void StarteNeuesSpiel(bool firstGame)
@@ -74,9 +77,9 @@ public class SchachManager : MonoBehaviour
         playground.SetzeAbhaengigkeiten(this);
 
         this.ErstelleFigurenVonAufstellung(Startkonfiguration);
-        AktiverSpieler = WeisserSpieler;
+        _aktiverPlayer = _weisserPlayer;
         this.SchachUIManager.SetTeamanzeige(Team.Player);
-        ErstelleAlleSpielerZuege(AktiverSpieler);
+        ErstelleAlleSpielerZuege(_aktiverPlayer);
         this.spielzustand = Spielzustand.Spiel;
     }
 
@@ -99,23 +102,23 @@ public class SchachManager : MonoBehaviour
         StarteNeuesSpiel(true);
     }
 
-    private void ErstelleFigurenVonAufstellung(SchachbrettAufstellung schachbrettAufstellung)
+    private void ErstelleFigurenVonAufstellung(PieceDeploymentObject pieceDeploymentObject)
     {
-        for (int i = 0; i < schachbrettAufstellung.GetFigurenAnzahl(); i++)
+        for (int i = 0; i < pieceDeploymentObject.GetAmountOfPieces(); i++)
         {
             //Daten der Figur abrufen
-            Vector2Int xyPosition = schachbrettAufstellung.Get_XY_VonAufstellungsFigur(i);
-            Team figurfarbe = schachbrettAufstellung.Get_Farbe_VonAufstellungsFigur(i);
-            string figurtypS = schachbrettAufstellung.Get_Name_VonAufstellungsFigur(i);
+            Vector2Int xyPosition = pieceDeploymentObject.GetPositionOfPiece(i);
+            Team figurfarbe = pieceDeploymentObject.GetTeamOfPiece(i);
+            var figurtypS = pieceDeploymentObject.GetTypeOfPiece(i);
 
             //Figur erstellen, instanziieren und dem Spieler hinzufügen 
             ErstelleFigurUndInitialisiere(xyPosition, figurfarbe, figurtypS);
         }
     }
 
-    public void ErstelleFigurUndInitialisiere(Vector2Int xyPosition, Team figurfarbe, string figurtypS)
+    public void ErstelleFigurUndInitialisiere(Vector2Int xyPosition, Team figurfarbe, PieceType figurtypS)
     {
-        Piece neuePiece = this.FigurErsteller.ErstelleFigur(figurtypS).GetComponent<Piece>();
+        Piece neuePiece = this._pieceCreator.CreatePiece(figurtypS, figurfarbe).GetComponent<Piece>();
         neuePiece.InitializePiece(xyPosition, figurfarbe, playground);
         
         //Setzt die Figur auf das Schachfeld
@@ -124,28 +127,28 @@ public class SchachManager : MonoBehaviour
         //Figur dem Spieler hinzufügen
         //Spieler aktuellerSpieler;
         
-        if (figurfarbe == Team.Player) { this.AktiverSpieler = WeisserSpieler; }
-        else { this.AktiverSpieler = SchwarzerSpieler; }
-        this.AktiverSpieler.AddFigur(neuePiece);
+        if (figurfarbe == Team.Player) { this._aktiverPlayer = _weisserPlayer; }
+        else { this._aktiverPlayer = _schwarzerPlayer; }
+        this._aktiverPlayer.AddPiece(neuePiece);
     }
 
-    private void ErstelleAlleSpielerZuege(Spieler spieler)
+    private void ErstelleAlleSpielerZuege(Player player)
     {
-        spieler.GeneriereAlleMoeglichenZuege();
+        player.GenerateAllPossibleMoves();
     }
 
     public bool IstTeamzug(Team farbe)
     {
-        return AktiverSpieler.Farbe == farbe;
+        return _aktiverPlayer.team == farbe;
     }
     
     public void BeendeZug()
     {
         //Spielerzüge vom aktuellen Spieler ermitteln
-        ErstelleAlleSpielerZuege(AktiverSpieler);
+        ErstelleAlleSpielerZuege(_aktiverPlayer);
         
         //Spielerzüge vom Gegner ermitteln
-        ErstelleAlleSpielerZuege(GegnerVonSpieler(AktiverSpieler));
+        ErstelleAlleSpielerZuege(GegnerVonSpieler(_aktiverPlayer));
 
         if (IstSpielVorbei()) { BeendeSpiel(); }
         else { WechlseAktivesTeam(); }
@@ -159,17 +162,17 @@ public class SchachManager : MonoBehaviour
 
     private bool IstSpielVorbei()
     {
-        Piece[] koenigsbedroher = AktiverSpieler.GetPieceAtackingOppositePiceOfType<Koenig>();
+        Piece[] koenigsbedroher = _aktiverPlayer.GetPieceAtackingOppositePiceOfType<Koenig>();
         if (koenigsbedroher.Length > 0)
         {
-            Spieler gegnerischerSpieler = GegnerVonSpieler(AktiverSpieler);
-            Piece angegriffenerKoenig = gegnerischerSpieler.GetFigurenVomTyp<Koenig>().FirstOrDefault();
-            gegnerischerSpieler.EntferneAngriffsMoeglichkeitenAufFigur<Koenig>(AktiverSpieler, angegriffenerKoenig);
+            Player gegnerischerPlayer = GegnerVonSpieler(_aktiverPlayer);
+            Piece angegriffenerKoenig = gegnerischerPlayer.GetPiecesOfType<Koenig>().FirstOrDefault();
+            gegnerischerPlayer.EntferneAngriffsMoeglichkeitenAufFigur<Koenig>(_aktiverPlayer, angegriffenerKoenig);
 
             int moeglicheKoenigszuege = angegriffenerKoenig.PossibleMoves.Count;
             if (moeglicheKoenigszuege == 0)
             {
-                bool koenigDeckbar = gegnerischerSpieler.KannFigurVorAngriffRetten<Koenig>(AktiverSpieler);
+                bool koenigDeckbar = gegnerischerPlayer.KannFigurVorAngriffRetten<Koenig>(_aktiverPlayer);
                 if (!koenigDeckbar)
                     return true;
             }
@@ -179,19 +182,19 @@ public class SchachManager : MonoBehaviour
 
     private void BeendeSpiel()
     {
-        this.SchachUIManager.OnGameFinished(AktiverSpieler.Farbe.ToString());
-        if (AktiverSpieler.Farbe == Team.Player)
+        this.SchachUIManager.OnGameFinished(_aktiverPlayer.team.ToString());
+        if (_aktiverPlayer.team == Team.Player)
         {
             teamanzeigeText1.text = "Team Weiss      gewinnt";
             teamanzeigeText2.text = "Team Weiss      gewinnt";
-            SchwarzerSpieler.AktiveFiguren.ForEach(
+            _schwarzerPlayer.remainingPiecesOfPlayer.ForEach(
                 (p => playground.SterbenUndLoeschen(p)));
         }
         else
         {
             teamanzeigeText1.text = "Team Schwarz    gewinnt";
             teamanzeigeText2.text = "Team Schwarz    gewinnt";
-            WeisserSpieler.AktiveFiguren.ForEach(
+            _weisserPlayer.remainingPiecesOfPlayer.ForEach(
                 (p => playground.SterbenUndLoeschen(p)));
         }
 
@@ -204,12 +207,12 @@ public class SchachManager : MonoBehaviour
 
     private void ZerstoereFiguren()
     {
-        WeisserSpieler.AktiveFiguren.ForEach(
+        _weisserPlayer.remainingPiecesOfPlayer.ForEach(
             p => {
                 if(p!=null && p.gameObject !=null) Destroy(p.gameObject);
             }
         );
-        SchwarzerSpieler.AktiveFiguren.ForEach(p => {
+        _schwarzerPlayer.remainingPiecesOfPlayer.ForEach(p => {
             if (p != null && p.gameObject != null) Destroy(p.gameObject);
         }
         );
@@ -218,8 +221,8 @@ public class SchachManager : MonoBehaviour
     private void WechlseAktivesTeam()
     {
         
-        if (AktiverSpieler == WeisserSpieler) { 
-            AktiverSpieler = SchwarzerSpieler; 
+        if (_aktiverPlayer == _weisserPlayer) { 
+            _aktiverPlayer = _schwarzerPlayer; 
             this.SchachUIManager.SetTeamanzeige(Team.Enemy); 
             foreach(var marker in teammarker)
             {
@@ -229,7 +232,7 @@ public class SchachManager : MonoBehaviour
             teamanzeigeText2.text = "Am Zug: Team Schwarz";
         }
         else {
-            AktiverSpieler = WeisserSpieler;   
+            _aktiverPlayer = _weisserPlayer;   
             this.SchachUIManager.SetTeamanzeige(Team.Player);
             foreach (var marker in teammarker)
             {
@@ -240,32 +243,32 @@ public class SchachManager : MonoBehaviour
         }
     }
 
-    private Spieler GegnerVonSpieler(Spieler spieler)
+    private Player GegnerVonSpieler(Player player)
     {
-        Spieler aktuellerGegner;
-        if (spieler == WeisserSpieler) { aktuellerGegner = SchwarzerSpieler; }
-        else { aktuellerGegner = WeisserSpieler; }
+        Player aktuellerGegner;
+        if (player == _weisserPlayer) { aktuellerGegner = _schwarzerPlayer; }
+        else { aktuellerGegner = _weisserPlayer; }
 
         return aktuellerGegner;
     }
 
     internal void OnFigurRemoved(Piece piece)
     {
-        Spieler figurBesitzer = (piece.Team == Team.Player) ? WeisserSpieler : SchwarzerSpieler;
-        figurBesitzer.RemoveFigur(piece);
+        Player figurBesitzer = (piece.Team == Team.Player) ? _weisserPlayer : _schwarzerPlayer;
+        figurBesitzer.RemovePiece(piece);
     }
 
     internal void EntferneAngriffsMoeglichkeitenAufFigur<T>(Piece piece) where T : Piece
     {
-        AktiverSpieler.EntferneAngriffsMoeglichkeitenAufFigur<T>(GegnerVonSpieler(AktiverSpieler), piece);
+        _aktiverPlayer.EntferneAngriffsMoeglichkeitenAufFigur<T>(GegnerVonSpieler(_aktiverPlayer), piece);
     }
 
     public void RestartGame()
     {
         ZerstoereFiguren();
         playground.OnSpielNeustart();
-        WeisserSpieler.OnSpielNeustart();
-        SchwarzerSpieler.OnSpielNeustart();
+        _weisserPlayer.OnRestartGame();
+        _schwarzerPlayer.OnRestartGame();
         StarteNeuesSpiel(false);
 
     }

@@ -1,4 +1,4 @@
-namespace Scripts.Enums
+namespace Scripts.Pieces.Enums
 {
     public enum PieceType
     {
