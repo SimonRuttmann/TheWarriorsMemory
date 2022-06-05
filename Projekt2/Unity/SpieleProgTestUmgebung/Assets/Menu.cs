@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Mainmenu : MonoBehaviour
+public class Menu : MonoBehaviour
 {
     private GameObject _mainmenu;
 
@@ -16,13 +16,30 @@ public class Mainmenu : MonoBehaviour
         //todo depending on the backend implementation this might need more code
     }
 
-    public void ContinueGame()
+    public void LoadGame()
     {
+        Debug.Log("Load Game");
         //todo load selected game state
     }
 
     public void CloseGame()
     {
+        Debug.Log("Close Game");
         Application.Quit();
+    }
+
+    public void BackToTitlescreen()
+    {
+        Debug.Log("Back to Titlescreen");
+    }
+
+    public void SaveGame()
+    {
+        Debug.Log("SaveGame");
+    }
+
+    public void ContinueGame()
+    {
+        Debug.Log("Continue Game");
     }
 }
