@@ -3,16 +3,34 @@ using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
+    private enum MenuState
+    {
+        Closed,
+        Main,
+        Ingame
+    }
+    private GameObject _menu;
     private GameObject _mainmenu;
-
+    private GameObject _ingamemenu;
+    
     public void Start()
     {
-        _mainmenu = GameObject.FindGameObjectWithTag("Menu");
+        _menu = GameObject.FindGameObjectWithTag("Menu");
+        
+        Transform main = _menu.transform.Find("MainMenu");
+        Transform ingame = _menu.transform.Find("IngameMenu");
+        
+        if(main == null || ingame == null) Debug.LogError("Submenus could not be fetched");
+
+        _mainmenu = main.gameObject;
+        _ingamemenu = ingame.gameObject;
+        
+        
     }
 
     public void NewGame()
     {
-        _mainmenu.SetActive(false);
+        ChangeToMenuType(MenuState.Closed);
         //todo depending on the backend implementation this might need more code
     }
 
@@ -31,6 +49,7 @@ public class Menu : MonoBehaviour
     public void BackToTitlescreen()
     {
         Debug.Log("Back to Titlescreen");
+        ChangeToMenuType(MenuState.Main);
     }
 
     public void SaveGame()
@@ -41,5 +60,31 @@ public class Menu : MonoBehaviour
     public void ContinueGame()
     {
         Debug.Log("Continue Game");
+        _menu.SetActive(false);
+    }
+
+    public void OpenIngameMenu()
+    {
+        ChangeToMenuType(MenuState.Ingame);
+    }
+
+    private void ChangeToMenuType(MenuState state)
+    {
+        switch (state)
+        {
+            case MenuState.Main:
+                _ingamemenu.SetActive(false);
+                _mainmenu.SetActive(true);
+                break;
+            case MenuState.Ingame:
+                _mainmenu.SetActive(false);
+                _ingamemenu.SetActive(true);
+                break;
+            case MenuState.Closed:
+                _menu.SetActive(false);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(state), state, null);
+        }
     }
 }
