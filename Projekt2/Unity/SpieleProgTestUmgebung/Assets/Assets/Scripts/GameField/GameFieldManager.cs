@@ -25,11 +25,12 @@ namespace Scripts.GameField
             GameFieldTerrainConfiguration gameConfigurationGameFieldTerrainConfiguration)
         {
             _hexField = new Hexagon[gameFieldPhysicalConfiguration.Size, gameFieldPhysicalConfiguration.Size];
+          
             _gameFieldPhysicalConfiguration = gameFieldPhysicalConfiguration;
             _gameFieldTerrainConfiguration = gameConfigurationGameFieldTerrainConfiguration;
-            
-            for (var i = 0; i < _hexField.Length; i++)
-                for (var j = 0; j < _hexField.Length; j++)
+            // TODO _hexField.Length = 64 WHYYYYYYYY
+            for (var i = 0; i < gameFieldPhysicalConfiguration.Size; i++)
+                for (var j = 0; j < gameFieldPhysicalConfiguration.Size; j++)
                 {
                     _hexField[i, j] = new Hexagon(i, j, IsInaccessibleTerrain(i,j));
                 }
@@ -99,6 +100,8 @@ namespace Scripts.GameField
 
         public Hexagon AddPiece(IPiece pieceToAdd, int x, int y)
         {
+            Debug.Log("x: " + x + " y: " + y);
+            Debug.Log(_hexField);
             _hexField[x, y].AddPiece(pieceToAdd);
             return _hexField[x, y];
         }

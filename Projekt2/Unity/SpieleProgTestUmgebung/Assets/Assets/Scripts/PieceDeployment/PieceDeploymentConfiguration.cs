@@ -28,8 +28,8 @@ namespace Scripts.PieceDeployment
         public Vector2Int GetPositionOfPiece(int index)
         {
             return new Vector2Int(
-                playground[index].logicalPosition.x - 1, 
-                playground[index].logicalPosition.y - 1);
+                playground[index].logicalPosition.x, 
+                playground[index].logicalPosition.y);
         }
         
         public PieceType GetTypeOfPiece(int index)

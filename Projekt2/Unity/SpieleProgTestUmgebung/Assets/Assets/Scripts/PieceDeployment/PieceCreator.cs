@@ -25,15 +25,19 @@ namespace Scripts.PieceDeployment
         /// <param name="pieceModels"></param>
         public void Initialize(GameObject[] pieceModels)
         {
+            Debug.Log("Initialize piceCrator: "+pieceModels.ToString());
             AddModelsToDictionary(pieceModels);
+            Debug.Log("Initialize piceCrator: "+pieceModels.ToString());
         }
     
         private void AddModelsToDictionary(GameObject[] pieceModels)
         {
             foreach (var model in pieceModels)
             {
+                Debug.Log("is in foreach: Model "+model);
+                Debug.Log("model.getComponent "+ model.GetComponent<Piece>());
                 var modelName = model.GetComponent<Piece>().ToString();
-            
+                Debug.Log("modelname: " + modelName);
                 //TODO This shouldn`t be required
                 modelName = modelName.Split(' ')[0];
 
