@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45071238, g: 0.49881107, b: 0.5649204, a: 1}
+  m_IndirectSpecularColor: {r: 0.45071203, g: 0.49881083, b: 0.5649196, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2653,16 +2653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0dc37dbd0c2bc41b29ee970f117f79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamanzeige: {fileID: 0}
-  teamtext: {fileID: 0}
-  neustartanzeige: {fileID: 0}
-  neustarttext: {fileID: 0}
-  fadenkreuz: {fileID: 0}
-  hauptmenue: {fileID: 0}
-  startButton: {fileID: 0}
-  startText: {fileID: 0}
-  beendenButton: {fileID: 0}
-  beendenText: {fileID: 0}
+  _menu: {fileID: 2796141948722979869}
 --- !u!114 &963057321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11083,7 +11074,7 @@ GameObject:
   - component: {fileID: 2796141948722979841}
   - component: {fileID: 2796141948722979869}
   m_Layer: 5
-  m_Name: Menu
+  m_Name: MenuObject
   m_TagString: Menu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11140,6 +11131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42bbd1efeac89d146936d0970444b30f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inGameManager: {fileID: 963057326}
 --- !u!114 &2796141948722979870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11332,7 +11324,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2796141949099987678
 RectTransform:
   m_ObjectHideFlags: 0

@@ -7,14 +7,7 @@ namespace Scripts.UI
 {
 	public class GameUiManager : MonoBehaviour
 	{
-
-		private IMenu _menu;
-
-		public void Awake()
-		{
-			_menu = GetComponent<Menu>();
-			if(_menu == null) Debug.LogError("Menu could not be fetched by GetComponent, check if exactly one menu is placed in scene");
-		}
+		[SerializeField] private Menu _menu;
 
 		//Wird beim Start ausgef�hrt
 		//Beim ersten Start
