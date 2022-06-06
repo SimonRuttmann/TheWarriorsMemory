@@ -51,12 +51,12 @@ public class CharacterDemoController : MonoBehaviour
 			// UI goal	
 			if(Input.GetMouseButton(0))//is the left mouse button being clicked?
 			{
-				ray = Camera.main.ScreenPointToRay (Input.mousePosition);//get a ray that goes from the camera -> "THROUGH" the mouse pointer - > and out into the scene
-				if(floorPlane.GetComponent<Collider>().Raycast(ray, out hit, 500.0f)) //check to see if that ray hits our "floor"												
-				{
-					movementTargetPosition = hit.point;//mark it where it hit
-					wasAttacking = false;//we're moving now, not attacking
-				}
+				//ray = Camera.main.ScreenPointToRay (Input.mousePosition);//get a ray that goes from the camera -> "THROUGH" the mouse pointer - > and out into the scene
+				//if(floorPlane.GetComponent<Collider>().Raycast(ray, out hit, 500.0f)) //check to see if that ray hits our "floor"												
+				//{
+				//	movementTargetPosition = hit.point;//mark it where it hit
+				//	wasAttacking = false;//we're moving now, not attacking
+				//}
 			}
 		}
 		

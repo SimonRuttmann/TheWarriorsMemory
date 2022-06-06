@@ -2505,7 +2505,7 @@ MonoBehaviour:
   playground: {fileID: 963057325}
   gameUIManager: {fileID: 963057320}
   gameFieldPhysicalConfiguration:
-    hexagonWidthHeight: 25.93
+    hexagonWidthHeight: 20.93
     size: 8
     startPoint: {fileID: 1198473199}
   markerConfiguration:
@@ -2516,14 +2516,14 @@ MonoBehaviour:
   markerCreator: {fileID: 963057322}
   animationScheduler: {fileID: 963057321}
   pieceModels:
-  - {fileID: 2846928085891100090, guid: e799efdb8ad98664085dec224ba14ba5, type: 3}
-  - {fileID: 944649661140211385, guid: 4290574725cd7c44a9e6863f221947df, type: 3}
-  - {fileID: 964808996077846381, guid: 96c0c7e4f40c1b646b77618d485f424c, type: 3}
-  - {fileID: 8546905191279204594, guid: f8e8dc3302fed924f81c1bdb5d47e725, type: 3}
-  - {fileID: 3260485902258687777, guid: 98f25185804a8fe4ca5bcebeec25b9df, type: 3}
-  - {fileID: 3807877122336005554, guid: 24c36d5f7725de94cb4b2e13bc8ae927, type: 3}
-  - {fileID: 8743688703183370791, guid: 5fbf5968f606dee4ea6cd456ff9587ab, type: 3}
-  - {fileID: 4278166885647912470, guid: 55848a5267236d544987c356eca971a7, type: 3}
+  - {fileID: 3238573947143872077, guid: 5adad78959b139f4699f2abe65d2f521, type: 3}
+  - {fileID: 3718378699645717453, guid: bee66284609a5c44cabca58978aba851, type: 3}
+  - {fileID: 6449874706557694526, guid: 068bb4c98fb16314d820ad3cf8163dcb, type: 3}
+  - {fileID: 4269399076033727074, guid: af4380fc65bfcaa4b9febedd9bcc2e75, type: 3}
+  - {fileID: 2168185063936746948, guid: 99b94c78751af1542af16bf2e84e0e79, type: 3}
+  - {fileID: 6322800544055346693, guid: 49d47e66b95b4fc41bba4d58b2cf5df2, type: 3}
+  - {fileID: 1146586977494897608, guid: d766c08a9ae1b2d458cdfc16475aefc6, type: 3}
+  - {fileID: 7757026919824914370, guid: e62c2ebcb3d0a3e418b71b9c0241be2b, type: 3}
 --- !u!4 &963057328
 Transform:
   m_ObjectHideFlags: 0
