@@ -100,8 +100,6 @@ namespace Scripts.GameField
 
         public Hexagon AddPiece(IPiece pieceToAdd, int x, int y)
         {
-            Debug.Log("x: " + x + " y: " + y);
-            Debug.Log(_hexField);
             _hexField[x, y].AddPiece(pieceToAdd);
             return _hexField[x, y];
         }

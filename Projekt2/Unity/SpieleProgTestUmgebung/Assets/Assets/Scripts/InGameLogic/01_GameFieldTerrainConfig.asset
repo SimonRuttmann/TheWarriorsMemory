@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inaccessibleTerrain:
   - {x: 1, y: 1}
-  - {x: 2, y: 7}
+  - {x: 6, y: 1}
   - {x: 4, y: 4}
   - {x: 4, y: 5}

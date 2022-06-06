@@ -25,9 +25,7 @@ namespace Scripts.PieceDeployment
         /// <param name="pieceModels"></param>
         public void Initialize(GameObject[] pieceModels)
         {
-            Debug.Log("Initialize piceCrator: "+pieceModels.ToString());
             AddModelsToDictionary(pieceModels);
-            Debug.Log("Initialize piceCrator: "+pieceModels.ToString());
         }
     
         private void AddModelsToDictionary(GameObject[] pieceModels)
@@ -54,7 +52,7 @@ namespace Scripts.PieceDeployment
         public GameObject CreatePiece(PieceType pieceType, Team team)
         {
             //TODO If prefabs differ between enemy and player we need the team variable here    
-        
+            
             var prefab = _pieceTypeModels[pieceType.ToString()];
             if (!prefab) return null;
         
