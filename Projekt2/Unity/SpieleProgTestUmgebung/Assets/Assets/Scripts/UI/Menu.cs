@@ -11,16 +11,15 @@ public class Menu : MonoBehaviour,IMenu
         Main,
         Ingame
     }
-    private GameObject _menu;
+     private GameObject _menu;
     private GameObject _mainmenu;
     private GameObject _ingamemenu;
 
-    private InGameManager _inGameManager;
-    private void Start()
+    [SerializeField] private InGameManager _inGameManager;
+    private void Awake()
     {
-        _inGameManager = GetComponent<InGameManager>();
-        if(_inGameManager == null) Debug.LogError("InGameManager not found");
-
+        _menu = GameObject.FindGameObjectWithTag("Menu");
+        
         var main = _menu.transform.Find("MainMenu");
         var ingame = _menu.transform.Find("IngameMenu");
         
@@ -28,8 +27,6 @@ public class Menu : MonoBehaviour,IMenu
 
         _mainmenu = main.gameObject;
         _ingamemenu = ingame.gameObject;
-        
-        
     }
 
     public void NewGame()
