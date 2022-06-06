@@ -17,8 +17,8 @@ public class Menu : MonoBehaviour
     {
         _menu = GameObject.FindGameObjectWithTag("Menu");
         
-        Transform main = _menu.transform.Find("MainMenu");
-        Transform ingame = _menu.transform.Find("IngameMenu");
+        var main = _menu.transform.Find("MainMenu");
+        var ingame = _menu.transform.Find("IngameMenu");
         
         if(main == null || ingame == null) Debug.LogError("Submenus could not be fetched");
 
@@ -42,24 +42,23 @@ public class Menu : MonoBehaviour
 
     public void CloseGame()
     {
-        Debug.Log("Close Game");
+        Debug.Log("Close Game, only applicable in a .exe");
         Application.Quit();
     }
 
     public void BackToTitlescreen()
     {
-        Debug.Log("Back to Titlescreen");
         ChangeToMenuType(MenuState.Main);
     }
 
     public void SaveGame()
     {
         Debug.Log("SaveGame");
+        //todo run funtion to save game, maybe open file browser
     }
 
     public void ContinueGame()
     {
-        Debug.Log("Continue Game");
         _menu.SetActive(false);
     }
 
