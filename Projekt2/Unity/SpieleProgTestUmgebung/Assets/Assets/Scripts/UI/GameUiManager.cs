@@ -1,3 +1,4 @@
+using System;
 using Scripts.Enums;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,60 +7,48 @@ namespace Scripts.UI
 {
 	public class GameUiManager : MonoBehaviour
 	{
-		[SerializeField] private GameObject teamanzeige;
-		[SerializeField] private Text teamtext;
-		[SerializeField] private GameObject neustartanzeige;
-		[SerializeField] private Text neustarttext;
-		[SerializeField] private GameObject fadenkreuz;
 
-		[SerializeField] private GameObject hauptmenue;
-		[SerializeField] private Button startButton;
-		[SerializeField] private Text startText;
-		[SerializeField] private Button beendenButton;
-		[SerializeField] private Text beendenText;
-	 
-		//Wird beim Start ausgeführt
+		private IMenu _menu;
+
+		public void Awake()
+		{
+			_menu = GetComponent<Menu>();
+			if(_menu == null) Debug.LogError("Menu could not be fetched by GetComponent, check if exactly one menu is placed in scene");
+		}
+
+		//Wird beim Start ausgefï¿½hrt
 		//Beim ersten Start
 		public void StartUi()
 		{
-			hauptmenue.SetActive(true);
-		
-			teamanzeige.SetActive(false);
-			neustartanzeige.SetActive(false);
-			fadenkreuz.SetActive(false);
+			_menu.OpenMainMenu();
 		}
 
-		//Spiel starten/Fortsetzen button wird gedrückt
+		//Spiel starten/Fortsetzen button wird gedrï¿½ckt
 		//Alle weiteren spielstarts wird diese methode aufgerufen
 		public void SpielStarten()
 		{
+			/*
 			startText.text = "Fortsetzen";
 			hauptmenue.SetActive(false);
 		
 			teamanzeige.SetActive(true);
 			fadenkreuz.SetActive(true);
 			neustartanzeige.SetActive(false);
+			*/
 		}
 
-		//Wird bei nach einem Schachzug gesetzt
+		//Wird bei nach einem Spielzug gesetzt
 		public void SetTeamDisplay(Team farbe)
 		{
-			if (farbe == Team.Player) teamtext.text = "Team Weiß ist an der Reihe";
-			else teamtext.text = "Team Schwarz ist an der Reihe";
+			//todo 
+			//if (farbe == Team.Player) teamtext.text = "Team Weiï¿½ ist an der Reihe";
+			//else teamtext.text = "Team Schwarz ist an der Reihe";
 		}
 
-		//Wird nach einem Schachmat angezeigt
+		//Wird nach dem Sieg eines Spielers angezeigt
 		public void OnGameFinished(string winner)
 		{
-			fadenkreuz.SetActive(true);
-			teamanzeige.SetActive(false);
-			neustartanzeige.SetActive(true);
-			neustarttext.text = "Spieler " + winner + "hat gewonnen!\n Drücke X um das Spiel neu zu starten.";
-		}
-
-		public void beendeSpiel()
-		{
-			Application.Quit();
+			//todo 
 		}
 	}
 }

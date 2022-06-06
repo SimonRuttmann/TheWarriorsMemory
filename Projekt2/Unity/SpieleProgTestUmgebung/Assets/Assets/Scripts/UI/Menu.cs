@@ -1,7 +1,9 @@
 using System;
+using Scripts.InGameLogic;
+using Scripts.UI;
 using UnityEngine;
 
-public class Menu : MonoBehaviour
+public class Menu : MonoBehaviour,IMenu
 {
     private enum MenuState
     {
@@ -12,11 +14,13 @@ public class Menu : MonoBehaviour
     private GameObject _menu;
     private GameObject _mainmenu;
     private GameObject _ingamemenu;
-    
-    public void Start()
+
+    private InGameManager _inGameManager;
+    private void Start()
     {
-        _menu = GameObject.FindGameObjectWithTag("Menu");
-        
+        _inGameManager = GetComponent<InGameManager>();
+        if(_inGameManager == null) Debug.LogError("InGameManager not found");
+
         var main = _menu.transform.Find("MainMenu");
         var ingame = _menu.transform.Find("IngameMenu");
         
@@ -30,8 +34,11 @@ public class Menu : MonoBehaviour
 
     public void NewGame()
     {
+        if (_inGameManager.GameState.Equals(GameState.InGame))
+        {
+            _inGameManager.RestartGame();    
+        }
         ChangeToMenuType(MenuState.Closed);
-        //todo depending on the backend implementation this might need more code
     }
 
     public void LoadGame()
@@ -40,13 +47,19 @@ public class Menu : MonoBehaviour
         //todo load selected game state
     }
 
+    public void RestartGame()
+    {
+        _inGameManager.RestartGame();
+        ChangeToMenuType(MenuState.Closed);
+    }
+
     public void CloseGame()
     {
         Debug.Log("Close Game, only applicable in a .exe");
         Application.Quit();
     }
 
-    public void BackToTitlescreen()
+    public void BackToTitleScreen()
     {
         ChangeToMenuType(MenuState.Main);
     }
@@ -65,6 +78,11 @@ public class Menu : MonoBehaviour
     public void OpenIngameMenu()
     {
         ChangeToMenuType(MenuState.Ingame);
+    }
+
+    public void OpenMainMenu()
+    {
+        ChangeToMenuType(MenuState.Main);
     }
 
     private void ChangeToMenuType(MenuState state)

@@ -13,10 +13,6 @@ namespace Scripts.InGameLogic
 {
     public class InGameManager : MonoBehaviour
     {
-        private enum GameState
-        {
-            Start, InGame, Finished
-        }
 
         /// <summary>
         /// The GameConfiguration to configure the game
@@ -36,6 +32,8 @@ namespace Scripts.InGameLogic
         
         //TODO This might be used by the ui
         private GameState _gameState;
+
+        public GameState GameState => _gameState;
 
         private SortedDictionary<int, IPiece> _turnOrderActivePlayer = new SortedDictionary<int, IPiece>();
         private int _turnCounter;
@@ -245,8 +243,7 @@ namespace Scripts.InGameLogic
             var pieceOwner = (piece.Team == Team.Player) ? _personPlayer : _enemyPlayer;
             pieceOwner.RemovePiece(piece);
         }
-        
-        
+
     }
 }
 
