@@ -79,6 +79,7 @@ public class Menu : MonoBehaviour,IMenu
 
     public void OpenMainMenu()
     {
+        _menu.SetActive(true);
         ChangeToMenuType(MenuState.Main);
     }
 
