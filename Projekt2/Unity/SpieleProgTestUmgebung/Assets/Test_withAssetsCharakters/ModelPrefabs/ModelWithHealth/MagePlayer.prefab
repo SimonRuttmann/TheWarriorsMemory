@@ -1620,7 +1620,7 @@ GameObject:
   - component: {fileID: 2368042229207246152}
   - component: {fileID: 6430971554712751090}
   m_Layer: 0
-  m_Name: MagePlayerModel
+  m_Name: ActingModel
   m_TagString: ActingModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1745,7 +1745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85e329e21604a0c4eab8c113861284d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBarObject: {fileID: 0}
+  _healthBarObject: {fileID: 2052320185211598935}
   moveSound: {fileID: 8428520466449113618}
   attackSound: {fileID: 6296085497923425347}
   dyingSound: {fileID: 5696895366300501095}

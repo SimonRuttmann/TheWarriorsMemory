@@ -1702,7 +1702,7 @@ GameObject:
   - component: {fileID: 8989305729487191897}
   - component: {fileID: 8901988305606564498}
   m_Layer: 0
-  m_Name: PaladinPlayerModel
+  m_Name: ActingModel
   m_TagString: ActingModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1832,7 +1832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6735e98384204443a7b5ba502f420cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBarObject: {fileID: 0}
+  _healthBarObject: {fileID: 3603157934073590406}
   moveSound: {fileID: 5979313294900944524}
   attackSound: {fileID: 784291270556834246}
   dyingSound: {fileID: 5893723634737623520}

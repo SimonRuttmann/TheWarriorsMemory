@@ -3901,6 +3901,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 417823783724599394}
+  - component: {fileID: -1233870032179937843}
   m_Layer: 0
   m_Name: ArcherEnemy
   m_TagString: Untagged
@@ -3924,6 +3925,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-1233870032179937843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5100517291517221226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a741d2ced484e0d439c111db04529c61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthBarObject: {fileID: 0}
+  moveSound: {fileID: 0}
+  attackSound: {fileID: 0}
+  dyingSound: {fileID: 0}
+  selectionSound: {fileID: 0}
+  painSound: {fileID: 0}
+  animator: {fileID: 0}
+  playground: {fileID: 0}
 --- !u!1 &5149251624184806927
 GameObject:
   m_ObjectHideFlags: 0
@@ -5929,7 +5950,7 @@ GameObject:
   - component: {fileID: 678011247794955212}
   - component: {fileID: 901260523151948512}
   m_Layer: 0
-  m_Name: ArcherEnemyModel
+  m_Name: ActingModel
   m_TagString: ActingModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6063,7 +6084,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a741d2ced484e0d439c111db04529c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBarObject: {fileID: 0}
+  _healthBarObject: {fileID: 6900340200045863363}
   moveSound: {fileID: 678011247794955212}
   attackSound: {fileID: 4525602077936030212}
   dyingSound: {fileID: 1473883547387780223}

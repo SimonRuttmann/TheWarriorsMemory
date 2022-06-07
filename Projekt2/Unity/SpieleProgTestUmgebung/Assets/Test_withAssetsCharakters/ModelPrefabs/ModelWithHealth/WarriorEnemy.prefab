@@ -5435,7 +5435,7 @@ GameObject:
   - component: {fileID: 731867989499188793}
   - component: {fileID: 6568606428520461064}
   m_Layer: 0
-  m_Name: WarriorEnemyModel
+  m_Name: ActingModel
   m_TagString: ActingModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5567,7 +5567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6985a2b17f9604f4891a8a31bf76522d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBarObject: {fileID: 0}
+  _healthBarObject: {fileID: 5030272528687746632}
   moveSound: {fileID: 4128220770652423030}
   attackSound: {fileID: 3811369212062486492}
   dyingSound: {fileID: 3634179594354769182}
