@@ -743,13 +743,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6985a2b17f9604f4891a8a31bf76522d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBarObject: {fileID: 0}
   moveSound: {fileID: 2610674149472171919}
   attackSound: {fileID: -1642043715941752338}
   dyingSound: {fileID: -2586492824304809597}
   selectionSound: {fileID: -7819259872847026060}
   painSound: {fileID: -7402520207732471442}
-  animator: {fileID: 0}
   playground: {fileID: 0}
 --- !u!82 &-7819259872847026060
 AudioSource:
@@ -5920,6 +5918,7 @@ GameObject:
   - component: {fileID: 5700573912117822338}
   - component: {fileID: 4491682958169907235}
   - component: {fileID: 29437390570739888}
+  - component: {fileID: 1537913368789170390}
   m_Layer: 0
   m_Name: WarriorPlayerModel
   m_TagString: ActingModel
@@ -6024,6 +6023,25 @@ MonoBehaviour:
   - models:
     - {fileID: 3789071518937375433}
     - {fileID: 1301892200980675912}
+--- !u!114 &1537913368789170390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312895777774126095}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d746bac09956f443bee4dcc265a97ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floorPlane: {fileID: 0}
+  WeaponState: 2
+  wasAttacking: 0
+  movementTargetPosition: {x: 0, y: 0, z: 0}
+  attackPos: {x: 0, y: 0, z: 0}
+  lookAtPos: {x: 0, y: 0, z: 0}
+  rightButtonDown: 0
 --- !u!1 &8327549425688934823
 GameObject:
   m_ObjectHideFlags: 0

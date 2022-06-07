@@ -32,7 +32,8 @@ namespace Scripts.PieceDeployment
         {
             foreach (var model in pieceModels)
             {
-                var modelName = model.GetComponent<Piece>().ToString();
+                Debug.Log(model.ToString());
+                var modelName = model.ToString();
                 //Split the first part, to receive its actual name
                 //E.g. ArcherEnemy (Scripts.Pieces.Archer) -> ArcherEnemy
                 modelName = modelName.Split(' ')[0];

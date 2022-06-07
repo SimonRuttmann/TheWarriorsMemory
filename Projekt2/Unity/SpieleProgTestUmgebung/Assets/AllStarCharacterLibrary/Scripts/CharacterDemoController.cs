@@ -109,7 +109,7 @@ public class CharacterDemoController : MonoBehaviour
 				break;
 		}
 		
-		animator.SetInteger("WeaponState", WeaponState);// probably would be better to check for change rather than bashing the value in like this
+		//animator.SetInteger("WeaponState", WeaponState);// probably would be better to check for change rather than bashing the value in like this
 		
 		if ( ! Input.GetKey(KeyCode.LeftAlt)) // if we're changing camera transforms, do not use "USE"
 		{
@@ -163,14 +163,14 @@ public class CharacterDemoController : MonoBehaviour
 		// now we slerp orientation
 		transform.rotation = Quaternion.Slerp(tempRot, hitRot, Time.deltaTime * rotateSpeed);
 		
-		if(Vector3.Distance(movementTargetPosition,transform.position)>0.5f)
+		/*if(Vector3.Distance(movementTargetPosition,transform.position)>0.5f)
 		{
 			animator.SetBool("Idling", false);
 		}
 		else
 		{
 			animator.SetBool("Idling", true);
-		}
+		}*/
 		//un comment next line if you are using physics and have a CharacterController on the prefab
 		//GetComponent<CharacterController>().Move(Vector3.down * gravity * Time.deltaTime);
 	}

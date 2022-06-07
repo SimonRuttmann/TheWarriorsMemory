@@ -316,13 +316,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6985a2b17f9604f4891a8a31bf76522d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBarObject: {fileID: 0}
   moveSound: {fileID: 2815679234397498521}
   attackSound: {fileID: -7545849599323433482}
   dyingSound: {fileID: 4028670235186751196}
   selectionSound: {fileID: -3731209487793241301}
   painSound: {fileID: 1630450952258188386}
-  animator: {fileID: 0}
   playground: {fileID: 0}
 --- !u!82 &-3731209487793241301
 AudioSource:
@@ -5933,6 +5931,8 @@ GameObject:
   - component: {fileID: 239759118874667618}
   - component: {fileID: 1282242857844073733}
   - component: {fileID: 4428896446417987772}
+  - component: {fileID: 6177990656451213412}
+  - component: {fileID: 5789941888726480342}
   m_Layer: 0
   m_Name: WarriorEnemyModel
   m_TagString: ActingModel
@@ -6035,6 +6035,44 @@ MonoBehaviour:
   - models:
     - {fileID: 5828601615956229533}
     - {fileID: 4850550319291806828}
+--- !u!114 &6177990656451213412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8863737158835691151}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d746bac09956f443bee4dcc265a97ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floorPlane: {fileID: 0}
+  WeaponState: 2
+  wasAttacking: 0
+  movementTargetPosition: {x: 0, y: 0, z: 0}
+  attackPos: {x: 0, y: 0, z: 0}
+  lookAtPos: {x: 0, y: 0, z: 0}
+  rightButtonDown: 0
+--- !u!114 &5789941888726480342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8863737158835691151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d746bac09956f443bee4dcc265a97ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floorPlane: {fileID: 0}
+  WeaponState: 2
+  wasAttacking: 0
+  movementTargetPosition: {x: 0, y: 0, z: 0}
+  attackPos: {x: 0, y: 0, z: 0}
+  lookAtPos: {x: 0, y: 0, z: 0}
+  rightButtonDown: 0
 --- !u!1 &8873920696929626435
 GameObject:
   m_ObjectHideFlags: 0

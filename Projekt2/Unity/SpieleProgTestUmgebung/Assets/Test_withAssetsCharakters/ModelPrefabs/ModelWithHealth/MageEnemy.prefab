@@ -1871,6 +1871,7 @@ GameObject:
   - component: {fileID: 2439023773833600849}
   - component: {fileID: 1984849388643381243}
   - component: {fileID: 1426530784752396549}
+  - component: {fileID: 1722553975706509619}
   m_Layer: 0
   m_Name: MageEnemyModel
   m_TagString: ActingModel
@@ -1972,6 +1973,25 @@ MonoBehaviour:
   - models:
     - {fileID: 4589209681240952523}
     - {fileID: 6166404856241512303}
+--- !u!114 &1722553975706509619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3238697472229660135}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d746bac09956f443bee4dcc265a97ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floorPlane: {fileID: 0}
+  WeaponState: 7
+  wasAttacking: 0
+  movementTargetPosition: {x: 0, y: 0, z: 0}
+  attackPos: {x: 0, y: 0, z: 0}
+  lookAtPos: {x: 0, y: 0, z: 0}
+  rightButtonDown: 0
 --- !u!1 &3312958415551201175
 GameObject:
   m_ObjectHideFlags: 0
@@ -4591,13 +4611,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85e329e21604a0c4eab8c113861284d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBarObject: {fileID: 0}
   moveSound: {fileID: 6978332270679919797}
   attackSound: {fileID: 4554442912527798156}
   dyingSound: {fileID: -4497210731183855466}
   selectionSound: {fileID: -8969579514065760234}
   painSound: {fileID: -3407414829425204735}
-  animator: {fileID: 0}
   playground: {fileID: 0}
 --- !u!82 &-8969579514065760234
 AudioSource:

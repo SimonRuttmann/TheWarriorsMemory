@@ -2258,14 +2258,14 @@ MonoBehaviour:
   markerCreator: {fileID: 963057322}
   animationScheduler: {fileID: 963057321}
   pieceModels:
-  - {fileID: 7800219390839195965, guid: 5adad78959b139f4699f2abe65d2f521, type: 3}
-  - {fileID: 6098029041820450645, guid: bee66284609a5c44cabca58978aba851, type: 3}
-  - {fileID: 658374326031085514, guid: 068bb4c98fb16314d820ad3cf8163dcb, type: 3}
-  - {fileID: 8100300706521241513, guid: af4380fc65bfcaa4b9febedd9bcc2e75, type: 3}
-  - {fileID: 3383664917757016530, guid: 99b94c78751af1542af16bf2e84e0e79, type: 3}
-  - {fileID: 2765539813017393069, guid: 49d47e66b95b4fc41bba4d58b2cf5df2, type: 3}
-  - {fileID: 4978400681613610876, guid: d766c08a9ae1b2d458cdfc16475aefc6, type: 3}
-  - {fileID: 2586131083278188971, guid: e62c2ebcb3d0a3e418b71b9c0241be2b, type: 3}
+  - {fileID: 5100517291517221226, guid: 03b783077294d5f4c8d53105f7ef7066, type: 3}
+  - {fileID: 1713767084843867087, guid: beaedc7778b1f684d8041ac8fad8be11, type: 3}
+  - {fileID: 6511128524854605639, guid: a4b8308a2c3d078419d511659ac24eb9, type: 3}
+  - {fileID: 47775401769203975, guid: 6a66c56f5b38f784f9a4561249219d25, type: 3}
+  - {fileID: 9007005353390960259, guid: 0fc0878d4f5917a4ab3a9a64d9687022, type: 3}
+  - {fileID: 1771006450747938434, guid: 2490131f06780aa46a30cc72b8ce941d, type: 3}
+  - {fileID: 352390417665018855, guid: e281d728b3238fe4d8c82c3c667930c6, type: 3}
+  - {fileID: 1443431226091395567, guid: c771d791be4590b479d1d2f9936d30e5, type: 3}
 --- !u!4 &963057328
 Transform:
   m_ObjectHideFlags: 0
@@ -2317,7 +2317,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 300, y: 1, z: 300}
+  m_Size: {x: 400, y: 2, z: 400}
   m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &996991201
 GameObject:
