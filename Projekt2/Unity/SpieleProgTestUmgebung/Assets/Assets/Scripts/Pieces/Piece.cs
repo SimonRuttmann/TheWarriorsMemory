@@ -16,6 +16,7 @@ namespace Scripts.Pieces
 
 		#region Stats
 
+		private HealthBar _healthBar;
 		public int Health
 		{
 			get => _health;
@@ -31,7 +32,7 @@ namespace Scripts.Pieces
 
 		private void UpdateHealthBar(int value)
 		{
-			//TODO MICHAEL UPDATE THE HEALTH BAR
+			_healthBar.SetHealth(value);
 			return;
 		}
 
@@ -143,6 +144,7 @@ namespace Scripts.Pieces
 		{
 			animator = GetComponent<Animator>();
 			_mover = GetComponent<IMover>();
+			_healthBar = GetComponent<HealthBar>();
 			moveSound.volume = 0.10f;
 		}
 	
@@ -159,6 +161,7 @@ namespace Scripts.Pieces
 			if (Team == Team.Player) transform.Rotate(0, 180, 0);
 
 			AddDefaultStats();
+			_healthBar.SetMaxHealth(Health);
 		}		
 
 		#endregion
