@@ -6,7 +6,6 @@ namespace Scripts.Pieces.Interfaces
     
 		public int Health { get; set; }
 
-
 		public int AttackDamage { get; set; }
 
 	

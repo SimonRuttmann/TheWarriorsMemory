@@ -16,7 +16,26 @@ namespace Scripts.Pieces
 
 		#region Stats
 
-		public int Health { get; set; }
+		public int Health
+		{
+			get => _health;
+			set
+			{
+				if (value < 0) value = 0;
+				
+				UpdateHealthBar(value);
+				
+				_health = value;
+			}
+		}
+
+		private void UpdateHealthBar(int value)
+		{
+			//TODO MICHAEL UPDATE THE HEALTH BAR
+			throw new System.NotImplementedException();
+		}
+
+		private int _health;
 		public int AttackDamage { get; set; }
 		public int MoveRange { get; set; }
 		public int AttackRange { get; set; }
@@ -137,13 +156,14 @@ namespace Scripts.Pieces
 			//Place piece on the correct position in the playground
 			transform.position = _gameFieldManager.ResolveAbsolutePositionOfHexagon(position);
 
-			if (Team == Team.Player) transform.Rotate(0, 180, 0); 
-		
+			if (Team == Team.Player) transform.Rotate(0, 180, 0);
+
+			AddDefaultStats();
 		}		
 
 		#endregion
-
-
+		
+		
 		#region Update
 
 		public void Update()
@@ -175,8 +195,10 @@ namespace Scripts.Pieces
 		private readonly ISet<Hexagon> _possibleMoves = new HashSet<Hexagon>();
 		
 		private readonly ISet<Hexagon> _possibleAttacks = new HashSet<Hexagon>();
-		
+
 		//Logical implementation 
+		
+		protected abstract void AddDefaultStats();
 		
 		public ISet<Hexagon> GenerateAllPossibleMovements()
 		{

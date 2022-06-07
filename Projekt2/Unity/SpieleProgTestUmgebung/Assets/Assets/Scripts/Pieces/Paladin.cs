@@ -1,16 +1,17 @@
-﻿using Scripts.Enums;
-using Scripts.GameField;
-using Scripts.InGameLogic;
-
+﻿
 namespace Scripts.Pieces
 {
     public class Paladin : Piece
     {
 
-        public override void InitializePiece(Hexagon position, Team team, Playground ground, IGameFieldManager gameFieldManager)
+        protected override void AddDefaultStats()
         {
-            base.InitializePiece(position, team, ground, gameFieldManager);
-            AttackRange = 2;
+            Health = 150;
+            
+            AttackDamage = 10;
+            
+            AttackRange = 1;
+            MoveRange = 1;
         }
     }
 }

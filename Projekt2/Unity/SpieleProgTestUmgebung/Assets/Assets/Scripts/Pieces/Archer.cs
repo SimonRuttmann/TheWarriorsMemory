@@ -1,15 +1,18 @@
-﻿using Scripts.Enums;
-using Scripts.GameField;
-using Scripts.InGameLogic;
-
+﻿
 namespace Scripts.Pieces
 {
     public class Archer : Piece
     {
-        public override void InitializePiece(Hexagon position, Team team, Playground ground, IGameFieldManager gameFieldManager)
+        
+        protected override void AddDefaultStats()
         {
-            base.InitializePiece(position, team, ground, gameFieldManager);
-            AttackRange = 10;
+            Health = 50;
+            
+            AttackDamage = 10;
+            
+            AttackRange = 4;
+            MoveRange = 3;
         }
+        
     }
 }
