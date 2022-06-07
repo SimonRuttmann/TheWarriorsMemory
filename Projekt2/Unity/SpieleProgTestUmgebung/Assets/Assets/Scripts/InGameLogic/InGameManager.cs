@@ -89,6 +89,7 @@ namespace Scripts.InGameLogic
             else _gameUIManager.SpielStarten();
             _gameUIManager.SetTeamDisplay(Team.Player);
 
+            PrepareTurn();
             GetNextTurn();
             _gameState = GameState.InGame;
         }
@@ -124,7 +125,7 @@ namespace Scripts.InGameLogic
                 var pieceType = deploymentConfiguration.GetTypeOfPiece(i);
 
                 //Create and initialize piece
-                var createdPiece = _pieceCreator.CreatePiece(pieceType, team).GetComponent<Piece>();
+                var createdPiece = _pieceCreator.CreatePiece(pieceType).GetComponent<Piece>();
                 _playground.AddPieceToPlayground(createdPiece, logicalPosition.x, logicalPosition.y, team);
                 
                 //Add piece to player
@@ -165,36 +166,49 @@ namespace Scripts.InGameLogic
 
         private void PrepareTurn()
         {
+            
             _turnOrderActivePlayer.Clear();
             
             _turnCounter = _activePlayer.RemainingPiecesOfPlayer.Count;
-            for (var i = 0; i < _turnCounter; i++) 
+            for (var i = 0; i < _turnCounter; i++)
                 _turnOrderActivePlayer.Add(i, _activePlayer.RemainingPiecesOfPlayer[i]);
+            
         }
-        
+
         private void GetNextTurn()
         {
-            if (_turnCounter == 0)
+            while (true)
             {
-                ChangeActiveTeam();
-                PrepareTurn();
-            }
+                if (_turnCounter == 0)
+                {
+                    ChangeActiveTeam();
+                    PrepareTurn();
+                    return;
+                }
 
-            ActivePiece = _turnOrderActivePlayer[_turnCounter];
-            _turnCounter--;
+                _turnCounter--;
+                ActivePiece = _turnOrderActivePlayer[_turnCounter];
 
-            if (_activePlayer.Team == Team.Player)
-            {
-                _playground.SelectPiece(ActivePiece);
+
+                if (_activePlayer.Team == Team.Player)
+                {
+                    var areMovesAvailable = _playground.SelectPiece(ActivePiece);
+                    
+                    //Player can execute his turn
+                    if (areMovesAvailable) return; 
+
+                    //Players selected piece cant move 
+                    continue;
+                }
+
+                var destination = _ai.GetAiMove(gameConfiguration.gameFieldManager, _personPlayer.RemainingPiecesOfPlayer, ActivePiece);
+                _playground.OnSelectedPieceMove(destination, ActivePiece);
+
+                //TODO wait for some seconds
                 return;
             }
-
-            var destination = _ai.GetAiMove(gameConfiguration.gameFieldManager, _personPlayer.RemainingPiecesOfPlayer, ActivePiece);
-            _playground.OnSelectedPieceMove(destination, ActivePiece);
-            
-            //TODO wait for some seconds
         }
-        
+
         private void EndGame()
         {
             _gameUIManager.OnGameFinished(_activePlayer.Team.ToString());

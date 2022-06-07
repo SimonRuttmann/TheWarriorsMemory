@@ -221,19 +221,13 @@ namespace Scripts.Pieces
 			
 			for (var i = 0; i < range; i++)
 			{
-				//TODO Check if this foreach is mutated by the inner conditions
-				//TODO If so, use imperative loop
-				foreach (var hexagon in hexagons)
+				ISet<Hexagon> hexagonsToCalculate = new HashSet<Hexagon>();
+				hexagonsToCalculate.AddAll(hexagons);
+				
+				foreach (var hexagon in hexagonsToCalculate)
 				{
-					if (isMovement)
-					{
-						AddOnMovement(hexagons, hexagon);
-					}
-					else
-					{
-						AddOnAttack(hexagons, hexagon);
-					}
-
+					if (isMovement) AddOnMovement(hexagons, hexagon);
+					else AddOnAttack(hexagons, hexagon);
 				}
 			}
 			

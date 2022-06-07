@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using Scripts.Enums;
+using Scripts.Extensions;
 using Scripts.GameField;
 using Scripts.Marker;
 using Scripts.Pieces;
@@ -184,7 +185,7 @@ namespace Scripts.InGameLogic
         }
 
         //Was private in chess mode
-        public void SelectPiece(IPiece piece)
+        public bool SelectPiece(IPiece piece)
         {
             _previousSelectedPiece = piece;
             
@@ -193,8 +194,11 @@ namespace Scripts.InGameLogic
 
             var moveMovements = _previousSelectedPiece.GeneratePossibleMoveMovements();
             var movePositions = moveMovements.Select(move => _gameFieldManager.ResolveAbsolutePositionOfHexagon(move));
+
+            if (attackMovements.IsEmpty() && moveMovements.IsEmpty()) return false;
             
             _markerCreator.CreateAndShowMarkers(movePositions, attackPositions);
+            return true;
         }
         
         private void DeselectPiece()

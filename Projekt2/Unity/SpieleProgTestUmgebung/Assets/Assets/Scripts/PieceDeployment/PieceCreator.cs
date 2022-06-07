@@ -32,13 +32,8 @@ namespace Scripts.PieceDeployment
         {
             foreach (var model in pieceModels)
             {
-                Debug.Log("is in foreach: Model "+model);
-                Debug.Log("model.getComponent "+ model.GetComponent<Piece>());
                 var modelName = model.GetComponent<Piece>().ToString();
-                Debug.Log("modelname: " + modelName);
-                //TODO This shouldn`t be required
-                modelName = modelName.Split(' ')[0];
-
+                
                 _pieceTypeModels.Add(modelName, model);
             }
         
@@ -49,10 +44,9 @@ namespace Scripts.PieceDeployment
         /// </summary>
         /// <param name="pieceType"></param>
         /// <returns></returns>
-        public GameObject CreatePiece(PieceType pieceType, Team team)
+        public GameObject CreatePiece(PieceType pieceType)
         {
-            //TODO If prefabs differ between enemy and player we need the team variable here    
-            
+
             var prefab = _pieceTypeModels[pieceType.ToString()];
             if (!prefab) return null;
         
