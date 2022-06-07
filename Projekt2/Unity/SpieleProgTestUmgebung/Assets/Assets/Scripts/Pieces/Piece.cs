@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Scripts.Enums;
@@ -6,6 +8,7 @@ using Scripts.GameField;
 using Scripts.InGameLogic;
 using Scripts.PieceMovement;
 using Scripts.Pieces.Interfaces;
+using Scripts.Toolbox;
 using UnityEngine;
 
 namespace Scripts.Pieces
@@ -13,29 +16,21 @@ namespace Scripts.Pieces
 	public abstract class Piece : MonoBehaviour, IPiece
 	{
 
-
+		private const string HealthBarTag = "HealthBar";
+		private const string ActingModelTag = "ActingModel";
+		private HealthBar _healthBar;
+		
 		#region Stats
 
-		[SerializeField] private GameObject _healthBarObject;
-
-		private HealthBar _healthBar;
 		public int Health
 		{
 			get => _health;
 			set
 			{
 				if (value < 0) value = 0;
-				
-				UpdateHealthBar(value);
-				
+				_healthBar.SetHealth(value);
 				_health = value;
 			}
-		}
-
-		private void UpdateHealthBar(int value)
-		{
-			_healthBar.SetHealth(value);
-			return;
 		}
 
 		private int _health;
@@ -75,42 +70,58 @@ namespace Scripts.Pieces
 
 		//Animator, will be used to set triggers to start the animation
 		
-		public Animator animator;
+		[NonSerialized]
+		private Animator _animator;
+		
 		private static readonly int SelectionTrigger = Animator.StringToHash("SelectionTrigger");
 		private static readonly int DyingTrigger = Animator.StringToHash("DyingTrigger");
 		private static readonly int AttackTrigger = Animator.StringToHash("AttackTrigger");
 		private static readonly int MoveTrigger = Animator.StringToHash("MoveTrigger");
 		private static readonly int PainTrigger = Animator.StringToHash("PainTrigger");
-
+		private static readonly int IdleTrigger = Animator.StringToHash("IdleTrigger");
+		
 		//Animation implementation
 
 		public void SelectionAnimation()
 		{
-			animator.SetTrigger(SelectionTrigger);
+			_animator.SetTrigger(SelectionTrigger);
 			selectionSound.Play();    
 		}
 
 		public void DyingAnimation()
 		{
-			animator.SetTrigger(DyingTrigger);
+			_animator.SetTrigger(DyingTrigger);
 			dyingSound.Play();
 		}
 
 		public void AttackAnimation()
 		{
-			animator.SetTrigger(AttackTrigger);
+			_animator.SetTrigger(AttackTrigger);
 			attackSound.Play();
 		}
 
-		public void MoveAnimation()
+		public void MoveAnimation(float timeToMove)
 		{
-			animator.SetTrigger(MoveTrigger);
+			_animator.SetTrigger(MoveTrigger);
 			moveSound.Play();
+			ScheduleIdleAfterMove(timeToMove);
 		}
+		
+		private void ScheduleIdleAfterMove(float time)
+		{
+			StartCoroutine(StartNextTurnAfterTime(time));
+		}
+
+		private IEnumerator StartNextTurnAfterTime(float time)
+		{
+			yield return new WaitForSeconds(time);
+			_animator.SetTrigger(IdleTrigger);
+		}       
+
 
 		public void PainAnimation()
         {
-			animator.SetTrigger(PainTrigger);
+			_animator.SetTrigger(PainTrigger);
 			painSound.Play();
         }
 		
@@ -133,12 +144,14 @@ namespace Scripts.Pieces
 		}
 		
 		
-		public void MoveToPosition(Hexagon position)
+		public float MoveToPosition(Hexagon position)
 		{
 			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(position);
 			Position = position;
-			moveSound.Play();
-			_mover.MoveTo(transform, targetCoordinates);
+			
+			var timeToMove =  _mover.MoveTo(transform, targetCoordinates);
+			MoveAnimation(timeToMove);
+			return timeToMove;
 		}
 
 		#endregion
@@ -154,10 +167,36 @@ namespace Scripts.Pieces
 		
 		private void InitializeComponents()
 		{
-			animator = GetComponent<Animator>();
+
+			InitializeChildren();
+			
 			_mover = GetComponent<IMover>();
-			_healthBar = _healthBarObject.GetComponent<HealthBar>();
 			moveSound.volume = 0.10f;
+			
+		}
+
+		private GameObject _actingModel;
+
+		private void InitializeChildren()
+		{
+			try
+			{
+				IList<GameObject> children = new List<GameObject>();
+				
+				for (var i = 0; i < transform.childCount; i++) 
+					children.Add(transform.GetChild(i).gameObject);
+				
+				_actingModel = children.First(child => ActingModelTag.EqualsIgnoreCase(child.tag));
+				var healthBarModel = children.First(child => HealthBarTag.EqualsIgnoreCase(child.tag));
+				
+				_healthBar = healthBarModel.transform.GetChild(0).gameObject.GetComponent<HealthBar>();
+				
+				_animator = _actingModel.GetComponent<Animator>();
+			}
+			catch (Exception)
+			{
+				throw new InvalidAmountChildrenException();
+			}
 		}
 	
 		public virtual void InitializePiece(Hexagon position, Team team, Playground ground, IGameFieldManager gameFieldManager)
@@ -169,10 +208,9 @@ namespace Scripts.Pieces
 			
 			//Place piece on the correct position in the playground
 			transform.position = _gameFieldManager.ResolveAbsolutePositionOfHexagon(position);
+			
+			transform.Rotate(0, Team == Team.Player ? 90 : 270, 0);
 
-			if (Team == Team.Player) transform.Rotate(0, 180, 0);
-
-		
 			AddDefaultStats();
 			_healthBar.SetMaxHealth(Health);
 		}		

@@ -12,6 +12,6 @@ namespace Scripts.Pieces.Interfaces
     
         public void RotatePiece(float rotationAngle);
 
-        public void MoveToPosition(Hexagon position);
+        public float MoveToPosition(Hexagon position);
     }
 }

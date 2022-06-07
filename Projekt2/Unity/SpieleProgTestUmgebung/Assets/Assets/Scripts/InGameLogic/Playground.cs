@@ -209,26 +209,26 @@ namespace Scripts.InGameLogic
         //Was private in chess mode
         public void OnSelectedPieceMove(Hexagon destination, IPiece piece)
         {
+            float waitingTime;
+            
             if (destination.HasPiece)
-            {
-                HitEnemyPiece(piece, destination.Piece);
-            }
+                waitingTime = HitEnemyPiece(piece, destination.Piece);
+            
             else
-            {
-                MovePiece(destination, piece);
-            }
+                waitingTime = MovePiece(destination, piece);
             
             DeselectPiece();
-            _inGameManager.EndTurn();
+            _inGameManager.EndTurn(waitingTime);
+
         }
 
-        private void MovePiece(Hexagon destination, IPiece piece)
+        private float MovePiece(Hexagon destination, IPiece piece)
         {
             //Remove piece on old hexagon, add piece on new hexagon and update piece hexagon
             _gameFieldManager.MovePieceToHexField(piece.Position, destination);
             
             //Update piece reference to hexagon and start animation
-            piece.MoveToPosition(destination);
+            return piece.MoveToPosition(destination);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Scripts.InGameLogic
         /// </summary>
         /// <param name="selectedPiece"></param>
         /// <param name="pieceToHit"></param>
-        private void HitEnemyPiece(IPiece selectedPiece, IPiece pieceToHit)
+        private float HitEnemyPiece(IPiece selectedPiece, IPiece pieceToHit)
         {
             
             var attackDmg = selectedPiece.AttackDamage;
@@ -252,11 +252,12 @@ namespace Scripts.InGameLogic
                 _inGameManager.OnPieceRemoved(pieceToHit);
             }
             
-            StartConflict(selectedPiece, pieceToHit, isKilled);
-            
+            var waitingTime = StartConflict(selectedPiece, pieceToHit, isKilled);
+
+            return waitingTime;
         }
         
-      private void StartConflict(IPiece attackingPiece, IPiece hitPiece, bool isKilled)
+      private float StartConflict(IPiece attackingPiece, IPiece hitPiece, bool isKilled)
       {
             IPiece piecePlayer, pieceEnemy;
 
@@ -355,6 +356,7 @@ namespace Scripts.InGameLogic
             }
             
             BlockInput(7f);
+            return 7f;
       }
       
       

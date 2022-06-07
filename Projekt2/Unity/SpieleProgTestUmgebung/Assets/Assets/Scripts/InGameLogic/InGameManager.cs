@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Scripts.AI;
 using Scripts.Enums;
@@ -152,7 +153,7 @@ namespace Scripts.InGameLogic
             return _activePlayer.Team == team;
         }
     
-        public void EndTurn()
+        public void EndTurn(float timeToWait)
         {
 
             if (OtherPlayerOf(_activePlayer).HasNoMorePieces)
@@ -161,8 +162,21 @@ namespace Scripts.InGameLogic
                 return;
             }
             
-            GetNextTurn();
+            ScheduleNextTurn(timeToWait);
         }
+
+        
+        private void ScheduleNextTurn(float time)
+        {
+            StartCoroutine(StartNextTurnAfterTime(time));
+        }
+
+        private IEnumerator StartNextTurnAfterTime(float time)
+        {
+            yield return new WaitForSeconds(time);
+            GetNextTurn();
+        }       
+
 
         private void PrepareTurn()
         {
@@ -203,8 +217,7 @@ namespace Scripts.InGameLogic
 
                 var destination = _ai.GetAiMove(gameConfiguration.gameFieldManager, _personPlayer.RemainingPiecesOfPlayer, ActivePiece);
                 _playground.OnSelectedPieceMove(destination, ActivePiece);
-
-                //TODO wait for some seconds
+                
                 return;
             }
         }

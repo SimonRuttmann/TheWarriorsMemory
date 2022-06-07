@@ -8,7 +8,9 @@
     
         public void AttackAnimation();
 
-        public void MoveAnimation();
+        public void MoveAnimation(float timeToMove);
+        
+        public void PainAnimation();
     
 
     }

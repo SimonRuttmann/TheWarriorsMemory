@@ -6,6 +6,7 @@
         Die, 
         Attack, 
         Idle, 
+        Pain,
         Delete, 
         Move, 
         Rotate

@@ -85,6 +85,7 @@ namespace Scripts.Pieces.Animation
                     case AnimationStatus.Rotate:  animationScheduledObject.Piece.RotatePiece(animationScheduledObject.RotationValue); break;
                     case AnimationStatus.Attack:  animationScheduledObject.Piece.AttackAnimation(); break;
                     case AnimationStatus.Idle:    animationScheduledObject.Piece.SelectionAnimation(); break;
+                    case AnimationStatus.Pain:    animationScheduledObject.Piece.PainAnimation(); break;
                     case AnimationStatus.Die:     animationScheduledObject.Piece.DyingAnimation(); break;
                     case AnimationStatus.Delete:  DestroyPiece(animationScheduledObject.Piece); break;
                     default: throw new ArgumentOutOfRangeException();
