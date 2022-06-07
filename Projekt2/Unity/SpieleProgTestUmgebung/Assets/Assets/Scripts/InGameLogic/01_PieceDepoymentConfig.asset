@@ -46,6 +46,6 @@ MonoBehaviour:
   - logicalPosition: {x: 6, y: 6}
     pieceType: 1
     team: 1
-  - logicalPosition: {x: 7, y: 6}
+  - logicalPosition: {x: 7, y: 7}
     pieceType: 7
     team: 1

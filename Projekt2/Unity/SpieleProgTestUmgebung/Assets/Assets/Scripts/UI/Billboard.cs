@@ -4,8 +4,23 @@ namespace Scripts.UI
 {
     public sealed class Billboard : MonoBehaviour
     {
-  
-        //private const float FixedRotation = 0;
+
+        private Transform _cam;
+
+        private void Awake()
+        {
+            _cam = GameObject.FindWithTag("MainCamera").transform;
+        }
+
+        private void LateUpdate()
+        {
+            transform.LookAt(transform.position + _cam.forward);
+        }
+    }
+}
+
+/**
+  //private const float FixedRotation = 0;
         private Transform _cam;
         private Transform _myTransform;
         private readonly Quaternion _fixedRotation =Quaternion.Euler(0f, 180f, 0f);
@@ -37,5 +52,4 @@ namespace Scripts.UI
             //eulerAngles = new Vector3 (eulerAngles.x, FixedRotation, eulerAngles.z);
             //_myTransform.eulerAngles = eulerAngles;
         }
-    }
-}
+        */
