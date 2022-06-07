@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45071203, g: 0.49881083, b: 0.5649196, a: 1}
+  m_IndirectSpecularColor: {r: 0.45071238, g: 0.49881107, b: 0.5649205, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2395,6 +2395,9 @@ GameObject:
   - component: {fileID: 963057322}
   - component: {fileID: 963057321}
   - component: {fileID: 963057320}
+  - component: {fileID: 963057330}
+  - component: {fileID: 963057329}
+  - component: {fileID: 963057331}
   m_Layer: 0
   m_Name: Playground
   m_TagString: Untagged
@@ -2509,8 +2512,8 @@ MonoBehaviour:
     size: 8
     startPoint: {fileID: 1198473199}
   markerConfiguration:
-    movementPrefab: {fileID: 1741302275115254822, guid: 90b7ac9370ce07349977ea2bde9386af, type: 3}
-    attackPrefab: {fileID: 1447034024332998154, guid: 788ce2cd87054c94bb5480920d6aa60b, type: 3}
+    movementPrefab: {fileID: 8622288257369687282, guid: c3360870cea67934c81af02c3f0ae517, type: 3}
+    attackPrefab: {fileID: 4751710651189599443, guid: 5e2fb664c01da5a489bb1fa981beb506, type: 3}
   pieceCreator: {fileID: 963057324}
   gameFieldManager: {fileID: 963057323}
   markerCreator: {fileID: 963057322}
@@ -2540,6 +2543,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963057329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963057319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee387f7aab7458147bb603ecafb1bb94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &963057330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963057319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94b16f7478720146afb6621f164ebf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &963057331
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963057319}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 300, y: 1, z: 300}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -4458,8 +4498,6 @@ GameObject:
   - component: {fileID: 2060820228}
   - component: {fileID: 2060820227}
   - component: {fileID: 2060820231}
-  - component: {fileID: 2060820230}
-  - component: {fileID: 2060820229}
   m_Layer: 0
   m_Name: HexGrid
   m_TagString: Untagged
@@ -4494,30 +4532,6 @@ Transform:
   m_Father: {fileID: 963057328}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2060820229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2060820226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94b16f7478720146afb6621f164ebf0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2060820230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2060820226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 149983370f9724f4bb18ac88d6bed089, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &2060820231
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4527,7 +4541,7 @@ BoxCollider:
   m_GameObject: {fileID: 2060820226}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
