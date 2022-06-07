@@ -2,7 +2,7 @@
 {
     public interface IAnimatable
     {
-        public void IdleAnimation();
+        public void SelectionAnimation();
 
         public void DyingAnimation();
     

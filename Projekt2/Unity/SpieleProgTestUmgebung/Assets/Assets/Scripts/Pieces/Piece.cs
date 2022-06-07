@@ -50,7 +50,9 @@ namespace Scripts.Pieces
 		public AudioSource moveSound;
 		public AudioSource attackSound;
 		public AudioSource dyingSound;
-		public AudioSource idleSound;
+		public AudioSource selectionSound;
+		public AudioSource painSound;
+
 		
 		#endregion
 
@@ -71,17 +73,18 @@ namespace Scripts.Pieces
 		//Animator, will be used to set triggers to start the animation
 		
 		public Animator animator;
-		private static readonly int IdleTrigger = Animator.StringToHash("IdleTrigger");
+		private static readonly int SelectionTrigger = Animator.StringToHash("SelectionTrigger");
 		private static readonly int DyingTrigger = Animator.StringToHash("DyingTrigger");
 		private static readonly int AttackTrigger = Animator.StringToHash("AttackTrigger");
 		private static readonly int MoveTrigger = Animator.StringToHash("MoveTrigger");
+		private static readonly int PainTrigger = Animator.StringToHash("PainTrigger");
 
 		//Animation implementation
-	
-		public void IdleAnimation()
+
+		public void SelectionAnimation()
 		{
-			animator.SetTrigger(IdleTrigger);
-			idleSound.Play();    
+			animator.SetTrigger(SelectionTrigger);
+			selectionSound.Play();    
 		}
 
 		public void DyingAnimation()
@@ -99,7 +102,14 @@ namespace Scripts.Pieces
 		public void MoveAnimation()
 		{
 			animator.SetTrigger(MoveTrigger);
+			moveSound.Play();
 		}
+
+		public void PainAnimation()
+        {
+			animator.SetTrigger(PainTrigger);
+			painSound.Play();
+        }
 		
 		#endregion
 
