@@ -16,6 +16,8 @@ namespace Scripts.Pieces
 
 		#region Stats
 
+		[SerializeField] private GameObject _healthBarObject;
+
 		private HealthBar _healthBar;
 		public int Health
 		{
@@ -154,7 +156,7 @@ namespace Scripts.Pieces
 		{
 			animator = GetComponent<Animator>();
 			_mover = GetComponent<IMover>();
-			_healthBar = GetComponent<HealthBar>();
+			_healthBar = _healthBarObject.GetComponent<HealthBar>();
 			moveSound.volume = 0.10f;
 		}
 	
@@ -170,6 +172,7 @@ namespace Scripts.Pieces
 
 			if (Team == Team.Player) transform.Rotate(0, 180, 0);
 
+		
 			AddDefaultStats();
 			_healthBar.SetMaxHealth(Health);
 		}		
