@@ -7,12 +7,19 @@ namespace Scripts.UI
 {
 	public class GameUiManager : MonoBehaviour
 	{
-		[SerializeField] private Menu _menu;
+		[SerializeField] private GameObject _menuObject;
+		private Menu _menu;
 
 		//Wird beim Start ausgef�hrt
 		//Beim ersten Start
+		private void Awake()
+		{
+			_menu = _menuObject.GetComponent<Menu>();
+		}
+
 		public void StartUi()
 		{
+			_menuObject.SetActive(true);
 			_menu.OpenMainMenu();
 		}
 
