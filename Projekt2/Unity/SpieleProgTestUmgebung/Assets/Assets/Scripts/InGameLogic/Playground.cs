@@ -137,7 +137,7 @@ namespace Scripts.InGameLogic
             if (field == null) return;
 
            
-
+            _inGameManager.ActivePiece.GenerateAllPossibleMovements();
             //New logic
             // Piece was selected and click on movable field
             if (_inGameManager.ActivePiece.IsAnyMovementPossibleTo(field))
