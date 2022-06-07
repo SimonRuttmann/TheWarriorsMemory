@@ -14,49 +14,49 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: NonCombat
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Idling
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 1
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Use
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Ability
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Pain
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: PainType
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Death
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -72038,21 +72038,21 @@ AnimatorStateMachine:
     second: []
   - first: {fileID: 110718128}
     second: []
-  - first: {fileID: 110723544}
-    second: []
-  - first: {fileID: 110748394}
-    second: []
-  - first: {fileID: 110750694}
-    second: []
-  - first: {fileID: 110751510}
-    second: []
-  - first: {fileID: 110779838}
-    second: []
   - first: {fileID: 110787190}
     second: []
   - first: {fileID: 110789842}
     second: []
   - first: {fileID: 110791764}
+    second: []
+  - first: {fileID: 110723544}
+    second: []
+  - first: {fileID: 110750694}
+    second: []
+  - first: {fileID: 110779838}
+    second: []
+  - first: {fileID: 110751510}
+    second: []
+  - first: {fileID: 110748394}
     second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: -480, y: 230, z: 0}
@@ -73055,7 +73055,7 @@ AnimatorStateMachine:
     second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 312, y: 900, z: 0}
-  m_EntryPosition: {x: -408, y: 504, z: 0}
+  m_EntryPosition: {x: -400, y: 1030, z: 0}
   m_ExitPosition: {x: 312, y: 852, z: 0}
   m_ParentStateMachinePosition: {x: 216, y: 504, z: 0}
   m_DefaultState: {fileID: 110278778}
