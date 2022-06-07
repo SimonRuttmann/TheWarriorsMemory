@@ -32,7 +32,7 @@ namespace Scripts.Pieces
 		private void UpdateHealthBar(int value)
 		{
 			//TODO MICHAEL UPDATE THE HEALTH BAR
-			throw new System.NotImplementedException();
+			return;
 		}
 
 		private int _health;
