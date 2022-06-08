@@ -72,22 +72,16 @@ namespace Scripts.InGameLogic
         /// </summary>
         private void Start()
         {
-            StartNewGame(true);
+            _gameUIManager.StartUi();
         }
         
-        private void StartNewGame(bool firstGame)
+        public void StartNewGame()
         {
-            
-            _gameState = GameState.Start;
-            
             _playground.PrepareStart();
 
             _activePlayer = _personPlayer;     
             
             DeployPieces(_pieceDeploymentConfiguration);
-            
-            if (firstGame) _gameUIManager.StartUi();
-            else _gameUIManager.SpielStarten();
             _gameUIManager.SetTeamDisplay(Team.Player);
 
             PrepareTurn();
@@ -111,7 +105,7 @@ namespace Scripts.InGameLogic
             
             DestroyPieces(remainingPieces);
             
-            StartNewGame(false);
+            StartNewGame();
         }
         
         

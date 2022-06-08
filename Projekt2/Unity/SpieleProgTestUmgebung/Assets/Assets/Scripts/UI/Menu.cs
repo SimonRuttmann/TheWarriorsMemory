@@ -36,6 +36,10 @@ public class Menu : MonoBehaviour,IMenu
         {
             _inGameManager.RestartGame();    
         }
+        else
+        {
+            _inGameManager.StartNewGame();
+        }
         ChangeToMenuType(MenuState.Closed);
     }
 
