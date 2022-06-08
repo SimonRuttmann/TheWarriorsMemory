@@ -140,8 +140,6 @@ namespace Scripts.InGameLogic
             var localSpaceInputPosition = transform.InverseTransformPoint(inputPosition);
             var field = _gameFieldManager.ResolveHexagonByRelativePosition(localSpaceInputPosition); 
             
-            //DEBUG
-            return;
             
             //Click is outside the playground
             if (field == null) return;
@@ -341,6 +339,10 @@ namespace Scripts.InGameLogic
             {
                 _animationScheduler.StartAnimation(1.5f, hitPiece, AnimationStatus.Die);
                 _animationScheduler.StartAnimation(4f, hitPiece, AnimationStatus.Delete);
+            }
+            else
+            {
+                _animationScheduler.StartAnimation(1.5f, hitPiece, AnimationStatus.Pain);
             }
             
             //Rotate pieces back
