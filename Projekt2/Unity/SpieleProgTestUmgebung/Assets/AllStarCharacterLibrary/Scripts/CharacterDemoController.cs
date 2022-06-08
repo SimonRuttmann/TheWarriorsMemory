@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class CharacterDemoController : MonoBehaviour 
 {
 	Animator animator;
-	public GameObject		floorPlane;//in this demonstration this is set manually, the Retail Ability system has methods for dealing with this automatically via data structures for environments
+	private GameObject		floorPlane;//in this demonstration this is set manually, the Retail Ability system has methods for dealing with this automatically via data structures for environments
 
 	public int 				WeaponState=0;//unarmed, 1H, 2H, bow, dual, pistol, rifle, spear and ss(sword and shield)
 	public bool 			wasAttacking;// we need this so we can take lock the direction we are facing during attacks, mecanim sometimes moves past the target which would flip the character around wildly
@@ -17,7 +17,7 @@ public class CharacterDemoController : MonoBehaviour
 	public Vector3 		movementTargetPosition;
 	public Vector3 		attackPos;
 	public Vector3		lookAtPos;
-	float				gravity = 5.0f;
+	//float				gravity = 5.0f;
 	
 	RaycastHit hit;
 	Ray ray;
@@ -119,7 +119,7 @@ public class CharacterDemoController : MonoBehaviour
 				{// RUNGY addin enemy collider "test for nearest hit" here, they need to actually take precednce over the ground
 					
 					ray = Camera.main.ScreenPointToRay (Input.mousePosition);// make a ray based on the camera and mouse pointer
-					if(floorPlane.GetComponent<Collider>().Raycast(ray, out hit, 500.0f)) 												
+					/*if(floorPlane.GetComponent<Collider>().Raycast(ray, out hit, 500.0f)) 												
 					{
 						movementTargetPosition = transform.position; //we are attacking so lock our position to where we are
 						attackPos = hit.point;// establish the point that we hit with the mouse
@@ -130,7 +130,7 @@ public class CharacterDemoController : MonoBehaviour
 						animator.SetBool("Idling", true);//stop moving
 						rightButtonDown = true;//right button was not down before, mark it as down so we don't attack 800 frames a second 
 						wasAttacking =true;//some mecanims will actually move us past the target, so we want to keep looking in one direction instead of spinning wildly around the target
-					}
+					}*/
 				}
 			}
 		}

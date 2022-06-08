@@ -86,7 +86,7 @@ public class TurnOffRenderers : ScriptableObject
 			}
 		}
 		CharacterDemoController cdc = go.transform.GetComponent<CharacterDemoController>();
-		cdc.floorPlane = GameObject.Find("Plane");
+		//cdc.floorPlane = GameObject.Find("Plane");
 		GameObject goct= GameObject.Find("CameraTarget");
 		CamTarget ct = goct.GetComponent<CamTarget>();
 		ct.target = go.transform;
