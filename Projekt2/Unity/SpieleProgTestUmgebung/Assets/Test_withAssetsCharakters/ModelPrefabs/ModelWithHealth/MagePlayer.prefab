@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -4422861516840268899}
   - component: {fileID: -7781460333642891202}
   - component: {fileID: 7996133732320943470}
+  - component: {fileID: -4243480676351927212}
   m_Layer: 0
   m_Name: MagePlayer
   m_TagString: Untagged
@@ -536,6 +537,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-4243480676351927212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47775401769203975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 271a69f5bda54864bb5dfe8540fca57e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &336141246269749268
 GameObject:
   m_ObjectHideFlags: 0
@@ -2224,7 +2237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d746bac09956f443bee4dcc265a97ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorPlane: {fileID: 0}
   WeaponState: 7
   wasAttacking: 0
   movementTargetPosition: {x: 0, y: 0, z: 0}

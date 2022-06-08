@@ -1255,6 +1255,7 @@ GameObject:
   - component: {fileID: -4193422094804203477}
   - component: {fileID: -4189425907130810063}
   - component: {fileID: 2012836200568826889}
+  - component: {fileID: -5513873595827451301}
   m_Layer: 0
   m_Name: ArcherPlayer
   m_TagString: Untagged
@@ -1776,6 +1777,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-5513873595827451301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713767084843867087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 141e361a344f3c14ba18ac8733ddb591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2123960489138878912
 GameObject:
   m_ObjectHideFlags: 0
@@ -1982,7 +1995,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d746bac09956f443bee4dcc265a97ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorPlane: {fileID: 0}
   WeaponState: 3
   wasAttacking: 0
   movementTargetPosition: {x: 0, y: 0, z: 0}
