@@ -19,9 +19,10 @@ public class Menu : MonoBehaviour,IMenu
     private void Awake()
     {
         _menu = GameObject.FindGameObjectWithTag("Menu");
-        
-        var main = _menu.transform.Find("MainMenu");
-        var ingame = _menu.transform.Find("IngameMenu");
+        var menuborder = _menu.transform.Find("Menuborder");
+
+        var main =menuborder.transform.Find("MainMenu");
+        var ingame = menuborder.transform.Find("IngameMenu");
         
         if(main == null || ingame == null) Debug.LogError("Submenus could not be fetched");
 
