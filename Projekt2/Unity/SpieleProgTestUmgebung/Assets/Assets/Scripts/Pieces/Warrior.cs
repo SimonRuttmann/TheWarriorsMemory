@@ -10,7 +10,7 @@ namespace Scripts.Pieces
             
             AttackDamage = 20;
             
-            AttackRange = 10;
+            AttackRange = 1;
             MoveRange = 2;
         }
     }
