@@ -45,8 +45,8 @@ public class AvatarEditorGUI : Editor
 			ae.AvatarInit = false;
 			ae.Start();
 		}
-		ae.avatarMat = (Material) EditorGUILayout.ObjectField(ae.avatarMat , typeof(Material) ,GUILayout.Width(180));
-		ae.avatarCam = (Camera) EditorGUILayout.ObjectField(ae.avatarCam , typeof(Camera) ,GUILayout.Width(180));
+		//ae.avatarMat = (Material) EditorGUILayout.ObjectField(ae.avatarMat , typeof(Material) ,GUILayout.Width(180));
+		//ae.avatarCam = (Camera) EditorGUILayout.ObjectField(ae.avatarCam , typeof(Camera) ,GUILayout.Width(180));
 		for(int index=0;index<ae.swappers.Length;index++)
 		{
 			EditorGUILayout.BeginHorizontal();
