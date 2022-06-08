@@ -127,19 +127,25 @@ namespace Scripts.InGameLogic
         
         public void HandleFieldSelection(Vector3 inputPosition)
         {
-            if (_blocker) return;
 
+            //Block inputs when game did is not active
+            if (_inGameManager.GameState != GameState.InGame) return;
+            
+            //Block inputs while animation
+            if (_blocker) return;
+            
+            //Block inputs, while enemy executes turns
+            if (_inGameManager.IsTurnOf(Team.Enemy)) return;
+            
             var localSpaceInputPosition = transform.InverseTransformPoint(inputPosition);
-                                    
-            var field = _gameFieldManager.ResolveHexagonByRelativePosition(inputPosition);  //TODO if this does not work, use localSpaceInputPosition!
+            var field = _gameFieldManager.ResolveHexagonByRelativePosition(localSpaceInputPosition); 
             
             //Click is outside the playground
             if (field == null) return;
 
-           
             _inGameManager.ActivePiece.GenerateAllPossibleMovements();
             //New logic
-            // Piece was selected and click on movable field
+            // Piece was selected from InGameManager and click on movable field
             if (_inGameManager.ActivePiece.IsAnyMovementPossibleTo(field))
             { 
                 OnSelectedPieceMove(field, _inGameManager.ActivePiece);
