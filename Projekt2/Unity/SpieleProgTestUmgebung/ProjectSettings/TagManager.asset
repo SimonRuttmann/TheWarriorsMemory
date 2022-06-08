@@ -39,8 +39,11 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Override
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Override
+    uniqueID: 3628146411
     locked: 0
