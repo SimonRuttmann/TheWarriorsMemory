@@ -1,11 +1,12 @@
 ﻿using Scripts.Extensions;
 using Scripts.Toolbox;
+using UnityEngine;
 
 namespace Scripts.GameField
 {
     /// <summary>
     /// This class is responsible for resolving the correct hexagon based on a hexField 
-    /// </summary>
+    /// </summary>34,7
     public static class HexagonResolver
     {
         public static Pair<int> ResolveHexagonLogicalPosition(
@@ -15,12 +16,15 @@ namespace Scripts.GameField
             //https://stackoverflow.com/questions/7705228/hexagonal-grids-how-do-you-find-which-hexagon-a-point-is-in
             
             var gridHeightOffset = gameFieldPhysicalConfiguration.HexagonWidthHeight / 4;
-            
-            var gridHeight = gameFieldPhysicalConfiguration.HexagonWidthHeight - gridHeightOffset;
+
+            var gridHeight = gameFieldPhysicalConfiguration.HexagonWidthHeight; // - gridHeightOffset;
             var gridWidth = gameFieldPhysicalConfiguration.HexagonWidthHeight;
 
-            var y = absoluteY - gameFieldPhysicalConfiguration.StartPointX;
-            var x = absoluteX - gameFieldPhysicalConfiguration.StartPointY;
+            var startX = gameFieldPhysicalConfiguration.StartPointX - (gameFieldPhysicalConfiguration.HexagonWidthHeight / 2);
+            var startY = gameFieldPhysicalConfiguration.StartPointY - (gameFieldPhysicalConfiguration.HexagonWidthHeight / 2);   
+            
+            var y = absoluteY - startX;
+            var x = absoluteX - startY;
 
             //Get the row and column, imagining that the hexagon grid is a square grid
             var rowAndColumn = GetRowAndColumn(x, y, gridHeight, gridWidth);
@@ -37,7 +41,8 @@ namespace Scripts.GameField
             var adjustedRowAndColumn = GetAdjustedRowAndColumn(relX, relY, row, column, gridHeight, gridWidth);
             var adjustedRow = adjustedRowAndColumn.First;
             var adjustedColumn = adjustedRowAndColumn.Second;
-
+            Debug.Log("Width: " + column + "Height: " + row);
+            Debug.Log("Adjusted Width: " + adjustedColumn + "Adjusted Height: " + adjustedRow);
             return new Pair<int>(adjustedRow, adjustedColumn);
         }
 
@@ -110,13 +115,13 @@ namespace Scripts.GameField
             // Work out if the point is above either of the hexagon's top edges
             if (relY < (-m * relX) + c) // LEFT edge
             {
-                row++;
+                row--;
                 if (!row.IsOdd())
                     column--;
             }
             else if (relY < (m * relX) - c) // RIGHT edge
             {
-                row++;
+                row--;
                 if (row.IsOdd())
                     column++;
             }

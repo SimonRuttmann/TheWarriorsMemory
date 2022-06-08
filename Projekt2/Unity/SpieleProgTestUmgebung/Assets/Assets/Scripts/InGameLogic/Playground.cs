@@ -140,9 +140,12 @@ namespace Scripts.InGameLogic
             var localSpaceInputPosition = transform.InverseTransformPoint(inputPosition);
             var field = _gameFieldManager.ResolveHexagonByRelativePosition(localSpaceInputPosition); 
             
+            //DEBUG
+            return;
+            
             //Click is outside the playground
             if (field == null) return;
-
+            
             _inGameManager.ActivePiece.GenerateAllPossibleMovements();
             //New logic
             // Piece was selected from InGameManager and click on movable field

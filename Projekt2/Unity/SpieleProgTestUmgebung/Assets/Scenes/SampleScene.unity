@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45071203, g: 0.49881083, b: 0.5649196, a: 1}
+  m_IndirectSpecularColor: {r: 0.45071238, g: 0.49881107, b: 0.5649205, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2267,6 +2267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameConfiguration: {fileID: 963057327}
+  startGameWithUI: 0
 --- !u!114 &963057327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2284,7 +2285,7 @@ MonoBehaviour:
   playground: {fileID: 963057325}
   gameUIManager: {fileID: 963057320}
   gameFieldPhysicalConfiguration:
-    hexagonWidthHeight: 34.88
+    hexagonWidthHeight: 34.7
     size: 8
     startPoint: {fileID: 1198473199}
   markerConfiguration:
@@ -4705,7 +4706,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2796141948722979841
 MonoBehaviour:
   m_ObjectHideFlags: 0
