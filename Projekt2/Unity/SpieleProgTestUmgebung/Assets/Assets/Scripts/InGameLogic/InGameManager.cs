@@ -31,15 +31,14 @@ namespace Scripts.InGameLogic
         private Player _enemyPlayer;
         private Player _activePlayer;
         
-        //TODO This might be used by the ui
-        private GameState _gameState;
+        private GameState _gameState = GameState.Start;
 
         public GameState GameState => _gameState;
 
         private SortedDictionary<int, IPiece> _turnOrderActivePlayer = new SortedDictionary<int, IPiece>();
         private int _turnCounter;
         
-        public IPiece ActivePiece;
+        public IPiece ActivePiece { get; private set; }
         
         private IAi _ai= new Ai();
 
