@@ -127,8 +127,9 @@ namespace Scripts.GameField
         }
 
         
-        public Hexagon GetPosition(Directions direction, int x, int y) 
+        public Hexagon GetPosition(Directions direction, int x, int y)
         {
+           
             try
             {
                 return
@@ -152,13 +153,13 @@ namespace Scripts.GameField
 
         private Hexagon GetTopRight(int x, int y)
         {
-            return x.IsOdd() ? _hexField[x + 1, y + 1] : _hexField[x + 0, y + 1];
+            return y.IsOdd() ? _hexField[x + 1, y + 1] : _hexField[x + 0, y + 1];
         }
 
         
         private Hexagon GetTopLeft(int x, int y)
         {
-            return x.IsOdd() ? _hexField[x - 0, y + 1] : _hexField[x - 1, y + 1];
+            return y.IsOdd() ? _hexField[x - 0, y + 1] : _hexField[x - 1, y + 1];
         }
 
         
@@ -176,13 +177,13 @@ namespace Scripts.GameField
         
         private Hexagon GetBotLeft(int x, int y)
         {
-            return x.IsOdd() ? _hexField[x - 0, y - 1] : _hexField[x - 1, y - 1];
+            return y.IsOdd() ? _hexField[x - 0, y - 1] : _hexField[x - 1, y - 1];
         }
         
         
         private Hexagon GetBotRight(int x, int y)
         {
-            return x.IsOdd() ? _hexField[x + 1, y - 1] : _hexField[x - 0, y - 1];
+            return y.IsOdd() ? _hexField[x + 1, y - 1] : _hexField[x - 0, y - 1];
         }
         
         
