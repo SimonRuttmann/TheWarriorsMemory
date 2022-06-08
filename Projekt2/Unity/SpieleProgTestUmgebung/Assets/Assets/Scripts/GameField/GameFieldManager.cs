@@ -46,9 +46,11 @@ namespace Scripts.GameField
         public Hexagon ResolveHexagonByRelativePosition(double x, double y)
         {
             var position = HexagonResolver.ResolveHexagonLogicalPosition(x, y, _gameFieldPhysicalConfiguration);
+            var row = position.First;
+            var column = position.Second;
             try
             {
-                return _hexField[position.First, position.Second];
+                return _hexField[column, row];
             }
             catch (IndexOutOfRangeException)
             {
