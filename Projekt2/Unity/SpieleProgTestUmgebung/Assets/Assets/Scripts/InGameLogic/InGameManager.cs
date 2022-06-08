@@ -42,8 +42,8 @@ namespace Scripts.InGameLogic
         public IPiece ActivePiece;
         
         private IAi _ai= new Ai();
-        
 
+        public bool startGameWithUI = true;
         private void Awake()
         {
             InitializeConfiguration();
@@ -72,7 +72,8 @@ namespace Scripts.InGameLogic
         /// </summary>
         private void Start()
         {
-            _gameUIManager.StartUi();
+            if(startGameWithUI) _gameUIManager.StartUi();
+            else StartNewGame();
         }
         
         public void StartNewGame()
