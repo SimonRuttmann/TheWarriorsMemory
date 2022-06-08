@@ -73,7 +73,6 @@ namespace Scripts.InGameLogic
         private void Start()
         {
             _gameUIManager.StartUi();
-            _gameState = GameState.Start;
         }
         
         public void StartNewGame()
@@ -106,7 +105,7 @@ namespace Scripts.InGameLogic
             
             DestroyPieces(remainingPieces);
             
-            StartNewGame(false);
+            StartNewGame();
         }
         
         
