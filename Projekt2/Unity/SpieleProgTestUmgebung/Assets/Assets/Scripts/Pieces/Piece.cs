@@ -104,7 +104,6 @@ namespace Scripts.Pieces
 		{
 			_animator.SetTrigger(MoveTrigger);
 			moveSound.Play();
-			//ScheduleIdleAfterMove(1);
 			ScheduleIdleAfterMove(timeToMove);
 		}
 		
@@ -151,8 +150,7 @@ namespace Scripts.Pieces
 			Position = position;
 			var timeToMove = countTimeToMove(transform, targetCoordinates);
 			MoveAnimation(timeToMove);
-			_mover.MoveTo(transform, targetCoordinates);
-			Debug.Log("here time to Move: " + timeToMove);
+			_mover.MoveTo(transform, targetCoordinates, timeToMove);
 			
 			return timeToMove;
 		}

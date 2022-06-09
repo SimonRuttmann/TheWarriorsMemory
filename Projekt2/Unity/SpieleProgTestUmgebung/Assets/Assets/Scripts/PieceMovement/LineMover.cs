@@ -7,10 +7,8 @@ namespace Scripts.PieceMovement
     {
         private const float MovementSpeed = 30;
 
-        public float MoveTo(Transform pieceTransform, Vector3 targetPosition)
+        public float MoveTo(Transform pieceTransform, Vector3 targetPosition, float duration)
         {
-            var distance = Vector3.Distance(targetPosition, pieceTransform.position);
-            var duration = distance / MovementSpeed;
             pieceTransform.DOMove(targetPosition, duration);
 
             return duration;
