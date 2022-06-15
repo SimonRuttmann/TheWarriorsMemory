@@ -4816,7 +4816,7 @@ GameObject:
   - component: {fileID: 5718328933376158173}
   - component: {fileID: 297827188725388143}
   m_Layer: 0
-  m_Name: Zugpartikel_1
+  m_Name: Zugpartikel_originalsmal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
