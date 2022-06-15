@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45071238, g: 0.49881107, b: 0.5649205, a: 1}
+  m_IndirectSpecularColor: {r: 0.45071238, g: 0.49881107, b: 0.5649204, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2289,8 +2289,8 @@ MonoBehaviour:
     size: 8
     startPoint: {fileID: 1198473199}
   markerConfiguration:
-    movementPrefab: {fileID: 8622288257369687282, guid: c3360870cea67934c81af02c3f0ae517, type: 3}
-    attackPrefab: {fileID: 4751710651189599443, guid: 5e2fb664c01da5a489bb1fa981beb506, type: 3}
+    movementPrefab: {fileID: 8023265488517252142, guid: ff84e9b27ec84ed4ca060bb1dbc09d25, type: 3}
+    attackPrefab: {fileID: 5534062665509555497, guid: d11bb75ec22f1974886081820b0ccb82, type: 3}
   pieceCreator: {fileID: 963057324}
   gameFieldManager: {fileID: 963057323}
   markerCreator: {fileID: 963057322}
