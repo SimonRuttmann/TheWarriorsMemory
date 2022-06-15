@@ -4,7 +4,7 @@ namespace Scripts.PieceMovement
 {
     public class InstantMover : MonoBehaviour, IMover
     {
-        public float MoveTo(Transform pieceTransform, Vector3 targetPosition)
+        public float MoveTo(Transform pieceTransform, Vector3 targetPosition, float duration)
         {
             pieceTransform.position = targetPosition;
             return 0f;

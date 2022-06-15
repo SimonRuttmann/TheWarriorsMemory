@@ -1985,7 +1985,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d746bac09956f443bee4dcc265a97ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorPlane: {fileID: 0}
   WeaponState: 7
   wasAttacking: 0
   movementTargetPosition: {x: 0, y: 0, z: 0}
@@ -4576,6 +4575,7 @@ GameObject:
   - component: {fileID: -3407414829425204735}
   - component: {fileID: -4497210731183855466}
   - component: {fileID: 4554442912527798156}
+  - component: {fileID: 6935548359487412489}
   m_Layer: 0
   m_Name: MageEnemy
   m_TagString: Untagged
@@ -5097,6 +5097,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6935548359487412489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6511128524854605639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 271a69f5bda54864bb5dfe8540fca57e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6548733695977914256
 GameObject:
   m_ObjectHideFlags: 0

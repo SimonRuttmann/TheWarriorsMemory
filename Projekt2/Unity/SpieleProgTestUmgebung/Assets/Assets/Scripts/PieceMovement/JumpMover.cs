@@ -8,11 +8,9 @@ namespace Scripts.PieceMovement
         [SerializeField] private float movementSpeed;
         [SerializeField] private float jumpHeight;
 
-        public float MoveTo(Transform pieceTransform, Vector3 targetPosition)
+        // right now jumpMover is not used
+        public float MoveTo(Transform pieceTransform, Vector3 targetPosition, float duration)
         {
-            var distance = Vector3.Distance(targetPosition, pieceTransform.position);
-            var duration = distance / movementSpeed;
-            
             pieceTransform.DOJump(targetPosition, jumpHeight, 1, duration);
             return duration;
         }

@@ -708,6 +708,7 @@ GameObject:
   - component: {fileID: -7402520207732471442}
   - component: {fileID: -2586492824304809597}
   - component: {fileID: -1642043715941752338}
+  - component: {fileID: -7779857985006438628}
   m_Layer: 0
   m_Name: WarriorPlayer
   m_TagString: Untagged
@@ -1229,6 +1230,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-7779857985006438628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443431226091395567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 141e361a344f3c14ba18ac8733ddb591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1520670505261514399
 GameObject:
   m_ObjectHideFlags: 0
@@ -6035,7 +6048,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d746bac09956f443bee4dcc265a97ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorPlane: {fileID: 0}
   WeaponState: 2
   wasAttacking: 0
   movementTargetPosition: {x: 0, y: 0, z: 0}

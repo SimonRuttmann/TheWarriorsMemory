@@ -148,10 +148,20 @@ namespace Scripts.Pieces
 		{
 			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(position);
 			Position = position;
-			
-			var timeToMove =  _mover.MoveTo(transform, targetCoordinates);
+			var timeToMove = countTimeToMove(transform, targetCoordinates);
 			MoveAnimation(timeToMove);
+			_mover.MoveTo(transform, targetCoordinates, timeToMove);
+			
 			return timeToMove;
+		}
+		
+		private const float MovementSpeed = 30;
+		private float countTimeToMove(Transform pieceTransform, Vector3 targetPosition)
+        {
+			if (pieceTransform.gameObject.ToString().Contains("Mage")) { return 1; }
+			var distance = Vector3.Distance(targetPosition, pieceTransform.position);
+			var duration = distance / MovementSpeed;
+			return duration;
 		}
 
 		#endregion
