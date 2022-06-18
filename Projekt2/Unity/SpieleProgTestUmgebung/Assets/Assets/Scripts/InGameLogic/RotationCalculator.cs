@@ -23,7 +23,7 @@ public static class RotationCalculator {
         IPiece piecePlayer, pieceEnemy;
         Vector3 absolutePositionAttackerOrStart, absolutePositionHitPieceOrFinish, absolutePositionRunner, absolutePostitionFinish;
 
-        //Rückgaben
+        //Rï¿½ckgaben
         Double rotationPointAttacker, rotationPointDefender, rotationPointRunner;
 
         bool movePlayer;

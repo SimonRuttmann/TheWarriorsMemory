@@ -7,6 +7,7 @@ using Scripts.Extensions;
 using Scripts.GameField;
 using Scripts.InGameLogic;
 using Scripts.PieceMovement;
+using Scripts.Pieces.Animation;
 using Scripts.Pieces.Interfaces;
 using Scripts.Toolbox;
 using Scripts.UI;
@@ -73,6 +74,8 @@ namespace Scripts.Pieces
 		
 		[NonSerialized]
 		private Animator _animator;
+
+		private IAnimationScheduler _animationScheduler;
 		
 		private static readonly int SelectionTrigger = Animator.StringToHash("SelectionTrigger");
 		private static readonly int DyingTrigger = Animator.StringToHash("DyingTrigger");
@@ -85,6 +88,9 @@ namespace Scripts.Pieces
 
 		public void SelectionAnimation()
 		{
+			Debug.Log("SELECT ANIMATION");
+			var isPresent = _animator != null;
+			Debug.Log("ANIMATOR IS PRESENT: " + isPresent);
 			_animator.SetTrigger(SelectionTrigger);
 			selectionSound.Play();    
 		}
@@ -152,8 +158,6 @@ namespace Scripts.Pieces
 			var startCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(currentPosition);
 			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(targetPosition);
 			
-			// calc angel
-			CalcAngelForMovment(startCoordinates, targetCoordinates);
 		
 			var travelTime = _mover.CalculateMovementDuration(transform, targetCoordinates);
 			MoveAnimation(travelTime);
@@ -161,14 +165,6 @@ namespace Scripts.Pieces
 			_mover.MoveTo(transform, targetCoordinates);
 			
 			return travelTime;
-		}
-
-		public float CalcAngelForMovment(Vector3 start,Vector3 finish)
-        {
-			float xDiff = finish.x - start.x;
-			float zDiff = finish.z - start.z;
-		    double i =  Math.Atan2(zDiff, xDiff) * 180.0 / Math.PI;
-			return 0f;
 		}
 		
 
@@ -179,6 +175,7 @@ namespace Scripts.Pieces
 
 		private void Awake()
 		{
+			Debug.Log("Awake piece");
 			InitializeComponents();
 		}
 		
@@ -217,12 +214,14 @@ namespace Scripts.Pieces
 			}
 		}
 	
-		public virtual void InitializePiece(Hexagon position, Team team, Playground ground, IGameFieldManager gameFieldManager)
+		public void InitializePiece(Hexagon position, Team team, Playground ground, 
+			IGameFieldManager gameFieldManager, IAnimationScheduler animationScheduler)
 		{
 			Team = team;
 			Position = position;
 			playground = ground;
 			_gameFieldManager = gameFieldManager;
+			_animationScheduler = animationScheduler;
 			
 			//Place piece on the correct position in the playground
 			transform.position = _gameFieldManager.ResolveAbsolutePositionOfHexagon(position);

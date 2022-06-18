@@ -102,7 +102,7 @@ namespace Scripts.InGameLogic
         public void AddPieceToPlayground(IPiece piece, int logicalX, int logicalY, Team team)
         {
             var field = _gameFieldManager.AddPiece(piece, logicalX, logicalY);
-            piece.InitializePiece(field, team, this, _gameFieldManager);
+            piece.InitializePiece(field, team, this, _gameFieldManager, _animationScheduler);
         }
         
         
