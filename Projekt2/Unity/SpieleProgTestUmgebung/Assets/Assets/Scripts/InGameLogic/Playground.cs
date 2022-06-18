@@ -194,7 +194,7 @@ namespace Scripts.InGameLogic
         //Was private in chess mode
         
         /// <summary>
-        /// Creates attack and movement markers for a given piece
+        /// Creates attack, movement and selection markers for a given piece
         /// </summary>
         /// <param name="piece">The piece to select</param>
         /// <returns>True, if any moves or attacks are possible</returns>
@@ -209,8 +209,10 @@ namespace Scripts.InGameLogic
             var movePositions = moveMovements.Select(move => _gameFieldManager.ResolveAbsolutePositionOfHexagon(move));
 
             if (attackMovements.IsEmpty() && moveMovements.IsEmpty()) return false;
+
+            var currentPosition = _gameFieldManager.ResolveAbsolutePositionOfHexagon(piece.Position);
             
-            _markerCreator.CreateAndShowMarkers(movePositions, attackPositions);
+            _markerCreator.CreateAndShowMarkers(movePositions, attackPositions, currentPosition);
             return true;
         }
         
@@ -237,11 +239,14 @@ namespace Scripts.InGameLogic
 
         private float MovePiece(Hexagon destination, IPiece piece)
         {
-            //Remove piece on old hexagon, add piece on new hexagon and update piece hexagon
-            _gameFieldManager.MovePieceToHexField(piece.Position, destination);
             
             //Update piece reference to hexagon and start animation
-            return piece.MoveToPosition(destination);
+            var travelTime = piece.MoveToPosition(destination);
+            
+            //Remove piece on old hexagon, add piece on new hexagon and update piece hexagon
+            _gameFieldManager.MovePieceToHexField(piece.Position, destination);
+
+            return travelTime;
         }
 
         /// <summary>

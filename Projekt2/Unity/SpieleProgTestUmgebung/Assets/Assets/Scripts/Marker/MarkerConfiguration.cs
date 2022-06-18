@@ -24,7 +24,13 @@ namespace Scripts.Marker
         [SerializeField] 
         private GameObject attackPrefab;
         
-
+        /// <summary>
+        /// The prefab of the marker for the currently selected piece
+        /// </summary>
+        /// <value>Required to be set in the inspector</value> 
+        [SerializeField] 
+        private GameObject selectionPrefab;
+        
         /// <summary>
         /// The prefab to instantiate for displaying fields to attack
         /// </summary>
@@ -36,5 +42,13 @@ namespace Scripts.Marker
         /// </summary>
         /// <seealso cref="movementPrefab"/>
         public GameObject MovementPrefab => movementPrefab;
+        
+        /// <summary>
+        /// The prefab to instantiate for displaying the field of
+        /// the currently selected piece
+        /// </summary>
+        /// <seealso cref="selectionPrefab"/>
+        public GameObject SelectionPrefab => movementPrefab;
+        
     }
 }

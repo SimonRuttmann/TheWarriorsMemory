@@ -18,7 +18,8 @@ namespace Scripts.Marker
         /// </summary>
         /// <param name="moves">A collection of positions, where movement markers should be displayed</param>
         /// <param name="attackMoves">A collection of positions, where attack markers should be displayed</param>
-        public void CreateAndShowMarkers(IEnumerable<Vector3> moves, IEnumerable<Vector3> attackMoves);
+        /// <param name="selectionPosition">A position, where the selection marker should be displayed</param>
+        public void CreateAndShowMarkers(IEnumerable<Vector3> moves, IEnumerable<Vector3> attackMoves, Vector3 selectionPosition);
         
         /// <summary>
         /// Removes all markers on the playground
