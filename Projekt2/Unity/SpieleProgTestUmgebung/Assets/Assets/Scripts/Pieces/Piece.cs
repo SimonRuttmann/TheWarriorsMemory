@@ -144,14 +144,14 @@ namespace Scripts.Pieces
 		}
 		
 		
-		public float MoveToPosition(Hexagon position)
+		public float MoveToPosition(Hexagon targetPosition)
 		{
 			var currentPostition = Position;
 			var startCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(currentPostition);
-			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(position);
+			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(targetPosition);
 			// calc angel
 			CalcAngelForMovment(startCoordinates, targetCoordinates);
-			Position = position;
+			Position = targetPosition;
 			var timeToMove = countTimeToMove(transform, targetCoordinates);
 			MoveAnimation(timeToMove);
 			_mover.MoveTo(transform, targetCoordinates, timeToMove);
