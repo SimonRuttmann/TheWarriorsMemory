@@ -192,6 +192,12 @@ namespace Scripts.InGameLogic
         }
 
         //Was private in chess mode
+        
+        /// <summary>
+        /// Creates attack and movement markers for a given piece
+        /// </summary>
+        /// <param name="piece">The piece to select</param>
+        /// <returns>True, if any moves or attacks are possible</returns>
         public bool SelectPiece(IPiece piece)
         {
             _previousSelectedPiece = piece;
