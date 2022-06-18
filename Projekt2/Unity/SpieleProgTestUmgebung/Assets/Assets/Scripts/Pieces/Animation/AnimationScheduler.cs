@@ -92,8 +92,8 @@ namespace Scripts.Pieces.Animation
                 }
                 
                 animationScheduledObject.ClearAnimationStatus();
-                _scheduledObjects.Remove(animationScheduledObject);
             }
+            _scheduledObjects.Clear();
         }
 
         public void StartEndAnimation(float time, IPiece dyingPiece)
