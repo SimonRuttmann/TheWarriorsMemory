@@ -5,10 +5,10 @@ using Scripts.Enums;
 using Scripts.Extensions;
 using Scripts.PieceDeployment;
 using Scripts.Pieces;
+using Scripts.Pieces.Animation;
 using Scripts.Pieces.Interfaces;
 using Scripts.UI;
 using UnityEngine;
-
 
 namespace Scripts.InGameLogic
 {
@@ -25,7 +25,8 @@ namespace Scripts.InGameLogic
         private GameUiManager _gameUIManager;
         private PieceCreator _pieceCreator;
         private PieceDeploymentConfiguration _pieceDeploymentConfiguration;
-
+        private IAnimationScheduler _animationScheduler;
+        
         
         private Player _personPlayer;
         private Player _enemyPlayer;
@@ -55,6 +56,7 @@ namespace Scripts.InGameLogic
             _playground = gameConfiguration.playground;
             _gameUIManager = gameConfiguration.gameUIManager;
             _pieceDeploymentConfiguration = gameConfiguration.pieceDeploymentConfiguration;
+            _animationScheduler = gameConfiguration.animationScheduler;
             
             _playground.InitializeGameManager(this, gameConfiguration);
             _pieceCreator.Initialize(gameConfiguration.pieceModels);
@@ -147,6 +149,17 @@ namespace Scripts.InGameLogic
             return _activePlayer.Team == team;
         }
     
+        /// <summary>
+        /// This methods ends a turn after a given time,
+        /// within the time all user inputs are blocked.
+        /// After the time elapses a new turn is started
+        /// </summary>
+        /// <param name="timeToWait"></param>
+        /// <remarks>
+        /// Regardless if the player or the ai is active we
+        /// schedule the next turn based on a waiting time,
+        /// to avoid multiple actions at the same time
+        /// </remarks>
         public void EndTurn(float timeToWait)
         {
 
@@ -155,24 +168,23 @@ namespace Scripts.InGameLogic
                 EndGame();
                 return;
             }
-
-            if(_activePlayer.Team == Team.Player)
-                GetNextTurn();
-
-            //Schedule the next turn for the ai
-            if(_activePlayer.Team == Team.Enemy)
-                ScheduleNextTurn(timeToWait);
+            
+            ScheduleNextTurn(timeToWait);
         }
 
         
         private void ScheduleNextTurn(float time)
         {
+            _playground.BlockInput = true;
             StartCoroutine(StartNextTurnAfterTime(time));
         }
 
         private IEnumerator StartNextTurnAfterTime(float time)
         {
             yield return new WaitForSeconds(time);
+
+            //Start next turn and enable user inputs on field
+            _playground.BlockInput = false;
             GetNextTurn();
         }       
 
@@ -200,8 +212,8 @@ namespace Scripts.InGameLogic
 
                 _turnCounter--;
                 ActivePiece = _turnOrderActivePlayer[_turnCounter];
-
-
+                _animationScheduler.StartAnimation(4f, ActivePiece, AnimationStatus.Select);
+                
                 if (_activePlayer.Team == Team.Player)
                 {
                     var areMovesAvailable = _playground.SelectPiece(ActivePiece);

@@ -9,6 +9,7 @@ using Scripts.InGameLogic;
 using Scripts.PieceMovement;
 using Scripts.Pieces.Interfaces;
 using Scripts.Toolbox;
+using Scripts.UI;
 using UnityEngine;
 
 namespace Scripts.Pieces

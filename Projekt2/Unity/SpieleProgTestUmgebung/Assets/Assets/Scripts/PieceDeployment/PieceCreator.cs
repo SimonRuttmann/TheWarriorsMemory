@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Scripts.Enums;
-using Scripts.Pieces;
 using Scripts.Pieces.Enums;
 using UnityEngine;
 

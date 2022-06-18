@@ -1,25 +1,23 @@
-using System;
 using Scripts.Enums;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Scripts.UI
 {
 	public class GameUiManager : MonoBehaviour
 	{
-		[SerializeField] private GameObject _menuObject;
+		[SerializeField] private GameObject menuObject;
 		private Menu _menu;
 
 		//Wird beim Start ausgef�hrt
 		//Beim ersten Start
 		private void Awake()
 		{
-			_menu = _menuObject.GetComponent<Menu>();
+			_menu = menuObject.GetComponent<Menu>();
 		}
 
 		public void StartUi()
 		{
-			_menuObject.SetActive(true);
+			menuObject.SetActive(true);
 			_menu.OpenMainMenu();
 		}
 

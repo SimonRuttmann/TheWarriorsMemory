@@ -9,7 +9,7 @@ namespace Scripts.InGameLogic
 	
 	public class Player
 	{
-		public readonly Team Team;
+		public Team Team { get; }
 		
 		public IList<IPiece> RemainingPiecesOfPlayer { get; } = new List<IPiece>();
 		
