@@ -22,13 +22,13 @@ namespace Scripts.Pieces.Animation
             AnimationStatus = AnimationStatus.Nothing;
         }
         
-        public readonly IPiece Piece;
+        public IPiece Piece { get; }
         
-        public AnimationStatus AnimationStatus;
+        public AnimationStatus AnimationStatus { get; private set; }
         
-        public readonly float RotationValue;
+        public float RotationValue { get; }
         
-        public readonly Hexagon TargetPosition;
+        public Hexagon TargetPosition { get; }
 
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Scripts.Extensions;
 using Scripts.Toolbox;
-using UnityEngine;
 
 namespace Scripts.GameField
 {
@@ -41,8 +40,7 @@ namespace Scripts.GameField
             var adjustedRowAndColumn = GetAdjustedRowAndColumn(relX, relY, row, column, gridHeight, gridWidth);
             var adjustedRow = adjustedRowAndColumn.First;
             var adjustedColumn = adjustedRowAndColumn.Second;
-            Debug.Log("Width: " + column + "Height: " + row);
-            Debug.Log("Adjusted Width: " + adjustedColumn + "Adjusted Height: " + adjustedRow);
+         
             return new Pair<int>(adjustedRow, adjustedColumn);
         }
 

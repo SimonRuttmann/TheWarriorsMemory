@@ -1,110 +1,112 @@
 using System;
 using Scripts.InGameLogic;
-using Scripts.UI;
 using UnityEngine;
 
-public class Menu : MonoBehaviour,IMenu
+namespace Scripts.UI
 {
-    private enum MenuState
+    public class Menu : MonoBehaviour,IMenu
     {
-        Closed,
-        Main,
-        Ingame
-    }
-     private GameObject _menu;
-    private GameObject _mainmenu;
-    private GameObject _ingamemenu;
+        private enum MenuState
+        {
+            Closed,
+            Main,
+            Ingame
+        }
+        private GameObject _menu;
+        private GameObject _mainmenu;
+        private GameObject _ingamemenu;
 
-    [SerializeField] private InGameManager _inGameManager;
-    private void Awake()
-    {
-        _menu = GameObject.FindGameObjectWithTag("Menu");
-        var menuborder = _menu.transform.Find("Menuborder");
+        [SerializeField] private InGameManager inGameManager;
+        private void Awake()
+        {
+            _menu = GameObject.FindGameObjectWithTag("Menu");
+            var menuborder = _menu.transform.Find("Menuborder");
 
-        var main =menuborder.transform.Find("MainMenu");
-        var ingame = menuborder.transform.Find("IngameMenu");
+            var main =menuborder.transform.Find("MainMenu");
+            var ingame = menuborder.transform.Find("IngameMenu");
         
-        if(main == null || ingame == null) Debug.LogError("Submenus could not be fetched");
+            if(main == null || ingame == null) Debug.LogError("Submenus could not be fetched");
 
-        _mainmenu = main.gameObject;
-        _ingamemenu = ingame.gameObject;
-    }
-
-    public void NewGame()
-    {
-        if (_inGameManager.GameState.Equals(GameState.InGame))
-        {
-            _inGameManager.RestartGame();    
+            _mainmenu = main.gameObject;
+            _ingamemenu = ingame.gameObject;
         }
-        else
+
+        public void NewGame()
         {
-            _inGameManager.StartNewGame();
+            if (inGameManager.GameState.Equals(GameState.InGame))
+            {
+                inGameManager.RestartGame();    
+            }
+            else
+            {
+                inGameManager.StartNewGame();
+            }
+            ChangeToMenuType(MenuState.Closed);
         }
-        ChangeToMenuType(MenuState.Closed);
-    }
 
-    public void LoadGame()
-    {
-        Debug.Log("Load Game");
-        //todo load selected game state
-    }
-
-    public void RestartGame()
-    {
-        _inGameManager.RestartGame();
-        ChangeToMenuType(MenuState.Closed);
-    }
-
-    public void CloseGame()
-    {
-        Debug.Log("Close Game, only applicable in a .exe");
-        Application.Quit();
-    }
-
-    public void BackToTitleScreen()
-    {
-        ChangeToMenuType(MenuState.Main);
-    }
-
-    public void SaveGame()
-    {
-        Debug.Log("SaveGame");
-        //todo run funtion to save game, maybe open file browser
-    }
-
-    public void ContinueGame()
-    {
-        _menu.SetActive(false);
-    }
-
-    public void OpenIngameMenu()
-    {
-        ChangeToMenuType(MenuState.Ingame);
-    }
-
-    public void OpenMainMenu()
-    {
-        _menu.SetActive(true);
-        ChangeToMenuType(MenuState.Main);
-    }
-
-    private void ChangeToMenuType(MenuState state)
-    {
-        switch (state)
+        public void LoadGame()
         {
-            case MenuState.Main:
-                _ingamemenu.SetActive(false);
-                _mainmenu.SetActive(true);
-                break;
-            case MenuState.Ingame:
-                _mainmenu.SetActive(false);
-                _ingamemenu.SetActive(true);
-                break;
-            case MenuState.Closed:
-                _menu.SetActive(false);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            Debug.Log("Load Game");
+            //todo load selected game state
+        }
+
+        public void RestartGame()
+        {
+            inGameManager.RestartGame();
+            ChangeToMenuType(MenuState.Closed);
+        }
+
+        public void CloseGame()
+        {
+            Debug.Log("Close Game, only applicable in a .exe");
+            Application.Quit();
+        }
+
+        public void BackToTitleScreen()
+        {
+            ChangeToMenuType(MenuState.Main);
+        }
+
+        public void SaveGame()
+        {
+            Debug.Log("SaveGame");
+            //todo run funtion to save game, maybe open file browser
+        }
+
+        public void ContinueGame()
+        {
+            _menu.SetActive(false);
+        }
+
+        public void OpenIngameMenu()
+        {
+            ChangeToMenuType(MenuState.Ingame);
+        }
+
+        public void OpenMainMenu()
+        {
+            _menu.SetActive(true);
+            ChangeToMenuType(MenuState.Main);
+        }
+
+        private void ChangeToMenuType(MenuState state)
+        {
+            switch (state)
+            {
+                case MenuState.Main:
+                    _ingamemenu.SetActive(false);
+                    _mainmenu.SetActive(true);
+                    break;
+                case MenuState.Ingame:
+                    _mainmenu.SetActive(false);
+                    _ingamemenu.SetActive(true);
+                    break;
+                case MenuState.Closed:
+                    _menu.SetActive(false);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
         }
     }
 }
