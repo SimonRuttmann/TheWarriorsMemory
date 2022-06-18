@@ -2193,7 +2193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0dc37dbd0c2bc41b29ee970f117f79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menuObject: {fileID: 2796141948722979840}
+  menuObject: {fileID: 2796141948722979840}
 --- !u!114 &963057321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2280,8 +2280,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0de7b9bfa5c5df4aa3f1d29ae08e66d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pieceDeploymentConfiguration: {fileID: 11400000, guid: dacd0c160f3c0f34fab6778fefda8925, type: 2}
-  gameFieldTerrainConfiguration: {fileID: 11400000, guid: b136961b26c8bd84b87b2be655419d68, type: 2}
+  pieceDeploymentConfiguration: {fileID: 11400000, guid: dacd0c160f3c0f34fab6778fefda8925,
+    type: 2}
+  gameFieldTerrainConfiguration: {fileID: 11400000, guid: b136961b26c8bd84b87b2be655419d68,
+    type: 2}
   playground: {fileID: 963057325}
   gameUIManager: {fileID: 963057320}
   gameFieldPhysicalConfiguration:
@@ -2289,9 +2291,12 @@ MonoBehaviour:
     size: 8
     startPoint: {fileID: 1198473199}
   markerConfiguration:
-    movementPrefab: {fileID: 8023265488517252142, guid: ff84e9b27ec84ed4ca060bb1dbc09d25, type: 3}
-    attackPrefab: {fileID: 5534062665509555497, guid: d11bb75ec22f1974886081820b0ccb82, type: 3}
-    selectionPrefab: {fileID: 5486293719581882342, guid: 253a3fc6e41f7d54fab5b65b86d2128d, type: 3}
+    movementPrefab: {fileID: 8023265488517252142, guid: ff84e9b27ec84ed4ca060bb1dbc09d25,
+      type: 3}
+    attackPrefab: {fileID: 5534062665509555497, guid: d11bb75ec22f1974886081820b0ccb82,
+      type: 3}
+    selectionPrefab: {fileID: 5486293719581882342, guid: 253a3fc6e41f7d54fab5b65b86d2128d,
+      type: 3}
   pieceCreator: {fileID: 963057324}
   gameFieldManager: {fileID: 963057323}
   markerCreator: {fileID: 963057322}
@@ -4735,7 +4740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42bbd1efeac89d146936d0970444b30f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inGameManager: {fileID: 963057326}
+  inGameManager: {fileID: 963057326}
 --- !u!114 &2796141948722979870
 MonoBehaviour:
   m_ObjectHideFlags: 0
