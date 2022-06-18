@@ -61,7 +61,7 @@ namespace Scripts.GameField
             hexagon.Piece = Piece;
             Piece.Position = hexagon;
 
-            hexagon.Piece = null;
+            Piece = null;
         }
 
         public void AddPiece(IPiece pieceToAdd)
