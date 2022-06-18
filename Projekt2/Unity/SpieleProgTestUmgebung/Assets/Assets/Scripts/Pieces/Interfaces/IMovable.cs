@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Scripts.GameField;
+using UnityEngine;
 
 namespace Scripts.Pieces.Interfaces
 {
@@ -13,5 +14,7 @@ namespace Scripts.Pieces.Interfaces
         public void RotatePiece(float rotationAngle);
 
         public float MoveToPosition(Hexagon position);
+
+        public void MoveStraight(Vector3 targetCoordinates, float travelTime, Transform transform);
     }
 }

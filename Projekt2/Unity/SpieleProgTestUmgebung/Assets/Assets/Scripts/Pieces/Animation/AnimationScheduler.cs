@@ -59,17 +59,25 @@ namespace Scripts.Pieces.Animation
         
         public void StartAnimation(float time, IPiece piece, AnimationStatus animationStatus)
         {
-            StartCoroutine(AnimationManager(time, piece, animationStatus));
+            StartCoroutine(AnimationManager(time: time, piece: piece, animationStatus: animationStatus));
+        }
+
+        public void MoveStraight(float time, IPiece piece, Vector3 targetCoordinates, float travelTime, Transform transform, AnimationStatus animationStatus)
+        {
+            StartCoroutine(AnimationManager(time: time, piece: piece, animationStatus: animationStatus, targetCoordinates: targetCoordinates, travelTime: travelTime, transform:transform));
         }
 
 
-        private IEnumerator AnimationManager(float time, IPiece piece, AnimationStatus animationStatus)
+        private IEnumerator AnimationManager(float time, IPiece piece, AnimationStatus animationStatus, Vector3 targetCoordinates = new Vector3(), float travelTime = 0f, Transform transform = null)
         {
             yield return new WaitForSeconds(time);
 
             _scheduledObjects.Add(new AnimationSchedulerObject(
                 piece: piece, 
-                animationStatus: animationStatus));
+                animationStatus: animationStatus,
+                targetCoordinates: targetCoordinates,
+                travelTime: travelTime,
+                transform: transform));
         }
 
 
@@ -88,6 +96,7 @@ namespace Scripts.Pieces.Animation
                     case AnimationStatus.Pain:    animationScheduledObject.Piece.PainAnimation(); break;
                     case AnimationStatus.Die:     animationScheduledObject.Piece.DyingAnimation(); break;
                     case AnimationStatus.Delete:  DestroyPiece(animationScheduledObject.Piece); break;
+                    case AnimationStatus.MoveStraight: animationScheduledObject.Piece.MoveStraight(animationScheduledObject.TargetCoordinates, animationScheduledObject.TravelTime, animationScheduledObject.Transform); Debug.Log("here") ; break;
                     default: throw new ArgumentOutOfRangeException();
                 }
                 

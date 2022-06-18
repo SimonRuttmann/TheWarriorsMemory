@@ -9,7 +9,8 @@
         Delete, 
         Select,
         Move, 
-        Rotate
+        Rotate,
+        MoveStraight,
     }
     
 }

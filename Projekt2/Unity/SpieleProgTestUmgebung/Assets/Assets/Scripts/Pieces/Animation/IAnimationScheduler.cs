@@ -1,5 +1,6 @@
 ﻿using Scripts.GameField;
 using Scripts.Pieces.Interfaces;
+using UnityEngine;
 
 namespace Scripts.Pieces.Animation
 {
@@ -14,5 +15,7 @@ namespace Scripts.Pieces.Animation
         public void RotatePiece(float time, IPiece rotatingPiece, float rotationValue);
         
         public void StartEndAnimation(float time, IPiece dyingPiece);
+
+        public void MoveStraight(float time, IPiece piece, Vector3 targetCoordinates, float travelTime, Transform transform, AnimationStatus animationStatus);
     }
 }

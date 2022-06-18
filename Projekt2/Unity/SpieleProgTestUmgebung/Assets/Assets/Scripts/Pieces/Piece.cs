@@ -89,7 +89,7 @@ namespace Scripts.Pieces
 		public void SelectionAnimation()
 		{
 			_animator.SetTrigger(SelectionTrigger);
-			selectionSound.Play();    
+			selectionSound.Play();
 		}
 
 		public void DyingAnimation()
@@ -155,26 +155,55 @@ namespace Scripts.Pieces
 			var startCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(currentPosition);
 			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(targetPosition);
 
+			var travelTime = _mover.CalculateMovementDuration(transform, targetCoordinates);
+
+			if(travelTime == 0f)
+            {
+				MoveAnimation(travelTime);
+				_mover.MoveTo(transform, targetCoordinates);
+				return travelTime;
+			}
+
+
 			// calc angel
 			Pair<Double> rotationAngel = RotationCalculator.CalcAngelForRunner(_gameFieldManager, this, targetPosition);
 
+
 			if(this.Team == Team.Player)
             {
-				RotatePiece((float)rotationAngel.First);
+				_animationScheduler.RotatePiece(0f, this, (float)rotationAngel.First); 
 			}
             else
             {
-				RotatePiece((float)rotationAngel.First - 180);
+				_animationScheduler.RotatePiece(0f, this, (float)rotationAngel.First- 180);
 			}
-		
-			var travelTime = _mover.CalculateMovementDuration(transform, targetCoordinates);
-			MoveAnimation(travelTime);
 			
-			_mover.MoveTo(transform, targetCoordinates);
+			Transform TransformTest = transform;
+
+			//_mover.MoveTo(transform, targetCoordinates);
+			
+			_animationScheduler.MoveStraight(1f, this, targetCoordinates, travelTime, TransformTest, AnimationStatus.MoveStraight);
+
+			
 			
 			return travelTime;
 		}
 		
+		public void MoveStraight(Vector3 targetCoordinates, float travelTime, Transform transform)
+        {
+			
+			MoveAnimation(travelTime);
+			_mover.MoveTo(transform, targetCoordinates);
+			if (this.Team == Team.Player)
+			{
+				_animationScheduler.RotatePiece(travelTime, this, 90);
+			}
+			else
+			{
+				_animationScheduler.RotatePiece(travelTime, this, -90);
+			}
+
+		}
 
 		#endregion
 		
