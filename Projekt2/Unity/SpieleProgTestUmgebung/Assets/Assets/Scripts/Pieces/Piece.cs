@@ -146,17 +146,20 @@ namespace Scripts.Pieces
 		
 		public float MoveToPosition(Hexagon targetPosition)
 		{
-			var currentPostition = Position;
-			var startCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(currentPostition);
+			var currentPosition = Position;
+			
+			var startCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(currentPosition);
 			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(targetPosition);
+			
 			// calc angel
 			CalcAngelForMovment(startCoordinates, targetCoordinates);
-			Position = targetPosition;
-			var timeToMove = countTimeToMove(transform, targetCoordinates);
-			MoveAnimation(timeToMove);
-			_mover.MoveTo(transform, targetCoordinates, timeToMove);
+		
+			var travelTime = _mover.CalculateMovementDuration(transform, targetCoordinates);
+			MoveAnimation(travelTime);
 			
-			return timeToMove;
+			_mover.MoveTo(transform, targetCoordinates);
+			
+			return travelTime;
 		}
 
 		public float CalcAngelForMovment(Vector3 start,Vector3 finish)
@@ -167,14 +170,6 @@ namespace Scripts.Pieces
 			return 0f;
 		}
 		
-		private const float MovementSpeed = 30;
-		private float countTimeToMove(Transform pieceTransform, Vector3 targetPosition)
-        {
-			if (pieceTransform.gameObject.ToString().Contains("Mage")) { return 1; }
-			var distance = Vector3.Distance(targetPosition, pieceTransform.position);
-			var duration = distance / MovementSpeed;
-			return duration;
-		}
 
 		#endregion
 		
@@ -235,6 +230,7 @@ namespace Scripts.Pieces
 
 			AddDefaultStats();
 			_healthBar.SetMaxHealth(Health);
+			_healthBar.SetTeam(Team);
 		}		
 
 		#endregion

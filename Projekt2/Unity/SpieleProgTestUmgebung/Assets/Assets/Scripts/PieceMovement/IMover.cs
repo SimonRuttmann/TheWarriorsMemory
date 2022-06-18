@@ -4,6 +4,10 @@ namespace Scripts.PieceMovement
 {
 	public interface IMover
 	{
-		public float MoveTo(Transform pieceTransform, Vector3 targetPosition, float duration);
+		
+		public float CalculateMovementDuration(Transform pieceTransform, Vector3 targetPosition);
+		
+		public void MoveTo(Transform pieceTransform, Vector3 targetPosition);
+		
 	}
 }

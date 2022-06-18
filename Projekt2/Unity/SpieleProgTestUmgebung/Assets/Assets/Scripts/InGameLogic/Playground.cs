@@ -67,27 +67,9 @@ namespace Scripts.InGameLogic
         }
         
         #endregion
-
         
-        #region BlockInput
+        public bool BlockInput { get; set; }
 
-        private bool _blocker;
-        
-        
-        private void BlockInput(float time)
-        {
-            _blocker = true;
-            StartCoroutine(EnableInputAfterTime(time));
-        }
-
-        private IEnumerator EnableInputAfterTime(float time)
-        {
-            yield return new WaitForSeconds(time);
-            _blocker = false;
-
-        }        
-
-        #endregion
         
         private IPiece _previousSelectedPiece;
         
@@ -132,7 +114,7 @@ namespace Scripts.InGameLogic
             if (_inGameManager.GameState != GameState.InGame) return;
             
             //Block inputs while animation
-            if (_blocker) return;
+            if (BlockInput) return;
             
             //Block inputs, while enemy executes turns
             if (_inGameManager.IsTurnOf(Team.Enemy)) return;
@@ -145,56 +127,19 @@ namespace Scripts.InGameLogic
             if (field == null) return;
             
             _inGameManager.ActivePiece.GenerateAllPossibleMovements();
-            //New logic
+            
             // Piece was selected from InGameManager and click on movable field
             if (_inGameManager.ActivePiece.IsAnyMovementPossibleTo(field))
             { 
                 OnSelectedPieceMove(field, _inGameManager.ActivePiece);
             }
             
-            /* Old chesslike logic
-             
-              var piece = field.Piece;
-             
-            if (_previousSelectedPiece == null)
-            {
-                if (piece == null || !_inGameManager.IsTurnOf(piece.Team)) return;
-             
-                // No preselection and click on piece within the players turn -> select piece
-                piece.IdleAnimation();
-                SelectPiece(piece);
-                return;
-            }
-
-
-            // Select piece twice -> deselect
-            if (piece != null && _previousSelectedPiece == piece)
-            {
-                DeselectPiece();
-                return;
-            }
-                
-            // Select piece while in players turn
-            if (piece != null && _inGameManager.IsTurnOf(piece.Team))
-            { 
-                piece.IdleAnimation();
-                SelectPiece(piece);
-                return;
-            }
-
-            // Piece was selected and click on movable field
-            if (_previousSelectedPiece.IsAnyMovementPossibleTo(field))
-            { 
-                OnSelectedPieceMove(field, _previousSelectedPiece);
-            }
-            */
-
+         
         }
 
-        //Was private in chess mode
         
         /// <summary>
-        /// Creates attack and movement markers for a given piece
+        /// Creates attack, movement and selection markers for a given piece
         /// </summary>
         /// <param name="piece">The piece to select</param>
         /// <returns>True, if any moves or attacks are possible</returns>
@@ -209,8 +154,10 @@ namespace Scripts.InGameLogic
             var movePositions = moveMovements.Select(move => _gameFieldManager.ResolveAbsolutePositionOfHexagon(move));
 
             if (attackMovements.IsEmpty() && moveMovements.IsEmpty()) return false;
+
+            var currentPosition = _gameFieldManager.ResolveAbsolutePositionOfHexagon(piece.Position);
             
-            _markerCreator.CreateAndShowMarkers(movePositions, attackPositions);
+            _markerCreator.CreateAndShowMarkers(movePositions, attackPositions, currentPosition);
             return true;
         }
         
@@ -219,7 +166,7 @@ namespace Scripts.InGameLogic
             _previousSelectedPiece = null;
             _markerCreator.DestroyMarkers();
         }
-        //Was private in chess mode
+        
         public void OnSelectedPieceMove(Hexagon destination, IPiece piece)
         {
             float waitingTime;
@@ -231,16 +178,18 @@ namespace Scripts.InGameLogic
                 waitingTime = MovePiece(destination, piece);
             
             DeselectPiece();
+            
             _inGameManager.EndTurn(waitingTime);
 
         }
+        
 
         private float MovePiece(Hexagon destination, IPiece piece)
         {
-
+            
             //Update piece reference to hexagon and start animation
             var travelTime = piece.MoveToPosition(destination);
-
+            
             //Remove piece on old hexagon, add piece on new hexagon and update piece hexagon
             _gameFieldManager.MovePieceToHexField(piece.Position, destination);
 
@@ -260,16 +209,15 @@ namespace Scripts.InGameLogic
             pieceToHit.Health -= attackDmg;
 
             var isKilled = pieceToHit.Health <= 0;
-
+            
+            var waitingTime = StartConflict(selectedPiece, pieceToHit, isKilled);
+            
             if (isKilled)
             {
                 //Remove piece from hexagon and player
                 _gameFieldManager.RemovePieceOnHexField(pieceToHit.Position);
                 _inGameManager.OnPieceRemoved(pieceToHit);
             }
-            
-            var waitingTime = StartConflict(selectedPiece, pieceToHit, isKilled);
-
             return waitingTime;
         }
         
@@ -375,7 +323,6 @@ namespace Scripts.InGameLogic
                 _animationScheduler.RotatePiece(6f, hitPiece, rotateBackHit);   
             }
             
-            BlockInput(7f);
             return 7f;
       }
       
