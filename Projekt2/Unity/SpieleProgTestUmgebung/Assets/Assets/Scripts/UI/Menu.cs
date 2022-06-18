@@ -10,12 +10,15 @@ namespace Scripts.UI
         {
             Closed,
             Main,
-            Ingame
+            Ingame,
+            Endscreen
         }
         private GameObject _menu;
         private GameObject _mainmenu;
         private GameObject _ingamemenu;
-
+        private GameObject _endScreen;
+        
+        
         [SerializeField] private InGameManager inGameManager;
         private void Awake()
         {
@@ -24,11 +27,13 @@ namespace Scripts.UI
 
             var main =menuborder.transform.Find("MainMenu");
             var ingame = menuborder.transform.Find("IngameMenu");
-        
+            var endscreen = _menu.transform.Find("EndScreen");
+            
             if(main == null || ingame == null) Debug.LogError("Submenus could not be fetched");
 
             _mainmenu = main.gameObject;
             _ingamemenu = ingame.gameObject;
+            _endScreen = endscreen.gameObject;
         }
 
         public void NewGame()
@@ -43,13 +48,7 @@ namespace Scripts.UI
             }
             ChangeToMenuType(MenuState.Closed);
         }
-
-        public void LoadGame()
-        {
-            Debug.Log("Load Game");
-            //todo load selected game state
-        }
-
+        
         public void RestartGame()
         {
             inGameManager.RestartGame();
@@ -60,17 +59,6 @@ namespace Scripts.UI
         {
             Debug.Log("Close Game, only applicable in a .exe");
             Application.Quit();
-        }
-
-        public void BackToTitleScreen()
-        {
-            ChangeToMenuType(MenuState.Main);
-        }
-
-        public void SaveGame()
-        {
-            Debug.Log("SaveGame");
-            //todo run funtion to save game, maybe open file browser
         }
 
         public void ContinueGame()
@@ -85,10 +73,15 @@ namespace Scripts.UI
 
         public void OpenMainMenu()
         {
+            _endScreen.SetActive(false);
             _menu.SetActive(true);
             ChangeToMenuType(MenuState.Main);
         }
 
+        public void OpenEndScreen()
+        {
+            ChangeToMenuType(MenuState.Endscreen);
+        }
         private void ChangeToMenuType(MenuState state)
         {
             switch (state)
@@ -103,6 +96,9 @@ namespace Scripts.UI
                     break;
                 case MenuState.Closed:
                     _menu.SetActive(false);
+                    break;
+                case MenuState.Endscreen:
+                    _endScreen.SetActive(true);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);

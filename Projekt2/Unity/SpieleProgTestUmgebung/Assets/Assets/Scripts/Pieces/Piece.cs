@@ -310,6 +310,8 @@ namespace Scripts.Pieces
 		
 		public ISet<Hexagon> GenerateAllPossibleMovements()
 		{
+			_allPossibleMovements.Clear();
+			
 			var attacks = GeneratePossibleAttackMovements();
 			var moves = GeneratePossibleMoveMovements();
 			
