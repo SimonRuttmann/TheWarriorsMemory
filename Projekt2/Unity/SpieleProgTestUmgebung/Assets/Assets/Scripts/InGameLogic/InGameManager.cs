@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Scripts.AI;
 using Scripts.Enums;
 using Scripts.Extensions;
+using Scripts.GameField;
 using Scripts.PieceDeployment;
 using Scripts.Pieces;
 using Scripts.Pieces.Animation;
@@ -230,12 +231,26 @@ namespace Scripts.InGameLogic
                 }
 
                 var destination = _ai.GetAiMove(gameConfiguration.gameFieldManager, _personPlayer.RemainingPiecesOfPlayer, ActivePiece);
-                _playground.OnSelectedPieceMove(destination, ActivePiece);
+                ScheduleAiMove(AnimationConstants.SelectAnimationDuration, destination, ActivePiece);
                 
                 return;
             }
         }
+        
+        
+        private void ScheduleAiMove(float time, Hexagon destination, IPiece piece)
+        {
+            StartCoroutine(StartMoveAfterTime(time, destination, piece));
+        }
 
+        private IEnumerator StartMoveAfterTime(float time, Hexagon destination, IPiece piece)
+        {
+            yield return new WaitForSeconds(time);
+
+            //Start the ai move
+            _playground.OnSelectedPieceMove(destination, piece);
+        }   
+        
         private void EndGame()
         {
             _gameUIManager.OnGameFinished(_activePlayer.Team.ToString());
