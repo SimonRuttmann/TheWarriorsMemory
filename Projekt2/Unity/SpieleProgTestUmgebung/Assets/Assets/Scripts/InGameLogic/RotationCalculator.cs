@@ -8,23 +8,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class RotationCalculator {
-    public static Pair<Double> CalcAngelForRunner(GameFieldManager _gameFieldManager, IPiece runnerPiece, Hexagon moveToCoordinates)
+    public static Pair<Double> CalcAngelForRunner(IGameFieldManager _gameFieldManager, IPiece runnerPiece, Hexagon moveToCoordinates)
     {
         return CalcAngelForRotation(_gameFieldManager, runnerPiece: runnerPiece, moveToCoordinates: moveToCoordinates);
     }
 
-    public static Pair<Double> CalcAngelForConflict(GameFieldManager _gameFieldManager, IPiece attackingPiece, IPiece hitPiece)
+    public static Pair<Double> CalcAngelForConflict(IGameFieldManager _gameFieldManager, IPiece attackingPiece, IPiece hitPiece)
     {
-        return CalcAngelForRotation(_gameFieldManager, attackingPiece: attackingPiece, hitPiece: hitPiece);
+        return CalcAngelForRotation(_gameFieldManager, attackingPiece: attackingPiece, hitPiece: hitPiece, attack: true);
     }
 
-    private static Pair<Double> CalcAngelForRotation(GameFieldManager _gameFieldManager, IPiece attackingPiece = null, IPiece hitPiece = null, IPiece runnerPiece = null, Hexagon moveToCoordinates = null, bool attack = false)
+    private static Pair<Double> CalcAngelForRotation(IGameFieldManager _gameFieldManager, IPiece attackingPiece = null, IPiece hitPiece = null, IPiece runnerPiece = null, Hexagon moveToCoordinates = null, bool attack = false)
     {
         IPiece piecePlayer, pieceEnemy;
-        Vector3 absolutePositionAttackerOrStart, absolutePositionHitPieceOrFinish, absolutePositionRunner, absolutePostitionFinish;
+        Vector3 absolutePositionAttackerOrStart, absolutePositionHitPieceOrFinish;
 
         //Rückgaben
-        Double rotationPointAttacker, rotationPointDefender, rotationPointRunner;
+        Double rotationPointAttacker, rotationPointDefender;
 
         bool movePlayer;
 
