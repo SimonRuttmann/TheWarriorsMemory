@@ -155,8 +155,10 @@ namespace Scripts.InGameLogic
                 EndGame();
                 return;
             }
-            
-            ScheduleNextTurn(timeToWait);
+
+            //Schedule the next turn for the ai
+            if(_activePlayer.Team == Team.Enemy)
+                ScheduleNextTurn(timeToWait);
         }
 
         
@@ -191,7 +193,6 @@ namespace Scripts.InGameLogic
                 {
                     ChangeActiveTeam();
                     PrepareTurn();
-                    return;
                 }
 
                 _turnCounter--;
