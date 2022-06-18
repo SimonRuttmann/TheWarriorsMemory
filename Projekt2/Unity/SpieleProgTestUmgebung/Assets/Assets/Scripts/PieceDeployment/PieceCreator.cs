@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Scripts.Enums;
-using Scripts.Pieces;
 using Scripts.Pieces.Enums;
 using UnityEngine;
 
@@ -32,8 +30,9 @@ namespace Scripts.PieceDeployment
         {
             foreach (var model in pieceModels)
             {
-                Debug.Log(model.ToString());
+                
                 var modelName = model.ToString();
+                
                 //Split the first part, to receive its actual name
                 //E.g. ArcherEnemy (Scripts.Pieces.Archer) -> ArcherEnemy
                 modelName = modelName.Split(' ')[0];

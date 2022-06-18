@@ -4,10 +4,10 @@
     {
         Nothing, 
         Die, 
-        Attack, 
-        Idle, 
+        Attack,
         Pain,
         Delete, 
+        Select,
         Move, 
         Rotate
     }

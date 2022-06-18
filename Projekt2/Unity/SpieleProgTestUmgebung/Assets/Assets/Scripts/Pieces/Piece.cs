@@ -7,8 +7,10 @@ using Scripts.Extensions;
 using Scripts.GameField;
 using Scripts.InGameLogic;
 using Scripts.PieceMovement;
+using Scripts.Pieces.Animation;
 using Scripts.Pieces.Interfaces;
 using Scripts.Toolbox;
+using Scripts.UI;
 using UnityEngine;
 
 namespace Scripts.Pieces
@@ -72,6 +74,8 @@ namespace Scripts.Pieces
 		
 		[NonSerialized]
 		private Animator _animator;
+
+		private IAnimationScheduler _animationScheduler;
 		
 		private static readonly int SelectionTrigger = Animator.StringToHash("SelectionTrigger");
 		private static readonly int DyingTrigger = Animator.StringToHash("DyingTrigger");
@@ -170,14 +174,6 @@ namespace Scripts.Pieces
 			
 			return travelTime;
 		}
-
-		public float CalcAngelForMovment(Vector3 start,Vector3 finish)
-        {
-			float xDiff = finish.x - start.x;
-			float zDiff = finish.z - start.z;
-		    double i =  Math.Atan2(zDiff, xDiff) * 180.0 / Math.PI;
-			return 0f;
-		}
 		
 
 		#endregion
@@ -225,12 +221,14 @@ namespace Scripts.Pieces
 			}
 		}
 	
-		public virtual void InitializePiece(Hexagon position, Team team, Playground ground, IGameFieldManager gameFieldManager)
+		public void InitializePiece(Hexagon position, Team team, Playground ground, 
+			IGameFieldManager gameFieldManager, IAnimationScheduler animationScheduler)
 		{
 			Team = team;
 			Position = position;
 			playground = ground;
 			_gameFieldManager = gameFieldManager;
+			_animationScheduler = animationScheduler;
 			
 			//Place piece on the correct position in the playground
 			transform.position = _gameFieldManager.ResolveAbsolutePositionOfHexagon(position);
