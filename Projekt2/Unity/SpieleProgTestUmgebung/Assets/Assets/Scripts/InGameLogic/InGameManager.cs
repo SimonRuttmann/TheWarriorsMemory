@@ -147,6 +147,17 @@ namespace Scripts.InGameLogic
             return _activePlayer.Team == team;
         }
     
+        /// <summary>
+        /// This methods ends a turn after a given time,
+        /// within the time all user inputs are blocked.
+        /// After the time elapses a new turn is started
+        /// </summary>
+        /// <param name="timeToWait"></param>
+        /// <remarks>
+        /// Regardless if the player or the ai is active we
+        /// schedule the next turn based on a waiting time,
+        /// to avoid multiple actions at the same time
+        /// </remarks>
         public void EndTurn(float timeToWait)
         {
 
@@ -155,24 +166,23 @@ namespace Scripts.InGameLogic
                 EndGame();
                 return;
             }
-
-            if(_activePlayer.Team == Team.Player)
-                GetNextTurn();
-
-            //Schedule the next turn for the ai
-            if(_activePlayer.Team == Team.Enemy)
-                ScheduleNextTurn(timeToWait);
+            
+            ScheduleNextTurn(timeToWait);
         }
 
         
         private void ScheduleNextTurn(float time)
         {
+            _playground.BlockInput = true;
             StartCoroutine(StartNextTurnAfterTime(time));
         }
 
         private IEnumerator StartNextTurnAfterTime(float time)
         {
             yield return new WaitForSeconds(time);
+
+            //Start next turn and enable user inputs on field
+            _playground.BlockInput = false;
             GetNextTurn();
         }       
 
