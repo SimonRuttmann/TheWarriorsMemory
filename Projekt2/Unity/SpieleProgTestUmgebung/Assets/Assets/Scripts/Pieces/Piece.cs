@@ -150,9 +150,18 @@ namespace Scripts.Pieces
 			
 			var startCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(currentPosition);
 			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(targetPosition);
-			
+
 			// calc angel
-			CalcAngelForMovment(startCoordinates, targetCoordinates);
+			Pair<Double> rotationAngel = RotationCalculator.CalcAngelForRunner(_gameFieldManager, this, targetPosition);
+
+			if(this.Team == Team.Player)
+            {
+				RotatePiece((float)rotationAngel.First);
+			}
+            else
+            {
+				RotatePiece((float)rotationAngel.First - 180);
+			}
 		
 			var travelTime = _mover.CalculateMovementDuration(transform, targetCoordinates);
 			MoveAnimation(travelTime);
