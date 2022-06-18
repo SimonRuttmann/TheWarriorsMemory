@@ -262,16 +262,15 @@ namespace Scripts.InGameLogic
             pieceToHit.Health -= attackDmg;
 
             var isKilled = pieceToHit.Health <= 0;
-
+            
+            var waitingTime = StartConflict(selectedPiece, pieceToHit, isKilled);
+            
             if (isKilled)
             {
                 //Remove piece from hexagon and player
                 _gameFieldManager.RemovePieceOnHexField(pieceToHit.Position);
                 _inGameManager.OnPieceRemoved(pieceToHit);
             }
-            
-            var waitingTime = StartConflict(selectedPiece, pieceToHit, isKilled);
-
             return waitingTime;
         }
         
