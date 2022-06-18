@@ -144,15 +144,27 @@ namespace Scripts.Pieces
 		}
 		
 		
-		public float MoveToPosition(Hexagon position)
+		public float MoveToPosition(Hexagon targetPosition)
 		{
-			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(position);
-			Position = position;
+			var currentPostition = Position;
+			var startCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(currentPostition);
+			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(targetPosition);
+			// calc angel
+			CalcAngelForMovment(startCoordinates, targetCoordinates);
+			Position = targetPosition;
 			var timeToMove = countTimeToMove(transform, targetCoordinates);
 			MoveAnimation(timeToMove);
 			_mover.MoveTo(transform, targetCoordinates, timeToMove);
 			
 			return timeToMove;
+		}
+
+		public float CalcAngelForMovment(Vector3 start,Vector3 finish)
+        {
+			float xDiff = finish.x - start.x;
+			float zDiff = finish.z - start.z;
+		    double i =  Math.Atan2(zDiff, xDiff) * 180.0 / Math.PI;
+			return 0f;
 		}
 		
 		private const float MovementSpeed = 30;
