@@ -88,9 +88,6 @@ namespace Scripts.Pieces
 
 		public void SelectionAnimation()
 		{
-			Debug.Log("SELECT ANIMATION");
-			var isPresent = _animator != null;
-			Debug.Log("ANIMATOR IS PRESENT: " + isPresent);
 			_animator.SetTrigger(SelectionTrigger);
 			selectionSound.Play();    
 		}
@@ -175,7 +172,6 @@ namespace Scripts.Pieces
 
 		private void Awake()
 		{
-			Debug.Log("Awake piece");
 			InitializeComponents();
 		}
 		

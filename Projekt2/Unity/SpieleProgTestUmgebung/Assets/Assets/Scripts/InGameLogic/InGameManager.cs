@@ -214,7 +214,10 @@ namespace Scripts.InGameLogic
                 ActivePiece = _turnOrderActivePlayer[_turnCounter];
                 
                 ActivePiece.SelectionAnimation();
-
+                
+                //If a time a required use this animation scheduler instead
+                //_animationScheduler.StartAnimation(0f, ActivePiece, AnimationStatus.Select);
+                
                 if (_activePlayer.Team == Team.Player)
                 {
                     var areMovesAvailable = _playground.SelectPiece(ActivePiece);
