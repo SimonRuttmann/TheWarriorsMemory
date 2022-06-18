@@ -223,6 +223,7 @@ namespace Scripts.Pieces
 
 			AddDefaultStats();
 			_healthBar.SetMaxHealth(Health);
+			_healthBar.SetTeam(Team);
 		}		
 
 		#endregion
