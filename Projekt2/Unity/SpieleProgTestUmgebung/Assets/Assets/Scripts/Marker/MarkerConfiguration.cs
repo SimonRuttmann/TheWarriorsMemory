@@ -48,7 +48,7 @@ namespace Scripts.Marker
         /// the currently selected piece
         /// </summary>
         /// <seealso cref="selectionPrefab"/>
-        public GameObject SelectionPrefab => movementPrefab;
+        public GameObject SelectionPrefab => selectionPrefab;
         
     }
 }
