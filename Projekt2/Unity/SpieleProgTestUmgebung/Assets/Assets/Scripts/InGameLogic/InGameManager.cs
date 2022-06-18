@@ -156,6 +156,9 @@ namespace Scripts.InGameLogic
                 return;
             }
 
+            if(_activePlayer.Team == Team.Player)
+                GetNextTurn();
+
             //Schedule the next turn for the ai
             if(_activePlayer.Team == Team.Enemy)
                 ScheduleNextTurn(timeToWait);
