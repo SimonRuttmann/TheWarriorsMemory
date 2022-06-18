@@ -237,11 +237,14 @@ namespace Scripts.InGameLogic
 
         private float MovePiece(Hexagon destination, IPiece piece)
         {
+
+            //Update piece reference to hexagon and start animation
+            var travelTime = piece.MoveToPosition(destination);
+
             //Remove piece on old hexagon, add piece on new hexagon and update piece hexagon
             _gameFieldManager.MovePieceToHexField(piece.Position, destination);
-            
-            //Update piece reference to hexagon and start animation
-            return piece.MoveToPosition(destination);
+
+            return travelTime;
         }
 
         /// <summary>
