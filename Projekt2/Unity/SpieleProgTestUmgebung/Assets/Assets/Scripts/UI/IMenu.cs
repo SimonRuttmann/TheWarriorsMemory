@@ -6,10 +6,8 @@ namespace Scripts.UI
         void OpenMainMenu();
         void OpenIngameMenu();
         void ContinueGame();
-        void SaveGame();
-        void BackToTitleScreen();
         void CloseGame();
-        void LoadGame();
         void RestartGame();
+        void OpenEndScreen();
     }
 }
