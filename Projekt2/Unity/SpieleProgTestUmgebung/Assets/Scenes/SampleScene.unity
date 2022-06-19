@@ -2509,7 +2509,7 @@ MonoBehaviour:
   playground: {fileID: 963057325}
   gameUIManager: {fileID: 963057320}
   gameFieldPhysicalConfiguration:
-    hexagonWidthHeight: 34.7
+    hexagonWidthHeight: 35.58
     size: 8
     startPoint: {fileID: 1198473199}
   markerConfiguration:
