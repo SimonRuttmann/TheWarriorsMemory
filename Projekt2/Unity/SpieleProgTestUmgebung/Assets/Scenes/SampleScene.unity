@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45071203, g: 0.49881083, b: 0.5649196, a: 1}
+  m_IndirectSpecularColor: {r: 0.45071238, g: 0.49881107, b: 0.5649204, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2509,7 +2509,7 @@ MonoBehaviour:
   playground: {fileID: 963057325}
   gameUIManager: {fileID: 963057320}
   gameFieldPhysicalConfiguration:
-    hexagonWidthHeight: 34.7
+    hexagonWidthHeight: 35.58
     size: 8
     startPoint: {fileID: 1198473199}
   markerConfiguration:
