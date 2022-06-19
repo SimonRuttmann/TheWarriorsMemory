@@ -86,12 +86,6 @@ namespace Scripts.Pieces
 		
 		//Animation implementation
 
-		public void SelectionAnimation()
-		{
-			_animator.SetTrigger(SelectionTrigger);
-			selectionSound.Play();
-		}
-
 		public void DyingAnimation()
 		{
 			_animator.SetTrigger(DyingTrigger);
