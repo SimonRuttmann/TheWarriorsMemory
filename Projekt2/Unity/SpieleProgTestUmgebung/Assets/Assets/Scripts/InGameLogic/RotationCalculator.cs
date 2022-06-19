@@ -6,9 +6,8 @@ using UnityEngine;
 
 namespace Scripts.InGameLogic
 {
-    public static class RotationCalculator {
-
-        
+    public static class RotationCalculator 
+    {
         /// <summary>
         /// Resolves the rotations between the attacker and defender
         /// </summary>
@@ -23,37 +22,55 @@ namespace Scripts.InGameLogic
             IPiece attackingPiece, IPiece defendingPiece)
         {
             
-            var degreeAttackerToDefender = ResolveRotationToPosition(gameFieldManager, attackingPiece, defendingPiece.Position);
-            var degreeDefenderToAttacker = ResolveRotationToPosition(gameFieldManager, attackingPiece, defendingPiece.Position);
+            var degreeAttackerToDefender = ResolveRotationToPosition(gameFieldManager, attackingPiece.Position, defendingPiece.Position);
+            var degreeDefenderToAttacker = ResolveRotationToPosition(gameFieldManager, attackingPiece.Position, defendingPiece.Position);
             
             return new Pair<float>(degreeAttackerToDefender, degreeDefenderToAttacker);
         }
         
         /// <summary>
-        /// Resolves the rotation from the pieces position to the destination field
+        /// Resolves the rotation from the a source position to the a destination position
         /// </summary>
         /// <param name="gameFieldManager">The game field manager, to resolve the absolute positions</param>
-        /// <param name="piece">The piece to move</param>
+        /// <param name="source">The source field</param>
         /// <param name="destination">The destination field</param>
         /// <returns>The degree between the piece and the destination</returns>
-        public static float ResolveRotationToPosition(IGameFieldManager gameFieldManager, IPiece piece, Hexagon destination)
+        public static float ResolveRotationToPosition(IGameFieldManager gameFieldManager, Hexagon source, Hexagon destination)
         {
-            Debug.Log("CALCULATION:");
-            var piecePosition = gameFieldManager.ResolveAbsolutePositionOfHexagon(piece.Position);
+
+            var piecePosition = gameFieldManager.ResolveAbsolutePositionOfHexagon(source);
             var destinationPosition = gameFieldManager.ResolveAbsolutePositionOfHexagon(destination);
-            Debug.Log("Hexagons: " + piece.Position.PosX + "|" + piece.Position.PosY + " , " + destination.PosX + "|" + destination.PosY);
-            Debug.Log("Positions: " + piecePosition + " , " +  destinationPosition);
             
             var degree =  GetDegreeFromPointAToBZeroedToRight(piecePosition, destinationPosition);
-            Debug.Log("degree: " + degree);
-        //    var adjustedDegree = piece.Team == Team.Enemy ? 
-        //        degree + 270 :       //Enemy looks to left
-        //        degree + 90;          //Player looks to right
-            
-        //    return (float) adjustedDegree;
-        return (float)degree;
+            return (float)degree;
         }
         
+        
+        /// <summary>
+        /// Returns the degree between the two given points.
+        /// The zeroing axis is the vertical axis of the first given point.
+        /// </summary>
+        /// <param name="a">Point a</param>
+        /// <param name="b">Point b</param>
+        /// <returns>The degree at point a between the top vertical and the point b </returns>
+        /// <remarks>
+        /// 
+        ///      arcTan(0) = 0                arcTan(0) = 0
+        ///      archTan(1) = pi/4            arcTan(-1) = - pi/4
+        ///      archTan(infinite) = pi/2     arcTan(-infinite) = - pi/2
+        ///     
+        ///      
+        ///                               C +0  
+        ///                -Pi/4  B               D    +Pi/4
+        ///          -P/2 A             Start            E   +Pi/2
+        ///                      H                 F      
+        ///                               G
+        ///     
+        ///      Start to F -> Would be Start to B  -> add 180 deg
+        ///      Start to G -> Would be Start to G  -> add 180 deg
+        ///      Start to H -> Would be Start to D  -> add 180 deg
+        ///     
+        /// </remarks>
         private static double GetDegreeFromPointAToBZeroedToRight(Vector3 a, Vector3 b)
         {
             
@@ -63,41 +80,15 @@ namespace Scripts.InGameLogic
             if (adjacentSide == 0) return GetDegreeFromPointAToBSameZ(a, b);
             
             var radians = Math.Atan((oppositeSide) / (adjacentSide));   //Radian
-            if (radians < 0) radians += 2 * Math.PI;
-            
             var degree =  (180 / Math.PI) * radians;                    //Degree
 
             if (a.z > b.z) degree += 180;
             
-            //If the opposite Side and | or the adjacent Side is below 0,
-            //it is necessary to add or subtract 180 degree,
-
-            //Case 1
-            //E.g. A to B is the arcTan(2-1 / 2-1) --> 45 deg
-            
-            //     B to A is the arcTan(1-2 / 1-2) --> 45 deg => Adjustment required
-
-            //              B (2,2) 
-            // A (1,1) 
-
-
-            //Case 2
-            //E.g. A to B is the arcTan(1- -2 /  1 - -2) -> arcTan(1) --> 45 deg
-            //     B to A is the arcTan(-2 -1 / -2 -1 )  -> arcTan(1) --> 45 deg => Adjustment required
-
-            //  B (1,1)         
-            //              A (-2,-2) 
-
-
-
-      //       var adjustedDegree = adjacentSide < 0 || oppositeSide < 0 ? degree + 180 : degree;
-      //       return adjustedDegree;
             return degree;
         }
 
         private static double GetDegreeFromPointAToBSameZ(Vector3 a, Vector3 b)
         {
-            Debug.Log("Degree same X");
             // A --> B          B <-- A
             return a.x < b.x ? 90 : 270;
         }    
