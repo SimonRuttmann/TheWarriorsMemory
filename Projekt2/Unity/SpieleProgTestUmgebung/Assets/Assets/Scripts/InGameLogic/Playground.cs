@@ -68,9 +68,7 @@ namespace Scripts.InGameLogic
         #endregion
         
         public bool BlockInput { get; set; }
-
         
-        private IPiece _previousSelectedPiece;
         
         internal void PrepareStart()
         {
@@ -84,8 +82,7 @@ namespace Scripts.InGameLogic
 
         private void ClearGameState()
         {
-            _previousSelectedPiece = null; 
-            
+
             _gameFieldManager.Clear();
             _gameFieldManager.Initialize(_gameFieldPhysicalConfiguration, _gameFieldTerrainConfiguration);
             
@@ -133,7 +130,7 @@ namespace Scripts.InGameLogic
                 OnSelectedPieceMove(field, _inGameManager.ActivePiece);
             }
             
-         
+            
         }
 
         
@@ -144,12 +141,11 @@ namespace Scripts.InGameLogic
         /// <returns>True, if any moves or attacks are possible</returns>
         public bool SelectPiece(IPiece piece)
         {
-            _previousSelectedPiece = piece;
-            
-            var attackMovements = _previousSelectedPiece.GeneratePossibleAttackMovements();
+
+            var attackMovements = piece.GeneratePossibleAttackMovements();
             var attackPositions = attackMovements.Select(move => _gameFieldManager.ResolveAbsolutePositionOfHexagon(move));
 
-            var moveMovements = _previousSelectedPiece.GeneratePossibleMoveMovements();
+            var moveMovements = piece.GeneratePossibleMoveMovements();
             var movePositions = moveMovements.Select(move => _gameFieldManager.ResolveAbsolutePositionOfHexagon(move));
 
             if (attackMovements.IsEmpty() && moveMovements.IsEmpty()) return false;
@@ -162,7 +158,6 @@ namespace Scripts.InGameLogic
         
         private void DeselectPiece()
         {
-            _previousSelectedPiece = null;
             _markerCreator.DestroyMarkers();
         }
         
