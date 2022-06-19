@@ -22,9 +22,16 @@ namespace Scripts.Marker
         public void CreateAndShowMarkers(IEnumerable<Vector3> moves, IEnumerable<Vector3> attackMoves, Vector3 selectionPosition);
         
         /// <summary>
+        /// Removes old markers and creates a new marker based on the given position
+        /// </summary>
+        /// <param name="selectionPosition">The position to display the enemy selection marker</param>
+        public void CreateEnemySelectionMarker(Vector3 selectionPosition);
+        
+        /// <summary>
         /// Removes all markers on the playground
         /// </summary>
         public void DestroyMarkers();
+        
 
     }
 }

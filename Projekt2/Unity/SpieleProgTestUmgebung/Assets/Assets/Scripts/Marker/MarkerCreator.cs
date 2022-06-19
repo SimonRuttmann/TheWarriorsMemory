@@ -10,6 +10,7 @@ namespace Scripts.Marker
         private GameObject _movementPrefab;
         private GameObject _attackPrefab;
         private GameObject _selectionPrefab;
+        private GameObject _enemySelectionPrefab;
         
         private readonly List<GameObject> _instantiatedMarkers = new List<GameObject>();
 
@@ -18,6 +19,7 @@ namespace Scripts.Marker
             _movementPrefab = markerConfiguration.MovementPrefab;
             _attackPrefab = markerConfiguration.AttackPrefab;
             _selectionPrefab = markerConfiguration.SelectionPrefab;
+            _enemySelectionPrefab = markerConfiguration.EnemySelectionPrefab;
         }
 
         public void CreateAndShowMarkers(IEnumerable<Vector3> moves, IEnumerable<Vector3> attackMoves, Vector3 selectionPosition)
@@ -37,9 +39,16 @@ namespace Scripts.Marker
             _instantiatedMarkers.Add(marker);
         }
         
+        public void CreateEnemySelectionMarker(Vector3 selectionPosition)
+        {
+            DestroyMarkers();
+            InstantiateMarker(selectionPosition, _enemySelectionPrefab);
+        }
+        
         public void DestroyMarkers()
         {
             _instantiatedMarkers.ForEach(Destroy);
         }
+        
     }
 }
