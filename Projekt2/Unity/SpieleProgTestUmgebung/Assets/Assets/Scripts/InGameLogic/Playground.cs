@@ -157,6 +157,16 @@ namespace Scripts.InGameLogic
             _markerCreator.CreateAndShowMarkers(movePositions, attackPositions, currentPosition);
             return true;
         }
+
+        /// <summary>
+        /// Displays markers for the enemy piece
+        /// </summary>
+        /// <param name="piece">The enemy piece to display</param>
+        public void SelectEnemyPiece(IPiece piece)
+        {
+            var absolutePosition = _gameFieldManager.ResolveAbsolutePositionOfHexagon(piece.Position);
+            _markerCreator.CreateEnemySelectionMarker(absolutePosition);
+        }
         
         private void DeselectPiece()
         {
@@ -185,8 +195,7 @@ namespace Scripts.InGameLogic
             // Rotete, Move, Rotete Back a piece
             var travelTime = piece.RotatePiece(destination);
             piece.MoveStraight(destination);
-
-            // TODO move animationSchedulat here from piece
+            
             piece.RotatePieceBack();
            
             //Remove piece on old hexagon, add piece on new hexagon and update piece hexagon

@@ -248,6 +248,7 @@ namespace Scripts.InGameLogic
 
             //Start the ai move
             _playground.OnSelectedPieceMove(destination, piece);
+            _playground.SelectEnemyPiece(piece);
         }   
         
         private void EndGame(bool withDyingPieces)

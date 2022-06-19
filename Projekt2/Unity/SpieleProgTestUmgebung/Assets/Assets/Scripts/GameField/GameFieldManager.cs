@@ -28,7 +28,7 @@ namespace Scripts.GameField
           
             _gameFieldPhysicalConfiguration = gameFieldPhysicalConfiguration;
             _gameFieldTerrainConfiguration = gameConfigurationGameFieldTerrainConfiguration;
-            // TODO _hexField.Length = 64 WHYYYYYYYY
+           
             for (var i = 0; i < gameFieldPhysicalConfiguration.Size; i++)
                 for (var j = 0; j < gameFieldPhysicalConfiguration.Size; j++)
                 {
