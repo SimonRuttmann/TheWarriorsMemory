@@ -6,7 +6,7 @@ namespace Scripts.Pieces
 
         protected override void AddDefaultStats()
         {
-            Health = 100;
+            Health = 85;
             
             AttackDamage = 20;
             
