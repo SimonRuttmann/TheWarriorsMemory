@@ -232,7 +232,7 @@ namespace Scripts.InGameLogic
             _animationScheduler.RotatePiece(0f, hitPiece, rotationDefender);
 
             //Execute attack
-            _animationScheduler.StartAnimation(1f, attackingPiece, AnimationStatus.Attack);
+            _animationScheduler.StartAnimation(0.5f, attackingPiece, AnimationStatus.Attack);
 
             //Dying animation and delete
             if (isKilled) {
