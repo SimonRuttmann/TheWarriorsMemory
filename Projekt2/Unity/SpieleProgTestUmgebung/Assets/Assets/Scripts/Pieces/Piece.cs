@@ -95,7 +95,6 @@ namespace Scripts.Pieces
 		public void AttackAnimation()
 		{
 			_animator.SetTrigger(AttackTrigger);
-			Debug.Log("Attack triggerd");
 			attackSound.Play();
 		}
 
@@ -245,7 +244,7 @@ namespace Scripts.Pieces
 			if (transform.rotation != _endRotationValue && _isRotationActive) 
 			{
 				transform.rotation = Quaternion.Slerp(_startRotationValue, _endRotationValue, _timeCount);
-				_timeCount += Time.deltaTime;
+				_timeCount += (Time.deltaTime * RotationCalculator.RotationSpeed);
 			}
 		
 			if (transform.rotation == _endRotationValue) _isRotationActive = false;

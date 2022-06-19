@@ -13,6 +13,7 @@ namespace Scripts.InGameLogic
         //Default rotation values e.g. right, left
         private const float DefaultDegreePlayer = 90;
         private const float DefaultDegreeEnemy = -90;
+        public const float RotationSpeed = 2;
 
         /// <summary>
         /// Returns the default rotation value for a piece 
