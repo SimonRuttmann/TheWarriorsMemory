@@ -5,7 +5,7 @@ using Scripts.Pieces.Interfaces;
 using Scripts.Toolbox;
 using UnityEngine;
 
-namespace Scripts.InGameLogic
+namespace Scripts.Pieces.Animation
 {
     public static class RotationCalculator
     {
