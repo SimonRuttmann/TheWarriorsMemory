@@ -28,6 +28,8 @@ namespace Scripts.AI
             return null;
         }
 
+        //Method is run when no attackable piece was found. 
+        //Returns the first field from which an attack would be possible.
         private Hexagon GetHexagonClosestToEnemy(ISet<Hexagon> possibleMoves, IList<IPiece> playerPieces, int attackRange)
         {
             _distanceList.Clear();
