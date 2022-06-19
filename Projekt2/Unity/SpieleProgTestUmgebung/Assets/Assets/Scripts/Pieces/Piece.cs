@@ -101,6 +101,7 @@ namespace Scripts.Pieces
 		public void AttackAnimation()
 		{
 			_animator.SetTrigger(AttackTrigger);
+			Debug.Log("Attack triggerd");
 			attackSound.Play();
 		}
 
@@ -160,7 +161,7 @@ namespace Scripts.Pieces
 			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(targetPosition);
 			var travelTime = _mover.CalculateMovementDuration(transform, targetCoordinates);
 
-			if (travelTime == 0f) return travelTime;
+			if (travelTime == 0f) return 1f;
 
 			var rotationValue = RotationCalculator.ResolveRotationToPosition(_gameFieldManager, Position, targetPosition);
 
