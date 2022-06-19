@@ -13,22 +13,22 @@ MonoBehaviour:
   m_Name: 01_PieceDepoymentConfig
   m_EditorClassIdentifier: 
   playground:
-  - logicalPosition: {x: 0, y: 2}
+  - logicalPosition: {x: 0, y: 0}
     pieceType: 6
     team: 0
-  - logicalPosition: {x: 1, y: 4}
+  - logicalPosition: {x: 1, y: 2}
     pieceType: 2
     team: 0
-  - logicalPosition: {x: 0, y: 6}
+  - logicalPosition: {x: 0, y: 4}
     pieceType: 6
     team: 0
-  - logicalPosition: {x: 1, y: 3}
+  - logicalPosition: {x: 2, y: 1}
     pieceType: 0
     team: 0
-  - logicalPosition: {x: 2, y: 4}
+  - logicalPosition: {x: 2, y: 2}
     pieceType: 4
     team: 0
-  - logicalPosition: {x: 1, y: 5}
+  - logicalPosition: {x: 1, y: 3}
     pieceType: 0
     team: 0
   - logicalPosition: {x: 7, y: 3}
