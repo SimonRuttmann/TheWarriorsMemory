@@ -6,8 +6,13 @@ using UnityEngine;
 
 namespace Scripts.InGameLogic
 {
-    public static class RotationCalculator 
+    public static class RotationCalculator
     {
+
+        //Default rotation values e.g. right, left
+        public const float DefaultDegreePlayer = 90;
+        public const float DefaultDegreeEnemy = -90;
+        
         /// <summary>
         /// Resolves the rotations between the attacker and defender
         /// </summary>

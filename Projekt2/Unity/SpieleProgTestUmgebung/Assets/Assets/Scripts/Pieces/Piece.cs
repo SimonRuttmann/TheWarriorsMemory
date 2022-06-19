@@ -146,8 +146,7 @@ namespace Scripts.Pieces
 			_isRotationActive = true;
 			_timeCount = 0;
 		}
-		
-		
+
 		public void MoveStraight(Hexagon targetPosition)
         {
 			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(targetPosition);
@@ -163,20 +162,19 @@ namespace Scripts.Pieces
 
 			if (travelTime == 0f) return travelTime;
 
-			Pair<Double> rotationAngel = RotationCalculator.CalcAngelForRunner(_gameFieldManager, this, targetPosition);
+			var rotationValue = RotationCalculator.ResolveRotationToPosition(_gameFieldManager, Position, targetPosition);
 
-			var adjustedAngel = this.Team == Team.Player ? rotationAngel.First : rotationAngel.First - 180;
-
-			RotatePiece((float) adjustedAngel);
-			//_animationScheduler.RotatePiece(0f, this, (float)adjustedAngel);
-
+			RotatePiece(rotationValue);
+			
 			return travelTime;
 		}
+		
 		public void RotatePieceBack()
         {
-			var adjustedAngel = this.Team == Team.Player ? 90 : -90;
-			_animationScheduler.RotatePiece(2f, this, (float)adjustedAngel);
+			var adjustedAngel = Team == Team.Player ? RotationCalculator.DefaultDegreePlayer : RotationCalculator.DefaultDegreeEnemy;
+			_animationScheduler.RotatePiece(2f, this, adjustedAngel);
 		}
+		
 		#endregion
 
 
