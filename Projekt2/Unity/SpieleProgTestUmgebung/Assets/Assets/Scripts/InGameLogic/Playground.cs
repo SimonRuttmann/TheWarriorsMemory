@@ -234,7 +234,7 @@ namespace Scripts.InGameLogic
             //Dying animation and delete
             if (isKilled) {
                 _animationScheduler.StartAnimation(1.5f, hitPiece, AnimationStatus.Die);
-                _animationScheduler.StartAnimation(4f, hitPiece, AnimationStatus.Delete);
+                _animationScheduler.StartAnimation(6f, hitPiece, AnimationStatus.Delete);
             }
             else {
                 _animationScheduler.StartAnimation(1.5f, hitPiece, AnimationStatus.Pain);
