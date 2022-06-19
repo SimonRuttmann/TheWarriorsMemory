@@ -205,7 +205,11 @@ namespace Scripts.InGameLogic
         {
             
             var attackDmg = selectedPiece.AttackDamage;
-            pieceToHit.Health -= attackDmg;
+
+            var modificator = PieceDamageModificator.GetModificatorForPiece(selectedPiece, pieceToHit);
+            var adjustedAttackDmg = modificator * attackDmg;
+            
+            pieceToHit.Health -= (int)adjustedAttackDmg;
 
             var isKilled = pieceToHit.Health <= 0;
             
@@ -219,9 +223,9 @@ namespace Scripts.InGameLogic
             }
             return waitingTime;
         }
-        
-      private float StartConflict(IPiece attackingPiece, IPiece hitPiece, bool isKilled)
-      {
+
+        private float StartConflict(IPiece attackingPiece, IPiece hitPiece, bool isKilled)
+        {
 
             var rotationValues = RotationCalculator.ResolveRotationsOnAttackMode(_gameFieldManager, attackingPiece, hitPiece);
             var rotationAttacker = rotationValues.First;
@@ -251,7 +255,7 @@ namespace Scripts.InGameLogic
             }
             
             return 7f;
-      }
+        }
       
       
 
