@@ -7,46 +7,68 @@ namespace Scripts.UI
 	{
 		[SerializeField] private GameObject menuObject;
 		private Menu _menu;
-
-		//Wird beim Start ausgef�hrt
-		//Beim ersten Start
+		
 		private void Awake()
 		{
 			_menu = menuObject.GetComponent<Menu>();
 		}
 
+		/// <summary>
+		/// Starts the main menu
+		/// </summary>
 		public void StartUi()
 		{
-			menuObject.SetActive(true);
 			_menu.OpenMainMenu();
 		}
 
-		//Spiel starten/Fortsetzen button wird gedr�ckt
-		//Alle weiteren spielstarts wird diese methode aufgerufen
-		public void SpielStarten()
+		public void Update()
 		{
-			/*
-			startText.text = "Fortsetzen";
-			hauptmenue.SetActive(false);
+			EscapeListener();
+		}
 		
-			teamanzeige.SetActive(true);
-			fadenkreuz.SetActive(true);
-			neustartanzeige.SetActive(false);
-			*/
+		private void EscapeListener()
+		{
+			if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				ToggleInGameMenu();
+			}
 		}
 
-		//Wird bei nach einem Spielzug gesetzt
-		public void SetTeamDisplay(Team farbe)
+		private void ToggleInGameMenu()
 		{
-			//todo 
-			//if (farbe == Team.Player) teamtext.text = "Team Wei� ist an der Reihe";
-			//else teamtext.text = "Team Schwarz ist an der Reihe";
+
+			switch (_menu.UiState)
+			{
+				case Menu.MenuState.Closed:
+					_menu.OpenIngameMenu();
+					return;
+				case Menu.MenuState.Ingame:
+					_menu.ContinueGame();
+					return;
+				case Menu.MenuState.Main:
+				case Menu.MenuState.Endscreen:
+				default: return;
+			}
 		}
 
-		//Wird nach dem Sieg eines Spielers angezeigt
-		public void OnGameFinished(string winner)
+		/// <summary>
+		/// Sets the team display in the ui
+		/// </summary>
+		/// <param name="activeTeam"></param>
+		/// <remarks>Called at every team change</remarks>
+		public void SetTeamDisplay(Team activeTeam)
 		{
-			//todo 
+			
+		}
+
+		/// <summary>
+		/// Starts the end screen
+		/// </summary>
+		/// <param name="winner">The winning team</param>
+		/// <remarks>Is invoked at the end of the game</remarks>
+		public void OnGameFinished(Team winner)
+		{
+			_menu.OpenEndScreen();
 		}
 	}
 }
