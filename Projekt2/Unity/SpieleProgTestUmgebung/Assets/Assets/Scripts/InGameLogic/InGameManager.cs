@@ -165,7 +165,7 @@ namespace Scripts.InGameLogic
 
             if (OtherPlayerOf(_activePlayer).HasNoMorePieces)
             {
-                EndGame(false);
+                ScheduleEndGame(4f, false);
                 return;
             }
             
@@ -255,7 +255,6 @@ namespace Scripts.InGameLogic
         {
             
             _gameUIManager.OnGameFinished(_activePlayer.Team);
-            _gameState = GameState.Finished;
 
             if (!withDyingPieces) return;
             
@@ -271,6 +270,21 @@ namespace Scripts.InGameLogic
             }
             
         }
+        
+        
+        private void ScheduleEndGame(float time, bool withDyingPieces)
+        {
+            _gameState = GameState.Finished;
+            StartCoroutine(StartEndGame(time, withDyingPieces));
+        }
+
+        private IEnumerator StartEndGame(float time, bool withDyingPieces)
+        {
+            yield return new WaitForSeconds(time);
+            
+            EndGame(withDyingPieces);
+        }   
+        
 
         private Player OtherPlayerOf(Player player)
         {
