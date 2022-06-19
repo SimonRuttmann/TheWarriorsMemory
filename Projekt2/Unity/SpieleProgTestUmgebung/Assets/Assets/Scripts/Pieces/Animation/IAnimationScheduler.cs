@@ -1,5 +1,6 @@
 ﻿using Scripts.GameField;
 using Scripts.Pieces.Interfaces;
+using UnityEngine;
 
 namespace Scripts.Pieces.Animation
 {
@@ -7,12 +8,12 @@ namespace Scripts.Pieces.Animation
     {
         public void CleanDelete(float time, IPiece piece);
         
-        public void MovePiece(float time, IPiece piece, Hexagon coordinates);
         
         public void StartAnimation(float time, IPiece piece, AnimationStatus animationStatus);
         
         public void RotatePiece(float time, IPiece rotatingPiece, float rotationValue);
         
         public void StartEndAnimation(float time, IPiece dyingPiece);
+
     }
 }

@@ -4,6 +4,7 @@ using Scripts.Enums;
 using Scripts.Extensions;
 using Scripts.GameField;
 using Scripts.Marker;
+using Scripts.PieceMovement;
 using Scripts.Pieces;
 using Scripts.Pieces.Animation;
 using Scripts.Pieces.Interfaces;
@@ -37,6 +38,7 @@ namespace Scripts.InGameLogic
         private IGameFieldManager _gameFieldManager;
         private IMarkerCreator _markerCreator;
         private IAnimationScheduler _animationScheduler;
+        private IMover _mover;
 
         private InGameManager _inGameManager;
         
@@ -176,14 +178,15 @@ namespace Scripts.InGameLogic
             _inGameManager.EndTurn(waitingTime);
 
         }
-        
 
+        
         private float MovePiece(Hexagon destination, IPiece piece)
         {
-            
-            //Update piece reference to hexagon and start animation
-            var travelTime = piece.MoveToPosition(destination);
-            
+            // Rotete, Move, Rotete Back a piece
+            var travelTime = piece.RotatePiece(destination);
+            piece.MoveStraight(destination);
+            piece.RotatePieceBack();
+           
             //Remove piece on old hexagon, add piece on new hexagon and update piece hexagon
             _gameFieldManager.MovePieceToHexField(piece.Position, destination);
 
