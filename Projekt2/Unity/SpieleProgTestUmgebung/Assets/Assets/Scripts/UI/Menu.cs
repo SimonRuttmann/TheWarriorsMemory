@@ -62,14 +62,7 @@ namespace Scripts.UI
         /// </summary>
         public void NewGame()
         {
-            if (inGameManager.GameState.Equals(GameState.InGame))
-            {
-                inGameManager.RestartGame();    
-            }
-            else
-            {
-                inGameManager.StartNewGame();
-            }
+            inGameManager.RestartGame();  
             ChangeToMenuType(MenuState.Closed);
         }
 

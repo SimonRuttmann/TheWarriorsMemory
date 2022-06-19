@@ -77,7 +77,7 @@ namespace Scripts.InGameLogic
             else StartNewGame();
         }
         
-        public void StartNewGame()
+        private void StartNewGame()
         {
             _playground.PrepareStart();
 
