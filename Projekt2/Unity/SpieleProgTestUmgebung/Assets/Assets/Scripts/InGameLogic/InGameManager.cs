@@ -229,9 +229,9 @@ namespace Scripts.InGameLogic
                 }
 
                 var destination = _ai.GetAiMove(gameConfiguration.gameFieldManager, _personPlayer.RemainingPiecesOfPlayer, ActivePiece);
-                if(destination != null)
-                    ScheduleAiMove(AnimationConstants.SelectAnimationDuration, destination, ActivePiece);
+                if(destination == null) continue;
                 
+                ScheduleAiMove(AnimationConstants.SelectAnimationDuration, destination, ActivePiece);
                 return;
             }
         }
