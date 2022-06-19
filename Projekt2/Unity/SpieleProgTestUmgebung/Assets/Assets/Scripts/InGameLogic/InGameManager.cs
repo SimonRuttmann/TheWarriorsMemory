@@ -210,7 +210,6 @@ namespace Scripts.InGameLogic
                     ChangeActiveTeam();
                     PrepareTurn();
                 }
-
                 _turnCounter--;
                 ActivePiece = _turnOrderActivePlayer[_turnCounter];
                 
@@ -231,7 +230,8 @@ namespace Scripts.InGameLogic
                 }
 
                 var destination = _ai.GetAiMove(gameConfiguration.gameFieldManager, _personPlayer.RemainingPiecesOfPlayer, ActivePiece);
-                ScheduleAiMove(AnimationConstants.SelectAnimationDuration, destination, ActivePiece);
+                if(destination != null)
+                    ScheduleAiMove(AnimationConstants.SelectAnimationDuration, destination, ActivePiece);
                 
                 return;
             }
@@ -264,7 +264,6 @@ namespace Scripts.InGameLogic
                 _personPlayer.RemainingPiecesOfPlayer.ForEach(
                     p => _playground.KillAndRemovePiece(p));
             }
-            
             _gameState = GameState.Finished;
         }
 
