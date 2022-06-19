@@ -1,6 +1,4 @@
-﻿using Scripts.GameField;
-using Scripts.Pieces.Interfaces;
-using UnityEngine;
+﻿using Scripts.Pieces.Interfaces;
 
 namespace Scripts.Pieces.Animation
 {

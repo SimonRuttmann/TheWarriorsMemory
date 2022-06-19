@@ -1,6 +1,4 @@
-﻿using Scripts.GameField;
-using Scripts.Pieces.Interfaces;
-using UnityEngine;
+﻿using Scripts.Pieces.Interfaces;
 
 namespace Scripts.Pieces.Animation
 {
@@ -9,13 +7,11 @@ namespace Scripts.Pieces.Animation
         public AnimationSchedulerObject(
             IPiece piece = null, 
             AnimationStatus animationStatus = AnimationStatus.Nothing, 
-            float rotationValue = 0f, 
-            Hexagon targetPosition = null)
+            float rotationValue = 0f)
         {
             Piece = piece;
             AnimationStatus = animationStatus;
             RotationValue = rotationValue;
-            TargetPosition = targetPosition;
         }
 
         public void ClearAnimationStatus()
@@ -28,8 +24,6 @@ namespace Scripts.Pieces.Animation
         public AnimationStatus AnimationStatus { get; private set; }
         
         public float RotationValue { get; }
-        
-        public Hexagon TargetPosition { get; }
 
     }
 }

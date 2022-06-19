@@ -1,4 +1,5 @@
 using System;
+using Scripts.Enums;
 using Scripts.GameField;
 using Scripts.Pieces.Interfaces;
 using Scripts.Toolbox;
@@ -10,8 +11,16 @@ namespace Scripts.InGameLogic
     {
 
         //Default rotation values e.g. right, left
-        public const float DefaultDegreePlayer = 90;
-        public const float DefaultDegreeEnemy = -90;
+        private const float DefaultDegreePlayer = 90;
+        private const float DefaultDegreeEnemy = -90;
+
+        /// <summary>
+        /// Returns the default rotation value for a piece 
+        /// </summary>
+        public static float GetDefaultRotation(IPiece piece)
+        {
+            return piece.Team == Team.Player ? DefaultDegreePlayer : DefaultDegreeEnemy;
+        }
         
         /// <summary>
         /// Resolves the rotations between the attacker and defender
@@ -28,7 +37,7 @@ namespace Scripts.InGameLogic
         {
             
             var degreeAttackerToDefender = ResolveRotationToPosition(gameFieldManager, attackingPiece.Position, defendingPiece.Position);
-            var degreeDefenderToAttacker = ResolveRotationToPosition(gameFieldManager, attackingPiece.Position, defendingPiece.Position);
+            var degreeDefenderToAttacker = ResolveRotationToPosition(gameFieldManager, defendingPiece.Position, attackingPiece.Position);
             
             return new Pair<float>(degreeAttackerToDefender, degreeDefenderToAttacker);
         }

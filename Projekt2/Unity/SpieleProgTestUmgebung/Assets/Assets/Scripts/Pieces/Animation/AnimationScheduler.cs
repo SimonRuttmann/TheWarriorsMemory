@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Scripts.GameField;
 using Scripts.Pieces.Interfaces;
 using UnityEngine;
 
@@ -25,17 +24,7 @@ namespace Scripts.Pieces.Animation
             DestroyPiece(piece);
 
         }
-
-      
-        private IEnumerator MoveManager(float time, IPiece piece, Hexagon targetPosition)
-        {
-            yield return new WaitForSeconds(time);
-            
-            _scheduledObjects.Add(new AnimationSchedulerObject(
-                piece: piece, 
-                animationStatus: AnimationStatus.Move, 
-                targetPosition: targetPosition));
-        }
+        
         
         public void RotatePiece(float time, IPiece rotatingPiece, float rotationValue)
         {

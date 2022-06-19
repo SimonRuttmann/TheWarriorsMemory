@@ -170,8 +170,8 @@ namespace Scripts.Pieces
 		}
 		
 		public void RotatePieceBack()
-        {
-			var adjustedAngel = Team == Team.Player ? RotationCalculator.DefaultDegreePlayer : RotationCalculator.DefaultDegreeEnemy;
+		{
+			var adjustedAngel = RotationCalculator.GetDefaultRotation(this);
 			_animationScheduler.RotatePiece(2f, this, adjustedAngel);
 		}
 		
