@@ -89,7 +89,7 @@ namespace Scripts.Pieces
 		public void SelectionAnimation()
 		{
 			_animator.SetTrigger(SelectionTrigger);
-			selectionSound.Play();    
+			selectionSound.Play();
 		}
 
 		public void DyingAnimation()
@@ -146,39 +146,38 @@ namespace Scripts.Pieces
 			_isRotationActive = true;
 			_timeCount = 0;
 		}
-		
-		
-		public float MoveToPosition(Hexagon targetPosition)
-		{
-			var currentPosition = Position;
-			
-			var startCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(currentPosition);
+
+		public void MoveStraight(Hexagon targetPosition)
+        {
 			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(targetPosition);
-
-			// calc angel
-			Pair<Double> rotationAngel = RotationCalculator.CalcAngelForRunner(_gameFieldManager, this, targetPosition);
-
-			if(this.Team == Team.Player)
-            {
-				RotatePiece((float)rotationAngel.First);
-			}
-            else
-            {
-				RotatePiece((float)rotationAngel.First - 180);
-			}
-		
 			var travelTime = _mover.CalculateMovementDuration(transform, targetCoordinates);
 			MoveAnimation(travelTime);
-			
-			_mover.MoveTo(transform, targetCoordinates);
+			_mover.MoveTo(this.transform, targetCoordinates);
+		}
+
+		public float RotatePiece(Hexagon targetPosition)
+		{
+			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(targetPosition);
+			var travelTime = _mover.CalculateMovementDuration(transform, targetCoordinates);
+
+			if (travelTime == 0f) return travelTime;
+
+			var rotationValue = RotationCalculator.ResolveRotationToPosition(_gameFieldManager, Position, targetPosition);
+
+			RotatePiece(rotationValue);
 			
 			return travelTime;
 		}
 		
-
+		public void RotatePieceBack()
+		{
+			var adjustedAngel = RotationCalculator.GetDefaultRotation(this);
+			_animationScheduler.RotatePiece(2f, this, adjustedAngel);
+		}
+		
 		#endregion
-		
-		
+
+
 		#region Initialize
 
 		private void Awake()

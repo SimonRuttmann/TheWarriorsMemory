@@ -7,144 +7,105 @@ using UnityEngine;
 
 namespace Scripts.InGameLogic
 {
-    public static class RotationCalculator {
+    public static class RotationCalculator
+    {
+
+        //Default rotation values e.g. right, left
+        private const float DefaultDegreePlayer = 90;
+        private const float DefaultDegreeEnemy = -90;
+
+        /// <summary>
+        /// Returns the default rotation value for a piece 
+        /// </summary>
+        public static float GetDefaultRotation(IPiece piece)
+        {
+            return piece.Team == Team.Player ? DefaultDegreePlayer : DefaultDegreeEnemy;
+        }
         
-        public static Pair<double> CalcAngelForRunner(IGameFieldManager gameFieldManager, IPiece runnerPiece, Hexagon moveToCoordinates)
+        /// <summary>
+        /// Resolves the rotations between the attacker and defender
+        /// </summary>
+        /// <param name="gameFieldManager">The game field manager to resolve absolute positions</param>
+        /// <param name="attackingPiece">The piece, which attacks</param>
+        /// <param name="defendingPiece">The piece, which gets attacked</param>
+        /// <returns>
+        /// A pair. The first contains the rotation from the attacker to the defender.
+        /// The second contains the rotation from the defender to the attacker
+        /// </returns>
+        public static Pair<float> ResolveRotationsOnAttackMode(IGameFieldManager gameFieldManager,
+            IPiece attackingPiece, IPiece defendingPiece)
         {
-            return CalcAngelForRotation(gameFieldManager, runnerPiece: runnerPiece, moveToCoordinates: moveToCoordinates);
+            
+            var degreeAttackerToDefender = ResolveRotationToPosition(gameFieldManager, attackingPiece.Position, defendingPiece.Position);
+            var degreeDefenderToAttacker = ResolveRotationToPosition(gameFieldManager, defendingPiece.Position, attackingPiece.Position);
+            
+            return new Pair<float>(degreeAttackerToDefender, degreeDefenderToAttacker);
+        }
+        
+        /// <summary>
+        /// Resolves the rotation from the a source position to the a destination position
+        /// </summary>
+        /// <param name="gameFieldManager">The game field manager, to resolve the absolute positions</param>
+        /// <param name="source">The source field</param>
+        /// <param name="destination">The destination field</param>
+        /// <returns>The degree between the piece and the destination</returns>
+        public static float ResolveRotationToPosition(IGameFieldManager gameFieldManager, Hexagon source, Hexagon destination)
+        {
+
+            var piecePosition = gameFieldManager.ResolveAbsolutePositionOfHexagon(source);
+            var destinationPosition = gameFieldManager.ResolveAbsolutePositionOfHexagon(destination);
+            
+            var degree =  GetDegreeFromPointAToBZeroedToRight(piecePosition, destinationPosition);
+            return (float)degree;
+        }
+        
+        
+        /// <summary>
+        /// Returns the degree between the two given points.
+        /// The zeroing axis is the vertical axis of the first given point.
+        /// </summary>
+        /// <param name="a">Point a</param>
+        /// <param name="b">Point b</param>
+        /// <returns>The degree at point a between the top vertical and the point b </returns>
+        /// <remarks>
+        /// 
+        ///      arcTan(0) = 0                arcTan(0) = 0
+        ///      archTan(1) = pi/4            arcTan(-1) = - pi/4
+        ///      archTan(infinite) = pi/2     arcTan(-infinite) = - pi/2
+        ///     
+        ///      
+        ///                               C +0  
+        ///                -Pi/4  B               D    +Pi/4
+        ///          -P/2 A             Start            E   +Pi/2
+        ///                      H                 F      
+        ///                               G
+        ///     
+        ///      Start to F -> Would be Start to B  -> add 180 deg
+        ///      Start to G -> Would be Start to G  -> add 180 deg
+        ///      Start to H -> Would be Start to D  -> add 180 deg
+        ///     
+        /// </remarks>
+        private static double GetDegreeFromPointAToBZeroedToRight(Vector3 a, Vector3 b)
+        {
+            
+            var oppositeSide = b.x - a.x;
+            var adjacentSide = b.z - a.z;
+
+            if (adjacentSide == 0) return GetDegreeFromPointAToBSameZ(a, b);
+            
+            var radians = Math.Atan((oppositeSide) / (adjacentSide));   //Radian
+            var degree =  (180 / Math.PI) * radians;                    //Degree
+
+            if (a.z > b.z) degree += 180;
+            
+            return degree;
         }
 
-        public static Pair<double> CalcAngelForConflict(IGameFieldManager gameFieldManager, IPiece attackingPiece, IPiece hitPiece)
+        private static double GetDegreeFromPointAToBSameZ(Vector3 a, Vector3 b)
         {
-            return CalcAngelForRotation(gameFieldManager, attackingPiece: attackingPiece, hitPiece: hitPiece, attack: true);
-        }
-
-        private static Pair<double> CalcAngelForRotation(IGameFieldManager gameFieldManager, IPiece attackingPiece = null, IPiece hitPiece = null, IPiece runnerPiece = null, Hexagon moveToCoordinates = null, bool attack = false)
-        {
-            IPiece piecePlayer, pieceEnemy;
-            Vector3 absolutePositionAttackerOrStart, absolutePositionHitPieceOrFinish;
-
-
-            Double rotationPointAttacker;
-
-            bool movePlayer;
-
-            Hexagon attackOrStart, hitOrFinish;
-            Hexagon piecePlayerPosition, pieceEnemyPosition;
-
-            if (attack)
-            {
-                attackOrStart = attackingPiece.Position;
-                hitOrFinish = hitPiece.Position;
-            
-                if (attackingPiece.Team == Team.Player)
-                {
-                    piecePlayer = attackingPiece;
-                    pieceEnemy = hitPiece;
-                }
-                else
-                {
-                    piecePlayer = hitPiece;
-                    pieceEnemy = attackingPiece;
-                }
-                pieceEnemyPosition = pieceEnemy.Position;
-                piecePlayerPosition = piecePlayer.Position;
-
-            }
-            else
-            {
-                attackOrStart = runnerPiece.Position;
-                hitOrFinish = moveToCoordinates;
-                if (runnerPiece.Team == Team.Player)
-                {
-                    movePlayer = true;
-                    piecePlayerPosition = runnerPiece.Position;
-                    pieceEnemyPosition = moveToCoordinates;
-                }
-                else
-                {
-                    movePlayer = false;
-                    piecePlayerPosition = moveToCoordinates;
-                    pieceEnemyPosition = runnerPiece.Position;
-               
-                }
-            }
-            absolutePositionAttackerOrStart = gameFieldManager.ResolveAbsolutePositionOfHexagon(attackOrStart);
-            absolutePositionHitPieceOrFinish = gameFieldManager.ResolveAbsolutePositionOfHexagon(hitOrFinish);
-            // wichtig zu wissen wer wen angreift? 
-
-            //Note: Z is Y in Unity Terms
-            // nur nach vorne laufen/ schauen auf Horizontaner ebene
-            if (absolutePositionHitPieceOrFinish.z - absolutePositionAttackerOrStart.z == 0)
-            {
-            
-                if (attack)
-                {
-                    if (attackingPiece.Team == Team.Enemy)
-                    {
-                     
-                        if (absolutePositionHitPieceOrFinish.x > absolutePositionAttackerOrStart.x) rotationPointAttacker = 270;
-                        else rotationPointAttacker = 90;
-                    }
-                 
-                    else
-                    {
-                        if (absolutePositionHitPieceOrFinish.x > absolutePositionAttackerOrStart.x) rotationPointAttacker = 90;
-                        else rotationPointAttacker = 270;
-                    }
-                }
-                else
-                {
-                    if (runnerPiece.Team == Team.Enemy)
-                    {
-
-                        if (absolutePositionHitPieceOrFinish.x > absolutePositionAttackerOrStart.x) rotationPointAttacker = 270;
-                        else rotationPointAttacker = 90;
-                    }
-
-                    else
-                    {
-                        if (absolutePositionHitPieceOrFinish.x > absolutePositionAttackerOrStart.x) rotationPointAttacker = 90;
-                        else rotationPointAttacker = 270;
-                    }
-                }
-            
-            }
-            else
-            {
-           
-                var absolutePositionPlayer = gameFieldManager.ResolveAbsolutePositionOfHexagon(piecePlayerPosition);
-                var absolutePositionEnemy = gameFieldManager.ResolveAbsolutePositionOfHexagon(pieceEnemyPosition);
-
-                var oppositeSide = absolutePositionHitPieceOrFinish.x - absolutePositionAttackerOrStart.x;
-                var adjacentSide = absolutePositionHitPieceOrFinish.z - absolutePositionAttackerOrStart.z;
-
-                if (absolutePositionPlayer.z > absolutePositionEnemy.z)
-                {
-                    rotationPointAttacker = 180 + (180 / Math.PI) * Math.Atan((oppositeSide) / (adjacentSide));
-                }
-                else
-                {
-                    rotationPointAttacker = (180 / Math.PI) * Math.Atan((oppositeSide) / (adjacentSide));
-                }
-            
-
-            
-
-            }
-
-            var rotationPointDefender = rotationPointAttacker;
-
-            if(attack)
-            {
-                if (attackingPiece.Team == Team.Player) { rotationPointAttacker = rotationPointAttacker - 180; }
-                if (hitPiece.Team == Team.Player) { rotationPointDefender = rotationPointDefender - 180; }
-            }
-
-            return new Pair<Double>(rotationPointAttacker, rotationPointDefender);
-
-        }
-
+            // A --> B          B <-- A
+            return a.x < b.x ? 90 : 270;
+        }    
 
     }
 }

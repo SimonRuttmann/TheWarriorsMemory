@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Scripts.GameField;
 using Scripts.Pieces.Interfaces;
 using UnityEngine;
 
@@ -25,21 +24,7 @@ namespace Scripts.Pieces.Animation
             DestroyPiece(piece);
 
         }
-
-        public void MovePiece(float time, IPiece piece, Hexagon position)
-        {
-            StartCoroutine(MoveManager(time, piece, position));
-        }
-
-        private IEnumerator MoveManager(float time, IPiece piece, Hexagon targetPosition)
-        {
-            yield return new WaitForSeconds(time);
-            
-            _scheduledObjects.Add(new AnimationSchedulerObject(
-                piece: piece, 
-                animationStatus: AnimationStatus.Move, 
-                targetPosition: targetPosition));
-        }
+        
         
         public void RotatePiece(float time, IPiece rotatingPiece, float rotationValue)
         {
@@ -59,9 +44,10 @@ namespace Scripts.Pieces.Animation
         
         public void StartAnimation(float time, IPiece piece, AnimationStatus animationStatus)
         {
-            StartCoroutine(AnimationManager(time, piece, animationStatus));
+            StartCoroutine(AnimationManager(time: time, piece: piece, animationStatus: animationStatus));
         }
 
+        
 
         private IEnumerator AnimationManager(float time, IPiece piece, AnimationStatus animationStatus)
         {
@@ -81,7 +67,6 @@ namespace Scripts.Pieces.Animation
                 switch (animationScheduledObject.AnimationStatus)
                 {
                     case AnimationStatus.Nothing: break;
-                    case AnimationStatus.Move:    animationScheduledObject.Piece.MoveToPosition(animationScheduledObject.TargetPosition); break;
                     case AnimationStatus.Rotate:  animationScheduledObject.Piece.RotatePiece(animationScheduledObject.RotationValue); break;
                     case AnimationStatus.Attack:  animationScheduledObject.Piece.AttackAnimation(); break;
                     case AnimationStatus.Select:  animationScheduledObject.Piece.SelectionAnimation(); break;

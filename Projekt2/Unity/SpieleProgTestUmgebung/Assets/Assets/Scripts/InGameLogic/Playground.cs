@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Scripts.Enums;
 using Scripts.Extensions;
@@ -68,9 +67,7 @@ namespace Scripts.InGameLogic
         #endregion
         
         public bool BlockInput { get; set; }
-
         
-        private IPiece _previousSelectedPiece;
         
         internal void PrepareStart()
         {
@@ -84,8 +81,7 @@ namespace Scripts.InGameLogic
 
         private void ClearGameState()
         {
-            _previousSelectedPiece = null; 
-            
+
             _gameFieldManager.Clear();
             _gameFieldManager.Initialize(_gameFieldPhysicalConfiguration, _gameFieldTerrainConfiguration);
             
@@ -133,7 +129,7 @@ namespace Scripts.InGameLogic
                 OnSelectedPieceMove(field, _inGameManager.ActivePiece);
             }
             
-         
+            
         }
 
         
@@ -144,12 +140,11 @@ namespace Scripts.InGameLogic
         /// <returns>True, if any moves or attacks are possible</returns>
         public bool SelectPiece(IPiece piece)
         {
-            _previousSelectedPiece = piece;
-            
-            var attackMovements = _previousSelectedPiece.GeneratePossibleAttackMovements();
+
+            var attackMovements = piece.GeneratePossibleAttackMovements();
             var attackPositions = attackMovements.Select(move => _gameFieldManager.ResolveAbsolutePositionOfHexagon(move));
 
-            var moveMovements = _previousSelectedPiece.GeneratePossibleMoveMovements();
+            var moveMovements = piece.GeneratePossibleMoveMovements();
             var movePositions = moveMovements.Select(move => _gameFieldManager.ResolveAbsolutePositionOfHexagon(move));
 
             if (attackMovements.IsEmpty() && moveMovements.IsEmpty()) return false;
@@ -162,7 +157,6 @@ namespace Scripts.InGameLogic
         
         private void DeselectPiece()
         {
-            _previousSelectedPiece = null;
             _markerCreator.DestroyMarkers();
         }
         
@@ -181,14 +175,15 @@ namespace Scripts.InGameLogic
             _inGameManager.EndTurn(waitingTime);
 
         }
-        
 
+        
         private float MovePiece(Hexagon destination, IPiece piece)
         {
-            
-            //Update piece reference to hexagon and start animation
-            var travelTime = piece.MoveToPosition(destination);
-            
+            // Rotete, Move, Rotete Back a piece
+            var travelTime = piece.RotatePiece(destination);
+            piece.MoveStraight(destination);
+            piece.RotatePieceBack();
+           
             //Remove piece on old hexagon, add piece on new hexagon and update piece hexagon
             _gameFieldManager.MovePieceToHexField(piece.Position, destination);
 
@@ -222,104 +217,32 @@ namespace Scripts.InGameLogic
         
       private float StartConflict(IPiece attackingPiece, IPiece hitPiece, bool isKilled)
       {
-            IPiece piecePlayer, pieceEnemy;
 
-            if (attackingPiece.Team == Team.Player)
-            {
-                piecePlayer = attackingPiece;
-                pieceEnemy = hitPiece;
-            }
-            else
-            {
-                piecePlayer = hitPiece;
-                pieceEnemy = attackingPiece;
-            }
-
-            double rotationPointAttacker, rotationPointDefender;
-
-            var absolutePositionAttacker = _gameFieldManager.ResolveAbsolutePositionOfHexagon(attackingPiece.Position);
-            var absolutePositionHitPiece = _gameFieldManager.ResolveAbsolutePositionOfHexagon(hitPiece.Position);
+            var rotationValues = RotationCalculator.ResolveRotationsOnAttackMode(_gameFieldManager, attackingPiece, hitPiece);
+            var rotationAttacker = rotationValues.First;
+            var rotationDefender = rotationValues.Second;
             
-            //Note: Z is Y in Unity Terms
-            if (absolutePositionHitPiece.z - absolutePositionAttacker.z == 0)
-            {
-                //TODO There seems to be some newer version, we didn't use
-                if (attackingPiece.Team == Team.Enemy)
-                {
-                    //TODO old note: Dame schwarz greif an und es passt sgoar
-                    if (absolutePositionHitPiece.x > absolutePositionAttacker.x) rotationPointAttacker = 270;
-                    else rotationPointAttacker = 90;
-                }
-                //TODO old note: Dame weiss greift an -> Beide figuren in die verkehrte richtung
-                else
-                {
-                    if (absolutePositionHitPiece.x > absolutePositionAttacker.x) rotationPointAttacker = 90;
-                    else rotationPointAttacker = 270;
-                }
-            }
-            else
-            {
-                
-                var absolutePositionPlayer = _gameFieldManager.ResolveAbsolutePositionOfHexagon(piecePlayer.Position);
-                var absolutePositionEnemy = _gameFieldManager.ResolveAbsolutePositionOfHexagon(pieceEnemy.Position);
-                
-                var oppositeSide = absolutePositionHitPiece.x - absolutePositionAttacker.x;
-                var adjacentSide = absolutePositionHitPiece.z - absolutePositionAttacker.z;
-                
-                if (absolutePositionPlayer.z > absolutePositionEnemy.z)
-                {
-                    rotationPointAttacker = 180 + (180 / Math.PI) * Math.Atan((oppositeSide) / (adjacentSide));
-                }
-                else
-                {
-                    rotationPointAttacker = (180 / Math.PI) * Math.Atan((oppositeSide) / (adjacentSide));
-                }
-                
-            }
-
-            rotationPointDefender = rotationPointAttacker;
-
-            if (attackingPiece.Team == Team.Player) { rotationPointAttacker = rotationPointAttacker - 180; }
-            if (hitPiece.Team == Team.Player) { rotationPointDefender = rotationPointDefender - 180; }
-
-
             //Rotate attacker and defender
-            _animationScheduler.RotatePiece(0f, attackingPiece, (float)rotationPointAttacker);
-            _animationScheduler.RotatePiece(0f, hitPiece, (float)rotationPointDefender);
+            _animationScheduler.RotatePiece(0f, attackingPiece, rotationAttacker);
+            _animationScheduler.RotatePiece(0f, hitPiece, rotationDefender);
 
             //Execute attack
             _animationScheduler.StartAnimation(1f, attackingPiece, AnimationStatus.Attack);
 
             //Dying animation and delete
-            if (isKilled)
-            {
+            if (isKilled) {
                 _animationScheduler.StartAnimation(1.5f, hitPiece, AnimationStatus.Die);
                 _animationScheduler.StartAnimation(4f, hitPiece, AnimationStatus.Delete);
             }
-            else
-            {
+            else {
                 _animationScheduler.StartAnimation(1.5f, hitPiece, AnimationStatus.Pain);
             }
             
             //Rotate pieces back
-            int rotateBackAttacker, rotateBackHit;
-
-            if (attackingPiece.Team == Team.Player)
-            {
-                rotateBackAttacker = 180;
-                rotateBackHit = 0;
-            }
-            else
-            {
-                rotateBackAttacker = 0;
-                rotateBackHit = 180;
-            }
+            _animationScheduler.RotatePiece(6f, attackingPiece,  RotationCalculator.GetDefaultRotation(attackingPiece));
             
-            _animationScheduler.RotatePiece(6f, attackingPiece, rotateBackAttacker);
-            
-            if (!isKilled)
-            {
-                _animationScheduler.RotatePiece(6f, hitPiece, rotateBackHit);   
+            if (!isKilled) {
+                _animationScheduler.RotatePiece(6f, hitPiece,    RotationCalculator.GetDefaultRotation(hitPiece));   
             }
             
             return 7f;
