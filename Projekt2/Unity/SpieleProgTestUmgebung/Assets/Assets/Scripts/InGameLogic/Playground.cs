@@ -250,20 +250,20 @@ namespace Scripts.InGameLogic
             //Dying animation and delete
             if (isKilled) {
                 _animationScheduler.StartAnimation(1.5f, hitPiece, AnimationStatus.Die);
-                _animationScheduler.StartAnimation(6f, hitPiece, AnimationStatus.Delete);
+                _animationScheduler.StartAnimation(4f, hitPiece, AnimationStatus.Delete);
             }
             else {
                 _animationScheduler.StartAnimation(1.5f, hitPiece, AnimationStatus.Pain);
             }
             
             //Rotate pieces back
-            _animationScheduler.RotatePiece(6f, attackingPiece,  RotationCalculator.GetDefaultRotation(attackingPiece));
+            _animationScheduler.RotatePiece(2.5f, attackingPiece,  RotationCalculator.GetDefaultRotation(attackingPiece));
             
             if (!isKilled) {
-                _animationScheduler.RotatePiece(6f, hitPiece,    RotationCalculator.GetDefaultRotation(hitPiece));   
+                _animationScheduler.RotatePiece(2.5f, hitPiece,    RotationCalculator.GetDefaultRotation(hitPiece));   
             }
             
-            return 7f;
+            return 3.5f;
         }
       
       
