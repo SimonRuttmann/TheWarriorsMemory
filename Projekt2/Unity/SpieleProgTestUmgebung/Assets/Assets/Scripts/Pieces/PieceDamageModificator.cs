@@ -7,15 +7,12 @@ namespace Scripts.Pieces
         public static double GetModificatorForPiece(IPiece attacker, IPiece defender)
         {
 
-            var attackerType = attacker.GetType();
-            var defenderType = defender.GetType();
+            var applyDmg =  (attacker is Mage    && defender is Paladin) ||
+                            (attacker is Paladin && defender is Warrior) ||
+                            (attacker is Warrior && defender is Archer)  ||
+                            (attacker is Archer  && defender is Mage); 
             
-            var applyDmg =  (attackerType == typeof(Mage)    && defenderType == typeof(Paladin)) ||
-                            (attackerType == typeof(Paladin) && defenderType == typeof(Warrior)) ||
-                            (attackerType == typeof(Warrior) && defenderType == typeof(Archer))  ||
-                            (attackerType == typeof(Archer)  && defenderType == typeof(Mage)); 
-            
-            return applyDmg ? 0f : 1.5f;
+            return applyDmg ? 1.5f : 1f;
         }
     }
 }
