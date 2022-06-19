@@ -7,7 +7,6 @@
         Attack,
         Pain,
         Delete, 
-        Select,
         Move, 
         Rotate
     }

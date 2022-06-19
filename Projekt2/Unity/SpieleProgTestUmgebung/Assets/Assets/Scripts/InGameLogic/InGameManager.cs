@@ -209,11 +209,10 @@ namespace Scripts.InGameLogic
                     ChangeActiveTeam();
                     PrepareTurn();
                 }
-
                 _turnCounter--;
                 ActivePiece = _turnOrderActivePlayer[_turnCounter];
                 
-                ActivePiece.SelectionAnimation();
+              
                 
                 //If a time a required use this animation scheduler instead
                 //_animationScheduler.StartAnimation(0f, ActivePiece, AnimationStatus.Select);
@@ -230,7 +229,8 @@ namespace Scripts.InGameLogic
                 }
 
                 var destination = _ai.GetAiMove(gameConfiguration.gameFieldManager, _personPlayer.RemainingPiecesOfPlayer, ActivePiece);
-                ScheduleAiMove(AnimationConstants.SelectAnimationDuration, destination, ActivePiece);
+                if(destination != null)
+                    ScheduleAiMove(AnimationConstants.SelectAnimationDuration, destination, ActivePiece);
                 
                 return;
             }

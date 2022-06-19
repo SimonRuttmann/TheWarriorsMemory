@@ -185,6 +185,8 @@ namespace Scripts.InGameLogic
             // Rotete, Move, Rotete Back a piece
             var travelTime = piece.RotatePiece(destination);
             piece.MoveStraight(destination);
+
+            // TODO move animationSchedulat here from piece
             piece.RotatePieceBack();
            
             //Remove piece on old hexagon, add piece on new hexagon and update piece hexagon
