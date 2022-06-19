@@ -26,25 +26,25 @@ namespace Scripts.InGameLogic
         private GameUiManager _gameUIManager;
         private PieceCreator _pieceCreator;
         private PieceDeploymentConfiguration _pieceDeploymentConfiguration;
-        private IAnimationScheduler _animationScheduler;
-        
         
         private Player _personPlayer;
         private Player _enemyPlayer;
         private Player _activePlayer;
         
         private GameState _gameState = GameState.Start;
-
         public GameState GameState => _gameState;
-
-        private SortedDictionary<int, IPiece> _turnOrderActivePlayer = new SortedDictionary<int, IPiece>();
+        
+        public bool IsUiOpen { get; set; }
+        public bool startGameWithUI = true;
+        
+        private readonly SortedDictionary<int, IPiece> _turnOrderActivePlayer = new SortedDictionary<int, IPiece>();
         private int _turnCounter;
         
         public IPiece ActivePiece { get; private set; }
         
-        private IAi _ai= new Ai();
-
-        public bool startGameWithUI = true;
+        private readonly IAi _ai= new Ai();
+        
+        
         private void Awake()
         {
             InitializeConfiguration();
@@ -57,8 +57,7 @@ namespace Scripts.InGameLogic
             _playground = gameConfiguration.playground;
             _gameUIManager = gameConfiguration.gameUIManager;
             _pieceDeploymentConfiguration = gameConfiguration.pieceDeploymentConfiguration;
-            _animationScheduler = gameConfiguration.animationScheduler;
-            
+
             _playground.InitializeGameManager(this, gameConfiguration);
             _pieceCreator.Initialize(gameConfiguration.pieceModels);
         }
@@ -166,7 +165,7 @@ namespace Scripts.InGameLogic
 
             if (OtherPlayerOf(_activePlayer).HasNoMorePieces)
             {
-                EndGame();
+                EndGame(false);
                 return;
             }
             
@@ -251,9 +250,14 @@ namespace Scripts.InGameLogic
             _playground.OnSelectedPieceMove(destination, piece);
         }   
         
-        private void EndGame()
+        private void EndGame(bool withDyingPieces)
         {
-            _gameUIManager.OnGameFinished(_activePlayer.Team.ToString());
+            
+            _gameUIManager.OnGameFinished(_activePlayer.Team);
+            _gameState = GameState.Finished;
+
+            if (!withDyingPieces) return;
+            
             if (_activePlayer.Team == Team.Player)
             {
                 _enemyPlayer.RemainingPiecesOfPlayer.ForEach(
@@ -265,15 +269,13 @@ namespace Scripts.InGameLogic
                     p => _playground.KillAndRemovePiece(p));
             }
             
-            _gameState = GameState.Finished;
         }
 
         private Player OtherPlayerOf(Player player)
         {
             return player == _personPlayer ? _enemyPlayer : _personPlayer;
         }
-
-        //TODO adjustment for ...
+        
         private void ChangeActiveTeam()
         {
         

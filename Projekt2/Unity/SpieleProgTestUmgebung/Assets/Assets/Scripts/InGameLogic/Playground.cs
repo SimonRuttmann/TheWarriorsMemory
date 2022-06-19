@@ -113,6 +113,9 @@ namespace Scripts.InGameLogic
             
             //Block inputs, while enemy executes turns
             if (_inGameManager.IsTurnOf(Team.Enemy)) return;
+
+            //Block inputs, white ui is open
+            if (_inGameManager.IsUiOpen) return;
             
             var localSpaceInputPosition = transform.InverseTransformPoint(inputPosition);
             var field = _gameFieldManager.ResolveHexagonByRelativePosition(localSpaceInputPosition); 
