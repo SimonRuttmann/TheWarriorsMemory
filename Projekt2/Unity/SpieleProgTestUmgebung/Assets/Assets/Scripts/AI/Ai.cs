@@ -11,6 +11,7 @@ namespace Scripts.AI
 {
     public class Ai : IAi
     {
+        private Dictionary<Hexagon, int> _distanceList = new Dictionary<Hexagon, int>();
         public Hexagon GetAiMove(GameFieldManager gameFieldManager, IList<IPiece> playerPieces, IPiece ownPiece)
         {
             //Stupid ai, just for test..
@@ -22,26 +23,37 @@ namespace Scripts.AI
             
             var moveMovements = ownPiece.GeneratePossibleMoveMovements();
             if (moveMovements.Count > 0)
-                return GetHexagonClosestToEnemy(moveMovements, playerPieces);
+                return GetHexagonClosestToEnemy(moveMovements, playerPieces, ownPiece.AttackRange);
 
             return null;
         }
 
-        private Hexagon GetHexagonClosestToEnemy(ISet<Hexagon> possibleMoves, IList<IPiece> playerPieces)
+        private Hexagon GetHexagonClosestToEnemy(ISet<Hexagon> possibleMoves, IList<IPiece> playerPieces, int attackRange)
         {
-            KeyValuePair<int, Hexagon> closestMove = new KeyValuePair<int, Hexagon>(0, null);
+            _distanceList.Clear();
             foreach (var possibleMove in possibleMoves)
             {
                 foreach (var playerPiece in playerPieces)
                 {
                     var distance = CalculateDistance(possibleMove, playerPiece.Position);
-                    if (closestMove.Value == null || closestMove.Key > distance)
+                    if (_distanceList.ContainsKey(possibleMove))
                     {
-                        closestMove = new KeyValuePair<int, Hexagon>(distance, possibleMove);
+                        if (_distanceList[possibleMove] > distance)
+                            _distanceList[possibleMove] = distance;
                     }
+                    else _distanceList.Add(possibleMove,distance);
                 }
             }
-            return closestMove.Value;
+
+            KeyValuePair<Hexagon,int> clostestNotReachingMove = new KeyValuePair<Hexagon, int>(null,0) ;
+            foreach (var pair in _distanceList)
+            {
+                if (pair.Value == attackRange) return pair.Key;
+                if (pair.Value > attackRange &&
+                    (clostestNotReachingMove.Key == null || clostestNotReachingMove.Value > pair.Value))
+                    clostestNotReachingMove = pair;
+            }
+            return clostestNotReachingMove.Key;
         }
         private int CalculateDistance(Hexagon hex1,Hexagon hex2)
         {
@@ -55,17 +67,17 @@ namespace Scripts.AI
         }
         private Hexagon GetPriorityAttack(ISet<Hexagon> possibleAttacks)
         {
-            KeyValuePair<int, Hexagon> priorityAttack = new KeyValuePair<int, Hexagon>(0,null);
+            KeyValuePair<Hexagon,int> priorityAttack = new KeyValuePair<Hexagon,int>(null,0);
             foreach (var possibleAttack in possibleAttacks)
             {
                 var piece = possibleAttack.Piece;
                 var priority = piece.Health - piece.AttackDamage;
 
-                if (priorityAttack.Value == null || priorityAttack.Key > priority)
-                    priorityAttack = new KeyValuePair<int, Hexagon>(priority, possibleAttack);
+                if (priorityAttack.Key == null || priorityAttack.Value > priority)
+                    priorityAttack = new KeyValuePair<Hexagon,int>(possibleAttack, priority);
             }
 
-            return priorityAttack.Value;
+            return priorityAttack.Key;
         }
         
     }
