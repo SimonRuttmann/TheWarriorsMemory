@@ -2516,6 +2516,7 @@ MonoBehaviour:
     movementPrefab: {fileID: 8023265488517252142, guid: ff84e9b27ec84ed4ca060bb1dbc09d25, type: 3}
     attackPrefab: {fileID: 5534062665509555497, guid: d11bb75ec22f1974886081820b0ccb82, type: 3}
     selectionPrefab: {fileID: 5486293719581882342, guid: 253a3fc6e41f7d54fab5b65b86d2128d, type: 3}
+    enemySelectionPrefab: {fileID: 2722920957446634711, guid: b4a925ce146a7694c8ba196ad360a228, type: 3}
   pieceCreator: {fileID: 963057324}
   gameFieldManager: {fileID: 963057323}
   markerCreator: {fileID: 963057322}
@@ -5265,7 +5266,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2796141948722979841
 MonoBehaviour:
   m_ObjectHideFlags: 0
