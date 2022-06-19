@@ -13,8 +13,10 @@ namespace Scripts.Pieces.Interfaces
     
         public void RotatePiece(float rotationAngle);
 
-        public float MoveToPosition(Hexagon position);
+        public void MoveStraight(Hexagon targetPosition);
 
-        public void MoveStraight(Vector3 targetCoordinates, float travelTime, Transform transform);
+        public float RotatePiece(Hexagon targetPosition);
+
+        public void RotatePieceBack();
     }
 }

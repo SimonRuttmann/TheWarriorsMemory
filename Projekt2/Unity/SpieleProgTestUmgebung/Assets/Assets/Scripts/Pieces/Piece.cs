@@ -148,66 +148,38 @@ namespace Scripts.Pieces
 		}
 		
 		
-		public float MoveToPosition(Hexagon targetPosition)
-		{
-			var currentPosition = Position;
-			
-			var startCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(currentPosition);
+		public void MoveStraight(Hexagon targetPosition)
+        {
 			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(targetPosition);
+			var travelTime = _mover.CalculateMovementDuration(transform, targetCoordinates);
+			MoveAnimation(travelTime);
+			_mover.MoveTo(this.transform, targetCoordinates);
+		}
 
+		public float RotatePiece(Hexagon targetPosition)
+		{
+			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(targetPosition);
 			var travelTime = _mover.CalculateMovementDuration(transform, targetCoordinates);
 
-			if(travelTime == 0f)
-            {
-				MoveAnimation(travelTime);
-				_mover.MoveTo(transform, targetCoordinates);
-				return travelTime;
-			}
+			if (travelTime == 0f) return travelTime;
 
-
-			// calc angel
 			Pair<Double> rotationAngel = RotationCalculator.CalcAngelForRunner(_gameFieldManager, this, targetPosition);
 
+			var adjustedAngel = this.Team == Team.Player ? rotationAngel.First : rotationAngel.First - 180;
 
-			if(this.Team == Team.Player)
-            {
-				_animationScheduler.RotatePiece(0f, this, (float)rotationAngel.First); 
-			}
-            else
-            {
-				_animationScheduler.RotatePiece(0f, this, (float)rotationAngel.First- 180);
-			}
-			
-			Transform TransformTest = transform;
+			RotatePiece((float) adjustedAngel);
+			//_animationScheduler.RotatePiece(0f, this, (float)adjustedAngel);
 
-			//_mover.MoveTo(transform, targetCoordinates);
-			
-			_animationScheduler.MoveStraight(1f, this, targetCoordinates, travelTime, TransformTest, AnimationStatus.MoveStraight);
-
-			
-			
 			return travelTime;
 		}
-		
-		public void MoveStraight(Vector3 targetCoordinates, float travelTime, Transform transform)
+		public void RotatePieceBack()
         {
-			
-			MoveAnimation(travelTime);
-			_mover.MoveTo(transform, targetCoordinates);
-			if (this.Team == Team.Player)
-			{
-				_animationScheduler.RotatePiece(travelTime, this, 90);
-			}
-			else
-			{
-				_animationScheduler.RotatePiece(travelTime, this, -90);
-			}
-
+			var adjustedAngel = this.Team == Team.Player ? 90 : -90;
+			_animationScheduler.RotatePiece(2f, this, (float)adjustedAngel);
 		}
-
 		#endregion
-		
-		
+
+
 		#region Initialize
 
 		private void Awake()

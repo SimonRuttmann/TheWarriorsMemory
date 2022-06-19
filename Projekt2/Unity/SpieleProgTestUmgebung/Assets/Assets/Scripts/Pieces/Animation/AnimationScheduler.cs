@@ -26,11 +26,7 @@ namespace Scripts.Pieces.Animation
 
         }
 
-        public void MovePiece(float time, IPiece piece, Hexagon position)
-        {
-            StartCoroutine(MoveManager(time, piece, position));
-        }
-
+      
         private IEnumerator MoveManager(float time, IPiece piece, Hexagon targetPosition)
         {
             yield return new WaitForSeconds(time);
@@ -62,22 +58,15 @@ namespace Scripts.Pieces.Animation
             StartCoroutine(AnimationManager(time: time, piece: piece, animationStatus: animationStatus));
         }
 
-        public void MoveStraight(float time, IPiece piece, Vector3 targetCoordinates, float travelTime, Transform transform, AnimationStatus animationStatus)
-        {
-            StartCoroutine(AnimationManager(time: time, piece: piece, animationStatus: animationStatus, targetCoordinates: targetCoordinates, travelTime: travelTime, transform:transform));
-        }
+        
 
-
-        private IEnumerator AnimationManager(float time, IPiece piece, AnimationStatus animationStatus, Vector3 targetCoordinates = new Vector3(), float travelTime = 0f, Transform transform = null)
+        private IEnumerator AnimationManager(float time, IPiece piece, AnimationStatus animationStatus)
         {
             yield return new WaitForSeconds(time);
 
             _scheduledObjects.Add(new AnimationSchedulerObject(
                 piece: piece, 
-                animationStatus: animationStatus,
-                targetCoordinates: targetCoordinates,
-                travelTime: travelTime,
-                transform: transform));
+                animationStatus: animationStatus));
         }
 
 
@@ -89,14 +78,12 @@ namespace Scripts.Pieces.Animation
                 switch (animationScheduledObject.AnimationStatus)
                 {
                     case AnimationStatus.Nothing: break;
-                    case AnimationStatus.Move:    animationScheduledObject.Piece.MoveToPosition(animationScheduledObject.TargetPosition); break;
                     case AnimationStatus.Rotate:  animationScheduledObject.Piece.RotatePiece(animationScheduledObject.RotationValue); break;
                     case AnimationStatus.Attack:  animationScheduledObject.Piece.AttackAnimation(); break;
                     case AnimationStatus.Select:  animationScheduledObject.Piece.SelectionAnimation(); break;
                     case AnimationStatus.Pain:    animationScheduledObject.Piece.PainAnimation(); break;
                     case AnimationStatus.Die:     animationScheduledObject.Piece.DyingAnimation(); break;
                     case AnimationStatus.Delete:  DestroyPiece(animationScheduledObject.Piece); break;
-                    case AnimationStatus.MoveStraight: animationScheduledObject.Piece.MoveStraight(animationScheduledObject.TargetCoordinates, animationScheduledObject.TravelTime, animationScheduledObject.Transform); Debug.Log("here") ; break;
                     default: throw new ArgumentOutOfRangeException();
                 }
                 
