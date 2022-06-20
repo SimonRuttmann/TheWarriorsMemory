@@ -96,6 +96,10 @@ namespace Scripts.InGameLogic
         /// </summary>
         public void RestartGame()
         {
+            
+            StopAllCoroutines();
+            _playground.BlockInput = false;
+
             IList<IPiece> remainingPieces = new List<IPiece>();
             remainingPieces.AddAll(_personPlayer.RemainingPiecesOfPlayer);
             remainingPieces.AddAll(_enemyPlayer.RemainingPiecesOfPlayer);

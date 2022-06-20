@@ -132,9 +132,22 @@ namespace Scripts.Pieces
 		private IMover _mover;
 		
 		//Movement implementation
-	
+
+		/// <summary>
+		/// Checks if the game object is destroyed
+		/// </summary>
+		/// <remarks>
+		/// Unity did overwrite the "this == null" for scripts.
+		/// As this would make totally no scene in standard C#.
+		/// The overwrite checks if the instantiated object is in the scene.
+		/// </remarks>
+		private bool IsDestroyed => this == null;
+
 		public void RotatePiece(float rotationAngle)
 		{
+			
+			if (IsDestroyed) return;
+			
 			_endRotationValue = Quaternion.Euler(0, rotationAngle, 0);
 			_startRotationValue = transform.localRotation;
 			_isRotationActive = true;
@@ -142,7 +155,10 @@ namespace Scripts.Pieces
 		}
 
 		public void MoveStraight(Hexagon targetPosition)
-        {
+		{
+
+			if (IsDestroyed) return;
+			
 			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(targetPosition);
 			var travelTime = _mover.CalculateMovementDuration(transform, targetCoordinates);
 			MoveAnimation(travelTime);
@@ -151,6 +167,9 @@ namespace Scripts.Pieces
 
 		public float RotatePiece(Hexagon targetPosition)
 		{
+
+			if (IsDestroyed) return 0f;
+			
 			var targetCoordinates = _gameFieldManager.ResolveAbsolutePositionOfHexagon(targetPosition);
 			var travelTime = _mover.CalculateMovementDuration(transform, targetCoordinates);
 
@@ -241,6 +260,8 @@ namespace Scripts.Pieces
 		public void Update()
 		{
 
+			if (IsDestroyed) return;
+			
 			if (transform.rotation != _endRotationValue && _isRotationActive) 
 			{
 				transform.rotation = Quaternion.Slerp(_startRotationValue, _endRotationValue, _timeCount);
