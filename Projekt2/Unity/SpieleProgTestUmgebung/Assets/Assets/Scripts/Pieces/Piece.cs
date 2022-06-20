@@ -88,18 +88,24 @@ namespace Scripts.Pieces
 
 		public void DyingAnimation()
 		{
+			if (IsDestroyed) return;
+			
 			_animator.SetTrigger(DyingTrigger);
 			dyingSound.Play();
 		}
 
 		public void AttackAnimation()
 		{
+			if (IsDestroyed) return;
+			
 			_animator.SetTrigger(AttackTrigger);
 			attackSound.Play();
 		}
 
 		public void MoveAnimation(float timeToMove)
 		{
+			if (IsDestroyed) return;
+			
 			_animator.SetTrigger(MoveTrigger);
 			moveSound.Play();
 			ScheduleIdleAfterMove(timeToMove);
@@ -107,18 +113,24 @@ namespace Scripts.Pieces
 		
 		private void ScheduleIdleAfterMove(float time)
 		{
-			StartCoroutine(StartNextTurnAfterTime(time));
+			StartCoroutine(StartIdleAfterMoveAfterTime(time));
 		}
 
-		private IEnumerator StartNextTurnAfterTime(float time)
+		private IEnumerator StartIdleAfterMoveAfterTime(float time)
 		{
 			yield return new WaitForSeconds(time);
-			_animator.SetTrigger(IdleTrigger);
+
+			if (!IsDestroyed)
+			{
+				_animator.SetTrigger(IdleTrigger);
+			}
 		}       
 
 
 		public void PainAnimation()
         {
+	        if (IsDestroyed) return;
+	        
 			_animator.SetTrigger(PainTrigger);
 			painSound.Play();
         }
@@ -184,6 +196,8 @@ namespace Scripts.Pieces
 		
 		public void RotatePieceBack()
 		{
+			if (IsDestroyed) return;
+			
 			var adjustedAngel = RotationCalculator.GetDefaultRotation(this);
 			_animationScheduler.RotatePiece(2f, this, adjustedAngel);
 		}
