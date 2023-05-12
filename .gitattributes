@@ -1,0 +1,4 @@
+*Spieleprogrammierung_Video.mp4 filter=lfs diff=lfs merge=lfs -text
+*MaleSkinBase.psd filter=lfs diff=lfs merge=lfs -text
+*FemaleSkinBase.psd filter=lfs diff=lfs merge=lfs -text
+*AmazonSkinBase.psd filter=lfs diff=lfs merge=lfs -text
