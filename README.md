@@ -17,20 +17,7 @@ In this turn-based fantasy battle, you control six unique characters:
 - 🔮 1 Mage
 - ✝️ 1 Paladin
 
-The AI controls an identical team. You and the enemy take turns moving and attacking with each character on a **hexagonal battlefield**.  
-Movement and attack ranges are visually indicated using blue and red hex markers.
-
-
-For more information there is also a full product and project documentation in german.
-For a brief outline of the project have a look at the game presentation.
-
-📜 [Presentation  (PDF)](docs/Presentation.pdf)
-
-📜 [Projectdocumentation  (PDF)](docs/Projektdokumentation.pdf)
-
-📜 [Productdocumentation (PDF)](docs/Produktdokumentation.pdf)
-
----
+The AI controls an identical team. You and the enemy take turns moving and attacking with each character on a **hexagonal battlefield**.
 
 ## 🕹️ How to Play
 
@@ -67,7 +54,7 @@ Each character class is effective against another – this “advantage circle�
 
 ![Advantage Wheel](media/img/advantage-cicle-en.png)
 
-// add here some text that each unit has different stats
+Each class has unique stats:
 
 | Character Type | Count | Health       | Damage     | Attack Range | Movement Range |
 |----------------|-------|--------------|------------|---------------|-----------------|
@@ -76,14 +63,14 @@ Each character class is effective against another – this “advantage circle�
 | Paladin        | 1     | Very High (150)| Low (10) | Low (1)       | Low (1)         |
 | Warrior        | 2     | High (85)    | High (20)  | Low (1)       | Medium (2)      |
 
-Use this mechanic wisely to:
+Make smart choices to:
 
-- Eliminate dangerous enemies first
+- Eliminate high-threat enemies early
 - Keep your support units safe
 
-Use terrain to your advantage:
- - mountains and lakes block movement
- - units will block movement of other units on their field
+Use Terrain to your advantage:
+- Mountains/lakes block movement
+- Units can’t pass through occupied fields
 
 ---
 
@@ -99,17 +86,35 @@ You’ll need to think ahead and position carefully!
 
 ---
 
-## 🔧 Technologies Used
+## 🔧 Technologies & Design
 
 - 🎮 Unity (C#)
 - 🎞️ Custom animation scheduler for timed actions
 - 📊 ScriptableObject-driven setup and runtime logic
 - 🔊 Audio feedback for every action and animation
 
-## 🔧 Design
 A brief overview of the games logic structure can be seen in the package diagram below:
-![Package Diagram](media/img/package-diagram.png)
+
+<p align="center">
+  <img src="media/img/package-diagram.png" width="50%"/>
+</p>
+
 The correspondig .eapx file (Enterprise Architect) can be found [here](docs/enterprisearchitect/architecture.eapx).
+
+---
+
+## More information
+
+For more information there is also a full product and project documentation in german.
+For a brief outline of the project have a look at the german game presentation.
+
+📜 [Presentation GER (PDF)](docs/Presentation.pdf)
+
+📜 [Projectdocumentation GER (PDF)](docs/Projektdokumentation.pdf)
+
+📜 [Productdocumentation GER (PDF)](docs/Produktdokumentation.pdf)
+
+
 ---
 
 ## 🧑‍💻 Teamwork makes the Dream Work
