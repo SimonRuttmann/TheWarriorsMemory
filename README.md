@@ -52,7 +52,9 @@ Each character class is effective against another – this “advantage circle�
 - ✅ Attacking an enemy you counter will deal **+50% damage**
 - ❌ Attacking an enemy that counters you may result in disadvantageous trades
 
-![Advantage Wheel](media/img/advantage-cicle-en.png)
+<p align="center">
+  <img src="media/img/advantage-cicle-en.png" width="60%"/>
+</p>
 
 Each class has unique stats:
 
