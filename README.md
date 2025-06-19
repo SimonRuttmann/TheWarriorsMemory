@@ -144,4 +144,4 @@ Want to play?
 
 ## 🎥 Videos
 
-🎬 [Watch Gameplay (MP4)](media/video/gameplay.mp4)
+🎬 [Watch Gameplay (MP4)](media/video/Gameplay.mp4)
