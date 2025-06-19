@@ -22,6 +22,9 @@ Movement and attack ranges are visually indicated using blue and red hex markers
 
 
 For more information there is also a full product and project documentation in german.
+For a brief outline of the project have a look at the game presentation.
+
+📜 [Presentation  (PDF)](docs/Presentation.pdf)
 
 📜 [Projectdocumentation  (PDF)](docs/Projektdokumentation.pdf)
 
@@ -103,8 +106,10 @@ You’ll need to think ahead and position carefully!
 - 📊 ScriptableObject-driven setup and runtime logic
 - 🔊 Audio feedback for every action and animation
 
-A brief overview of the game logic can be seen below:
+## 🔧 Design
+A brief overview of the games logic structure can be seen in the package diagram below:
 ![Package Diagram](media/img/package-diagram.png)
+The correspondig .eapx file (Enterprise Architect) can be found [here](docs/enterprisearchitect/architecture.eapx).
 ---
 
 ## 🧑‍💻 Teamwork makes the Dream Work
