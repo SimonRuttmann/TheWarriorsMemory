@@ -2,9 +2,9 @@
 
 **The Warrior’s Memory** is a tactical 2.5D turn-based strategy game, designed and developed in **Unity** during my time at **Aalen University**.
 
-Fight a battle of wits and strategy against a clever AI opponent! Choose your units wisely, take advantage of terrain, and exploit character class synergies to emerge victorious.
+Fight a battle of wits and strategy against a clever AI opponent! Move your units wisely, take advantage of terrain, and exploit character class synergies to emerge victorious.
 
-![Gameplay Preview](media/img/screenshot.png)
+![Gameplay Preview](media/gifs/gameplay-fight.gif)
 
 ---
 
@@ -20,36 +20,25 @@ In this turn-based fantasy battle, you control six unique characters:
 The AI controls an identical team. You and the enemy take turns moving and attacking with each character on a **hexagonal battlefield**.  
 Movement and attack ranges are visually indicated using blue and red hex markers.
 
-![Battlefield Movement GIF](media/gifs/movement.gif)
 
----
+For more information there is also a full product and project documentation in german.
 
-## 🧠 Strategic Depth
+📜 [Projectdocumentation  (PDF)](docs/Projektdokumentation.pdf)
 
-Each character class is effective against another – this “advantage circle” adds a layer of tactical depth.
-
-- ✅ Attacking an enemy you counter will deal **+50% damage**
-- ❌ Attacking an enemy that counters you may result in disadvantageous trades
-
-![Advantage Wheel](media/img/advantage-wheel.png)
-
-Use this mechanic wisely to:
-
-- Eliminate dangerous enemies first
-- Keep your support units safe
-- Use terrain to your advantage (e.g., mountains and lakes block movement)
+📜 [Productdocumentation (PDF)](docs/Produktdokumentation.pdf)
 
 ---
 
 ## 🕹️ How to Play
 
-- 🔁 Turns are taken alternately by both teams
+- ⚔️ The game can be started by selecting "new game"
+- 🔁 Turns are taken alternately by both teams for all units of that team
 - 🔥 The current active unit is marked on the battlefield
 - 🚶 Blue markers = movement options
 - 🎯 Red markers = valid attack targets
 - ⌨️ Press `ESC` to pause or return to the main menu
 
-![Attack Execution GIF](media/gifs/attack.gif)
+![Gameplay Preview](media/gifs/gameplay-start.gif)
 
 The battle continues until one side has no units left. A win screen lets you start over or exit.
 
@@ -61,7 +50,37 @@ The battle continues until one side has no units left. A win screen lets you sta
 - Combined use of low-res pixel backgrounds and high-res 3D units
 - Audio and animation for every class: idle, move, attack, hit, and death
 
-![Combat Animation GIF](media/gifs/combat.gif)
+![Combat Animation GIF](media/gifs/gameplay-attack.gif)
+
+---
+
+
+## 🧠 Strategic Depth
+
+Each character class is effective against another – this “advantage circle” adds a layer of tactical depth.
+
+- ✅ Attacking an enemy you counter will deal **+50% damage**
+- ❌ Attacking an enemy that counters you may result in disadvantageous trades
+
+![Advantage Wheel](media/img/advantage-cicle-en.png)
+
+// add here some text that each unit has different stats
+
+| Character Type | Count | Health       | Damage     | Attack Range | Movement Range |
+|----------------|-------|--------------|------------|---------------|-----------------|
+| Mage           | 1     | Low (30)     | High (20)  | Medium (3)    | Low (1)         |
+| Archer         | 2     | Medium (50)  | Low (10)   | Medium (3)    | High (3)        |
+| Paladin        | 1     | Very High (150)| Low (10) | Low (1)       | Low (1)         |
+| Warrior        | 2     | High (85)    | High (20)  | Low (1)       | Medium (2)      |
+
+Use this mechanic wisely to:
+
+- Eliminate dangerous enemies first
+- Keep your support units safe
+
+Use terrain to your advantage:
+ - mountains and lakes block movement
+ - units will block movement of other units on their field
 
 ---
 
@@ -84,6 +103,8 @@ You’ll need to think ahead and position carefully!
 - 📊 ScriptableObject-driven setup and runtime logic
 - 🔊 Audio feedback for every action and animation
 
+A brief overview of the game logic can be seen below:
+![Package Diagram](media/img/package-diagram.png)
 ---
 
 ## 🧑‍💻 Teamwork makes the Dream Work
@@ -111,9 +132,6 @@ Want to play?
 
 ---
 
-## 🎥 Videos & GIFs
+## 🎥 Videos
 
-| ![](media/gifs/menu.gif) | ![](media/gifs/turn.gif) | ![](media/gifs/end.gif) |
-|--------------------------|--------------------------|--------------------------|
-
-More visuals will be added soon!
+🎬 [Watch Gameplay (MP4)](media/video/gameplay.mp4)
